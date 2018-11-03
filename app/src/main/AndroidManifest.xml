@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.nicok.pathguide">
+    package="com.nicok.pathguide.activities">
 
     <application
         android:allowBackup="true"
@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.nicok.pathguide.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,7 +18,11 @@
         </activity>
 
         <service
-            android:name="com.example.nicok.pathguide.FlagReader"
+            android:name=".FlagReader"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name="com.example.nicok.pathguide.BeaconService"
             android:enabled="true"
             android:exported="true"></service>
     </application>

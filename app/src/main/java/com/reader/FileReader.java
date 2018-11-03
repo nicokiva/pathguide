@@ -1,18 +1,22 @@
-package reader;
+package com.reader;
+
+import android.content.Context;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class FileReader implements IReader {
 
-    public String read(InputStream stream) throws IOException {
+    public String readAsset(String filename, Context context) throws IOException {
+        InputStreamReader stream = new InputStreamReader(context.getAssets().open(filename));
 
-        // TODO: Remove InputStream as input, Activities should only know filenames.
+        return read(stream);
+    }
 
+    private String read(InputStreamReader stream) throws IOException {
         try {
-            BufferedReader r = new BufferedReader(new InputStreamReader(stream));
+            BufferedReader r = new BufferedReader(stream);
             StringBuilder file = new StringBuilder();
             for (String line; (line = r.readLine()) != null; ) {
                 file.append(line).append('\n');

@@ -1,4 +1,4 @@
-package com.example.nicok.pathguide;
+package com.nicok.pathguide.activities;
 
 import android.app.Service;
 import android.content.Intent;

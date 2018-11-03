@@ -1,4 +1,4 @@
-package map;
+package com.map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

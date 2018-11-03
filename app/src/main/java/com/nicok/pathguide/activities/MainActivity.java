@@ -1,19 +1,14 @@
-package com.example.nicok.pathguide;
+package com.nicok.pathguide.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import map.MapDefinition;
-import reader.FileReader;
-import java.io.IOException;
+import com.map.MapDefinition;
+import com.reader.FileReader;
 
 
-import map.Map;
-
-import reader.IReader;
-import serializer.SerializeWrapper;
+import com.reader.IReader;
+import com.serializer.SerializeWrapper;
 
 import android.widget.TextView;
 
@@ -40,9 +35,10 @@ public class MainActivity extends AppCompatActivity {
 
     public MapDefinition loadMap() {
         try {
-            String map = reader.read(getAssets().open("map.json"));
-            return this.serializeWrapper.deserialize(map, MapDefinition.class);
+//            this.getApplicationContext()
+            String map = reader.readAsset("map.json", this);
 
+            return this.serializeWrapper.deserialize(map, MapDefinition.class);
         } catch (Exception e) {
             return null;
         }

@@ -1,4 +1,4 @@
-package com.example.nicok.pathguide;
+package com.nicok.pathguide.activities;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
