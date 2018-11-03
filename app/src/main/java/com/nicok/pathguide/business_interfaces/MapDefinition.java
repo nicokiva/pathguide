@@ -1,4 +1,4 @@
-package com.nicok.pathguide.BusinessInterfaces;
+package com.nicok.pathguide.business_interfaces;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -3,7 +3,7 @@ package com.nicok.pathguide.activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.nicok.pathguide.BusinessInterfaces.MapDefinition;
+import com.nicok.pathguide.business_interfaces.MapDefinition;
 import com.nicok.pathguide.reader.FileReader;
 
 
