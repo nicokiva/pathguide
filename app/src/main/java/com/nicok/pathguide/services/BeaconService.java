@@ -1,11 +1,11 @@
-package com.nicok.pathguide.activities;
+package com.nicok.pathguide.services;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-public class FlagReader extends Service {
-    public FlagReader() {
+public class BeaconService extends Service {
+    public BeaconService() {
     }
 
     @Override

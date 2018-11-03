@@ -3,12 +3,12 @@ package com.nicok.pathguide.activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.map.MapDefinition;
-import com.reader.FileReader;
+import com.nicok.pathguide.BusinessInterfaces.MapDefinition;
+import com.nicok.pathguide.reader.FileReader;
 
 
-import com.reader.IReader;
-import com.serializer.SerializeWrapper;
+import com.nicok.pathguide.reader.IReader;
+import com.nicok.pathguide.serializer.SerializeWrapper;
 
 import android.widget.TextView;
 
