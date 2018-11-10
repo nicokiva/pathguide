@@ -1,6 +1,7 @@
 {
-  "nodes": [{
-    "f001102001": {
+  "nodes": [
+    {
+      "id": "f001102001",
       "floor": -2,
       "description": "Aula 206",
       "types": [
@@ -9,7 +10,8 @@
       ]
     },
 
-    "f001102002": {
+    {
+      "id": "f001102002",
       "floor": -2,
       "description": "Aula 205",
       "types": [
@@ -17,7 +19,9 @@
         "final"
       ]
     },
-    "f001102003": {
+
+    {
+      "id": "f001102003",
       "floor": -2,
       "description": "Aula 204",
       "types": [
@@ -25,91 +29,93 @@
         "final"
       ]
     },
-    "b001102056": {
+
+    {
+      "id": "b001102056",
       "floor": -2,
       "description": "Beacon 02",
       "types": [
         "gateway"
       ]
     }
-  }],
+  ],
 
-  "edges": [{
-    "e001102022": {
-      "id": 22,
+  "edges": [
+    {
+      "id": "e001102022",
       "from": "b001102056",
       "to": "f001102003",
       "instructions": "Caminar hacia la derecha 5 pasos, girar a la izquierda, caminar derecho 3 pasos, girar a la derecha."
     },
-    "e001102023": {
-      "id": 23,
+    {
+      "id": "e001102023",
       "from": "b001102056",
       "to": "f001102002",
       "instructions": "Caminar hacia adelante 5 pasos hasta llegar a la pared, girar a la derecha y caminar hacia adelante 10 pasos."
     },
-    "e001102024": {
-      "id": 24,
+    {
+      "id": "e001102024",
       "from": "b001102056",
       "to": "f001102001",
       "instructions": "Girar a la derecha y caminar hacia adelante 10 pasos."
     },
 
 
-    "e001102025": {
-      "id": 25,
+    {
+      "id": "e001102025",
       "from": "f001102003",
       "to": "b001102056",
       "instructions": "Girar a la izquierda, caminar 5 pasos, girar a la derecha avanzar 10 pasos."
     },
-    "e001102026": {
-      "id": 26,
+    {
+      "id": "e001102026",
       "from": "f001102003",
       "to": "f001102002",
       "instructions": "Girar a la izquierda, caminar 15 pasos."
     },
-    "e001102040": {
-      "id": 40,
+    {
+      "id": "e001102040",
       "from": "f001102003",
       "to": "f001102002",
       "instructions": "Girar a la izquierda, caminar 5 pasos, girar a la derecha avanzar 10 pasos, girar a la izquierda y avanzar 10 pasos."
     },
 
-    "e001102041": {
-      "id": 41,
+    {
+      "id": "e001102041",
       "from": "f001102002",
       "to": "b001102056",
       "instructions": "Avanzar 10 pasos, girar a la izquierda y caminr hacia adelante 5 pasos."
     },
-    "e001102042": {
-      "id": 42,
+    {
+      "id": "e001102042",
       "from": "f001102002",
       "to": "f001102003",
       "instructions": "Caminar derecho 12 pasos, girar a la derecha."
     },
-    "e001102051": {
-      "id": 51,
+    {
+      "id": "e001102051",
       "from": "f001102002",
       "to": "f001102001",
       "instructions": "Girar a la izquierda, caminar 5 pasos, girar a la derecha."
     },
 
-    "e001102052": {
-      "id": 52,
+    {
+      "id": "e001102052",
       "from": "f001102001",
       "to": "b001102056",
       "instructions": "Caminar hacia adelante 10 pasos."
     },
-    "e001102053": {
-      "id": 53,
+    {
+      "id": "e001102053",
       "from": "f001102001",
       "to": "f001102003",
       "instructions": "Caminar derecho 12 pasos, girar a la derecha, caminar derecho 5 pasos."
     },
-    "e001102054": {
-      "id": 54,
+    {
+      "id": "e001102054",
       "from": "f001102001",
       "to": "f001102002",
       "instructions": "Girar a la derecha, caminar derecho 5 pasos."
     }
-  }]
+  ]
 }

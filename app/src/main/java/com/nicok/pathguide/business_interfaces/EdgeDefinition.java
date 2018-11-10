@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.io.Serializable;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
 @JsonPropertyOrder({
@@ -13,10 +15,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "instructions"
 })
 
-public class EdgeDefinition {
-
-    @JsonProperty("id")
-    public String id;
+public class EdgeDefinition extends BaseEntity implements Serializable {
 
     @JsonProperty("from")
     public String from;

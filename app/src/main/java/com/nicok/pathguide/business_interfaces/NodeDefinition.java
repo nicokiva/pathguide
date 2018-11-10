@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.io.Serializable;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
 @JsonPropertyOrder({
@@ -12,14 +14,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "types"
 })
 
-public class NodeDefinition {
+public class NodeDefinition extends BaseEntity implements Serializable {
 
     @JsonProperty("floor")
     public String floor;
-
-    @JsonProperty("description")
-    public String description;
-
 
     @JsonProperty("types")
     public String[] types;

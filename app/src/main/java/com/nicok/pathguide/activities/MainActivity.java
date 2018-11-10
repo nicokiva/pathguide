@@ -1,5 +1,6 @@
 package com.nicok.pathguide.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -9,8 +10,6 @@ import com.nicok.pathguide.reader.FileReader;
 
 import com.nicok.pathguide.reader.IReader;
 import com.nicok.pathguide.serializer.SerializeWrapper;
-
-import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -25,17 +24,13 @@ public class MainActivity extends AppCompatActivity {
 
         map = loadMap();
 
-        TextView txtMapString = findViewById(R.id.txtMapString);
-        try {
-            txtMapString.setText(this.serializeWrapper.serialize(map));
-        } catch (Exception e) {
-
-        }
+        Intent myIntent = new Intent(MainActivity.this, DestinationActivity.class);
+        myIntent.putExtra("map", map);
+        MainActivity.this.startActivity(myIntent);
     }
 
     public MapDefinition loadMap() {
         try {
-//            this.getApplicationContext()
             String map = reader.readAsset("map.json", this);
 
             return this.serializeWrapper.deserialize(map, MapDefinition.class);

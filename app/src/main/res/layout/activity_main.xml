@@ -7,11 +7,10 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/txtMapString"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
-        android:layout_height="23dp"
-        android:text=" "
-        tools:layout_editor_absoluteX="154dp"
-        tools:layout_editor_absoluteY="246dp" />
-
+        android:layout_height="wrap_content"
+        android:text="MAIN"
+        tools:layout_editor_absoluteX="163dp"
+        tools:layout_editor_absoluteY="286dp" />
 </android.support.constraint.ConstraintLayout>
