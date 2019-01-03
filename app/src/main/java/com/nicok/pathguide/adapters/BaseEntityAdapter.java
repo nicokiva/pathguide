@@ -1,4 +1,4 @@
-package com.nicok.pathguide.business_interfaces;
+package com.nicok.pathguide.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.nicok.pathguide.activities.R;
+import com.nicok.pathguide.business_definitions.BaseEntityDefinition;
 
 import java.util.List;
 

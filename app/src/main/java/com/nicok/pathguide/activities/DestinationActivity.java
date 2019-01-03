@@ -3,14 +3,12 @@ package com.nicok.pathguide.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.nicok.pathguide.business_interfaces.BaseEntityDefinition;
-import com.nicok.pathguide.business_interfaces.BaseEntityAdapter;
-import com.nicok.pathguide.business_interfaces.MapDefinition;
-import com.nicok.pathguide.business_interfaces.NodeDefinition;
+import com.nicok.pathguide.business_definitions.BaseEntityDefinition;
+import com.nicok.pathguide.adapters.BaseEntityAdapter;
+import com.nicok.pathguide.business_definitions.MapDefinition;
+import com.nicok.pathguide.business_definitions.NodeDefinition;
 
 import java.util.List;
 import java.util.stream.Collectors;

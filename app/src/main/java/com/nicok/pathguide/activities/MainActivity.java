@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.nicok.pathguide.business_interfaces.MapDefinition;
+import com.nicok.pathguide.business_definitions.MapDefinition;
 import com.nicok.pathguide.reader.FileReader;
 
 
