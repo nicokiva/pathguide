@@ -11,17 +11,17 @@ import com.nicok.pathguide.activities.R;
 
 import java.util.List;
 
-public class BaseEntityAdapter extends ArrayAdapter<BaseEntity> {
+public class BaseEntityAdapter extends ArrayAdapter<BaseEntityDefinition> {
 
     private static class ViewHolder {
         TextView description;
     }
 
 
-    private List<BaseEntity> data = null;
+    private List<BaseEntityDefinition> data = null;
     Context context;
 
-    public BaseEntityAdapter(Context context, int resource, List<BaseEntity > data) {
+    public BaseEntityAdapter(Context context, int resource, List<BaseEntityDefinition > data) {
         super(context, resource, data);
 
         this.data = data;
@@ -30,7 +30,7 @@ public class BaseEntityAdapter extends ArrayAdapter<BaseEntity> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        BaseEntity entity = getItem(position);
+        BaseEntityDefinition entity = getItem(position);
 
         ViewHolder viewHolder;
         if (convertView == null) {

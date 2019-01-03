@@ -14,7 +14,7 @@ import java.io.Serializable;
     "types"
 })
 
-public class NodeDefinition extends BaseEntity implements Serializable {
+public class NodeDefinition extends BaseEntityDefinition implements Serializable {
 
     @JsonProperty("floor")
     public String floor;

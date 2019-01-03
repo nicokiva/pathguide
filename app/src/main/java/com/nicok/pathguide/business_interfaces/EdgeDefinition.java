@@ -15,7 +15,7 @@ import java.io.Serializable;
     "instructions"
 })
 
-public class EdgeDefinition extends BaseEntity implements Serializable {
+public class EdgeDefinition extends BaseEntityDefinition implements Serializable {
 
     @JsonProperty("from")
     public String from;

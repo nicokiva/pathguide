@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
-public abstract class BaseEntity implements Serializable {
+public abstract class BaseEntityDefinition implements Serializable {
 
     @JsonProperty("id")
     public String id;

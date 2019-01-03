@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.nicok.pathguide.business_interfaces.BaseEntity;
+import com.nicok.pathguide.business_interfaces.BaseEntityDefinition;
 import com.nicok.pathguide.business_interfaces.BaseEntityAdapter;
 import com.nicok.pathguide.business_interfaces.MapDefinition;
 import com.nicok.pathguide.business_interfaces.NodeDefinition;
@@ -32,7 +32,7 @@ public class DestinationActivity extends AppCompatActivity {
         destinationsList.setAdapter(adapter);
 
         destinationsList.setOnItemClickListener((parent, view, position, id) -> {
-            BaseEntity itemValue = (BaseEntity)destinationsList.getItemAtPosition(position);
+            BaseEntityDefinition itemValue = (BaseEntityDefinition)destinationsList.getItemAtPosition(position);
         });
     }
 }
