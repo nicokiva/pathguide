@@ -5,11 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.nicok.pathguide.business_definitions.MapDefinition;
-import com.nicok.pathguide.reader.FileReader;
+import com.nicok.pathguide.helpers.reader.FileReader;
 
 
-import com.nicok.pathguide.reader.IReader;
-import com.nicok.pathguide.serializer.SerializeWrapper;
+import com.nicok.pathguide.helpers.reader.IReader;
+import com.nicok.pathguide.helpers.serializer.SerializeWrapper;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -19,9 +19,26 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setTheme(R.style.AppTheme);
 
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main);
+        holdToDisplayScreen();
+
+        loadDataAndRedirectToDestinationsList();
+    }
+
+    private void holdToDisplayScreen() {
+        /* This is used to display the Splash screen */
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadDataAndRedirectToDestinationsList() {
         map = loadMap();
 
         Intent myIntent = new Intent(MainActivity.this, DestinationActivity.class);
@@ -29,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.this.startActivity(myIntent);
     }
 
-    public MapDefinition loadMap() {
+    private MapDefinition loadMap() {
         try {
             String map = reader.readAsset("map.json", this);
 

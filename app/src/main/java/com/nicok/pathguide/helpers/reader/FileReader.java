@@ -1,4 +1,4 @@
-package com.nicok.pathguide.reader;
+package com.nicok.pathguide.helpers.reader;
 
 import android.content.Context;
 

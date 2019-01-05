@@ -1,4 +1,4 @@
-package com.nicok.pathguide.serializer;
+package com.nicok.pathguide.helpers.serializer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
