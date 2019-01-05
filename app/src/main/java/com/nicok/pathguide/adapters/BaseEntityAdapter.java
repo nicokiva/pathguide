@@ -44,7 +44,6 @@ public class BaseEntityAdapter extends ArrayAdapter<BaseEntityDefinition> {
 
             convertView.setTag(viewHolder);
         } else {
-
             viewHolder = (ViewHolder) convertView.getTag();
         }
 

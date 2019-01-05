@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.nicok.pathguide.activities.constants.ExtrasParameterNames;
 import com.nicok.pathguide.business_definitions.MapDefinition;
 import com.nicok.pathguide.helpers.reader.FileReader;
 
@@ -31,18 +32,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void holdToDisplayScreen() {
         /* This is used to display the Splash screen */
-        try {
-            Thread.sleep(4000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(4000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     private void loadDataAndRedirectToDestinationsList() {
         map = loadMap();
 
         Intent myIntent = new Intent(MainActivity.this, DestinationActivity.class);
-        myIntent.putExtra("map", map);
+        myIntent.putExtra(ExtrasParameterNames.MAP, map);
         MainActivity.this.startActivity(myIntent);
     }
 
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             String map = reader.readAsset("map.json", this);
 
-            return this.serializeWrapper.deserialize(map, MapDefinition.class);
+            return serializeWrapper.deserialize(map, MapDefinition.class);
         } catch (Exception e) {
             return null;
         }

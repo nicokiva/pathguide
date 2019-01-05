@@ -8,10 +8,13 @@
         android:id="@+id/label"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textStyle="bold"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:text="@string/pick_destination_label" />
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:text="@string/pick_destination_label"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
 
     <ListView
