@@ -1,8 +1,6 @@
 package com.nicok.pathguide.activities;
 
 import android.content.Intent;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
 
@@ -15,6 +13,9 @@ import com.nicok.pathguide.fragments.SelectDestinationDialogFragment;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 public class DestinationActivity extends AppCompatActivity implements SelectDestinationDialogFragment.SelectDestinationDialogListener {
 

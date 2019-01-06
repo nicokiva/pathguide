@@ -1,7 +1,6 @@
 package com.nicok.pathguide.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.nicok.pathguide.activities.constants.ExtrasParameterNames;
@@ -11,6 +10,8 @@ import com.nicok.pathguide.helpers.reader.FileReader;
 
 import com.nicok.pathguide.helpers.reader.IReader;
 import com.nicok.pathguide.helpers.serializer.SerializeWrapper;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 
 public class MainActivity extends AppCompatActivity {
