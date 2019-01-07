@@ -34,12 +34,13 @@ public class DestinationActivity extends AppCompatActivity implements SelectDest
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.destination_title);
         setContentView(R.layout.activity_destination);
 
         Intent intent = getIntent();
         MapDefinition map = (MapDefinition) intent.getSerializableExtra(ExtrasParameterNames.MAP);
 
-        List<NodeDefinition> nodes = map.getAvailableNodes();
+        List<NodeDefinition> nodes = map.getFinalNodes();
 
         ListView destinationsList = findViewById(R.id.available_destination_list);
         BaseEntityAdapter adapter = new BaseEntityAdapter(this, android.R.layout.simple_list_item_1, nodes.stream().collect(Collectors.toList()));

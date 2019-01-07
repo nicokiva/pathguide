@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">PathGuide</string>
-    <string name="pick_destination_label">Seleccione el destino</string>
+
+    <string name="destination_title">Destino</string>
 
     <string name="select_destination_dialog">Quieres ir a {{destination}}?</string>
-
 </resources>
