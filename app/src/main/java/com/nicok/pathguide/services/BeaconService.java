@@ -13,4 +13,18 @@ public class BeaconService extends Service {
         // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
     }
+
+
+//    setDestination() {
+//
+//    }
+//
+//    private calcPath() {
+//        activity.changeLocation(node)
+//    }
+//
+//    getCurrentLocation() {
+//
+//    }
+
 }

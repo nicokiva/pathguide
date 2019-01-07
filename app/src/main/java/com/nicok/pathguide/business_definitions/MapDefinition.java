@@ -2,7 +2,7 @@ package com.nicok.pathguide.business_definitions;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.nicok.pathguide.business_definitions.NodeTypes.NodeType;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,10 +12,6 @@ import java.util.stream.Collectors;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
-@JsonPropertyOrder({
-    "nodes",
-    "edges"
-})
 
 public class MapDefinition implements Serializable {
 
@@ -31,7 +27,8 @@ public class MapDefinition implements Serializable {
         }
 
 
-        return nodes.stream().filter(node -> Arrays.stream(node.types).anyMatch("final"::equalsIgnoreCase)).collect(Collectors.toList());
+
+        return nodes.stream().filter(node -> Arrays.stream(node.types.toArray()).anyMatch(x -> ((NodeType)x).isFinal())).collect(Collectors.toList());
     }
 
 }

@@ -3,7 +3,7 @@ package com.nicok.pathguide.activities;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.nicok.pathguide.activities.constants.ExtrasParameterNames;
+import com.nicok.pathguide.constants.ExtrasParameterNames;
 import com.nicok.pathguide.business_definitions.MapDefinition;
 import com.nicok.pathguide.helpers.reader.FileReader;
 

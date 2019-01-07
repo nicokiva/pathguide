@@ -4,4 +4,6 @@
     <string name="destination_title">Destino</string>
 
     <string name="select_destination_dialog">Quieres ir a {{destination}}?</string>
+
+    <string name="classroom_icon">Classroom</string>
 </resources>

@@ -1,7 +1,7 @@
 package com.nicok.pathguide.fragments;
 
 import com.nicok.pathguide.activities.R;
-import com.nicok.pathguide.activities.constants.ExtrasParameterNames;
+import com.nicok.pathguide.constants.ExtrasParameterNames;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

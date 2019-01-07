@@ -1,4 +1,4 @@
-package com.nicok.pathguide.activities.constants;
+package com.nicok.pathguide.constants;
 
 public class ExtrasParameterNames {
 

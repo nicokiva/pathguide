@@ -4,9 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
 
-import com.nicok.pathguide.activities.constants.ExtrasParameterNames;
+import com.nicok.pathguide.constants.ExtrasParameterNames;
 import com.nicok.pathguide.business_definitions.BaseEntityDefinition;
-import com.nicok.pathguide.adapters.BaseEntityAdapter;
+import com.nicok.pathguide.adapters.NodeEntityAdapter;
 import com.nicok.pathguide.business_definitions.MapDefinition;
 import com.nicok.pathguide.business_definitions.NodeDefinition;
 import com.nicok.pathguide.fragments.SelectDestinationDialogFragment;
@@ -32,6 +32,11 @@ public class DestinationActivity extends AppCompatActivity implements SelectDest
     }
 
     @Override
+    public void onBackPressed() {
+        return;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(R.string.destination_title);
@@ -43,7 +48,7 @@ public class DestinationActivity extends AppCompatActivity implements SelectDest
         List<NodeDefinition> nodes = map.getFinalNodes();
 
         ListView destinationsList = findViewById(R.id.available_destination_list);
-        BaseEntityAdapter adapter = new BaseEntityAdapter(this, android.R.layout.simple_list_item_1, nodes.stream().collect(Collectors.toList()));
+        NodeEntityAdapter adapter = new NodeEntityAdapter(this, android.R.layout.simple_list_item_1, nodes.stream().collect(Collectors.toList()));
         destinationsList.setAdapter(adapter);
 
         destinationsList.setOnItemClickListener((parent, view, position, id) -> {

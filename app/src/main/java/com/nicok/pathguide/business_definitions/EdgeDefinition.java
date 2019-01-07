@@ -8,13 +8,6 @@ import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
-@JsonPropertyOrder({
-    "id",
-    "from",
-    "to",
-    "instructions"
-})
-
 public class EdgeDefinition extends BaseEntityDefinition implements Serializable {
 
     @JsonProperty("from")

@@ -1,12 +1,22 @@
 {
   "nodes": [
     {
+      "id": "f001102000",
+      "floor": -2,
+      "description": "Baño",
+      "extra": "Independencia 1 - 2do subsuelo",
+      "types": [
+        "bathroom"
+      ]
+    },
+
+    {
       "id": "f001102001",
       "floor": -2,
       "description": "Aula 206",
+      "extra": "Independencia 1 - 2do subsuelo",
       "types": [
-        "classroom",
-        "final"
+        "classroom"
       ]
     },
 
@@ -14,9 +24,9 @@
       "id": "f001102002",
       "floor": -2,
       "description": "Aula 205",
+      "extra": "Independencia 1 - 2do subsuelo",
       "types": [
-        "classroom",
-        "final"
+        "classroom"
       ]
     },
 
@@ -24,9 +34,9 @@
       "id": "f001102003",
       "floor": -2,
       "description": "Aula 204",
+      "extra": "Independencia 1 - 2do subsuelo",
       "types": [
-        "classroom",
-        "final"
+        "classroom"
       ]
     },
 
