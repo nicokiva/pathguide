@@ -1,11 +1,5 @@
 package com.nicok.pathguide.graph;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.stream.Stream;
-
-// now we must create graph object and implement dijkstra algorithm
 public class Graph {
 
     private Node[] nodes;
@@ -14,11 +8,7 @@ public class Graph {
 
     public Graph(Node[] nodes, Edge[] edges) {
         this.edges = edges;
-
-        // create all nodes ready to be updated with the edges
         this.nodes = nodes;
-
-        // add all the edges to the nodes, each edge added to two nodes (to and from)
         this.noOfEdges = edges.length;
 
         for(Edge edge : edges) {
@@ -50,25 +40,12 @@ public class Graph {
         }
     }
 
-    public void calculateDistanceFrom(Node initialNode) {
-        this.setDistance(initialNode, 0);
+    public Integer getDistanceTo(Node toNode) {
+        return toNode.getDistanceFromSource();
     }
 
-    // now we're going to implement this method in next part !
-    private int getNodeShortestDistanced() {
-        int storedNodeIndex = 0;
-        int storedDist = Integer.MAX_VALUE;
-
-        for (int i = 0; i < this.nodes.length; i++) {
-            int currentDist = this.nodes[i].getDistanceFromSource();
-
-            if (!this.nodes[i].isVisited() && currentDist < storedDist) {
-                storedDist = currentDist;
-                storedNodeIndex = i;
-            }
-        }
-
-        return storedNodeIndex;
+    public void calculateDistanceFrom(Node initialNode) {
+        this.setDistance(initialNode, 0);
     }
 
     // display result
@@ -83,16 +60,8 @@ public class Graph {
         System.out.println(output);
     }
 
-    public Node[] getNodes() {
-        return nodes;
-    }
-
     public Edge[] getEdges() {
         return edges;
-    }
-
-    public int getNoOfEdges() {
-        return noOfEdges;
     }
 
 }

@@ -26,13 +26,4 @@ public class Edge {
         return 0;
     }
 
-    // determines the neighbouring node of a supplied node, based on the two nodes connected by this edge
-    public Node getNeighbourIndex(Node node) {
-        if (this.fromNode == node) {
-            return this.toNode;
-        } else {
-            return this.fromNode;
-        }
-    }
-
 }

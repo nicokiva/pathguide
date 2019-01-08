@@ -7,8 +7,7 @@ import java.util.ArrayList;
 public class Node {
 
     private Integer distanceFromSource = null;
-    private boolean visited;
-    private ArrayList<Edge> edges = new ArrayList<Edge>(); // now we must create edges
+    private ArrayList<Edge> edges = new ArrayList<Edge>();
     private NodeDefinition data;
 
     public Node(NodeDefinition data) {
@@ -25,14 +24,6 @@ public class Node {
 
     public void setDistanceFromSource(Integer distanceFromSource) {
         this.distanceFromSource = distanceFromSource;
-    }
-
-    public boolean isVisited() {
-        return visited;
-    }
-
-    public void setVisited(boolean visited) {
-        this.visited = visited;
     }
 
     public ArrayList<Edge> getEdges() {
