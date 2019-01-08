@@ -1,18 +1,29 @@
 package com.nicok.pathguide.graph;
 
+import com.nicok.pathguide.business_definitions.NodeDefinition;
+
 import java.util.ArrayList;
 
 public class Node {
 
-    private int distanceFromSource = Integer.MAX_VALUE;
+    private Integer distanceFromSource = null;
     private boolean visited;
     private ArrayList<Edge> edges = new ArrayList<Edge>(); // now we must create edges
+    private NodeDefinition data;
 
-    public int getDistanceFromSource() {
+    public Node(NodeDefinition data) {
+        this.data = data;
+    }
+
+    public NodeDefinition getData() {
+        return data;
+    }
+
+    public Integer getDistanceFromSource() {
         return distanceFromSource;
     }
 
-    public void setDistanceFromSource(int distanceFromSource) {
+    public void setDistanceFromSource(Integer distanceFromSource) {
         this.distanceFromSource = distanceFromSource;
     }
 

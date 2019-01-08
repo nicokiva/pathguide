@@ -1,35 +1,37 @@
 package com.nicok.pathguide.graph;
 
+import com.nicok.pathguide.business_definitions.EdgeDefinition;
+
 public class Edge {
 
-    private int fromNodeIndex;
-    private int toNodeIndex;
-    private int length;
+    private Node fromNode;
+    private Node toNode;
+    private EdgeDefinition data;
 
-    public Edge(int fromNodeIndex, int toNodeIndex, int length) {
-        this.fromNodeIndex = fromNodeIndex;
-        this.toNodeIndex = toNodeIndex;
-        this.length = length;
+    public Edge(Node fromNode, Node toNode, EdgeDefinition data) {
+        this.fromNode = fromNode;
+        this.toNode = toNode;
+        this.data = data;
     }
 
-    public int getFromNodeIndex() {
-        return fromNodeIndex;
+    public Node getFromNode() {
+        return fromNode;
     }
 
-    public int getToNodeIndex() {
-        return toNodeIndex;
+    public Node getToNode() {
+        return toNode;
     }
 
     public int getLength() {
-        return length;
+        return 0;
     }
 
     // determines the neighbouring node of a supplied node, based on the two nodes connected by this edge
-    public int getNeighbourIndex(int nodeIndex) {
-        if (this.fromNodeIndex == nodeIndex) {
-            return this.toNodeIndex;
+    public Node getNeighbourIndex(Node node) {
+        if (this.fromNode == node) {
+            return this.toNode;
         } else {
-            return this.fromNodeIndex;
+            return this.fromNode;
         }
     }
 
