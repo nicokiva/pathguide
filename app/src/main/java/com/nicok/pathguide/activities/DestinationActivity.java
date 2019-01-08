@@ -52,10 +52,11 @@ public class DestinationActivity extends AppCompatActivity implements SelectDest
         destinationsList.setAdapter(adapter);
 
         destinationsList.setOnItemClickListener((parent, view, position, id) -> {
-            BaseEntityDefinition itemValue = (BaseEntityDefinition)destinationsList.getItemAtPosition(position);
+            BaseEntityDefinition itemValue = (NodeDefinition)destinationsList.getItemAtPosition(position);
 
             Bundle data = new Bundle();
             data.putString(ExtrasParameterNames.SELECTED_DESTINATION_NAME, itemValue.description);
+            data.putInt(ExtrasParameterNames.SELECTED_DESTINATION_ICON, ((NodeDefinition) itemValue).getIcon());
 
             DialogFragment dialog = new SelectDestinationDialogFragment();
             dialog.setArguments(data);

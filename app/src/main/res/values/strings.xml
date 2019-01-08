@@ -6,4 +6,7 @@
     <string name="select_destination_dialog">Quieres ir a {{destination}}?</string>
 
     <string name="classroom_icon">Classroom</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
