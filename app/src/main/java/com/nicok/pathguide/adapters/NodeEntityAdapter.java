@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nicok.pathguide.activities.R;
@@ -17,6 +18,7 @@ public class NodeEntityAdapter extends ArrayAdapter<NodeDefinition> {
     private static class ViewHolder {
         TextView description;
         TextView extra;
+        ImageView icon;
     }
 
 
@@ -43,6 +45,7 @@ public class NodeEntityAdapter extends ArrayAdapter<NodeDefinition> {
 
             viewHolder.description = convertView.findViewById(R.id.tv_description);
             viewHolder.extra = convertView.findViewById(R.id.tv_extra);
+            viewHolder.icon = convertView.findViewById(R.id.img_icon);
 
             convertView.setTag(viewHolder);
         } else {
@@ -51,6 +54,10 @@ public class NodeEntityAdapter extends ArrayAdapter<NodeDefinition> {
 
         viewHolder.description.setText(entity.description);
         viewHolder.extra.setText(entity.extra);
+        Integer icon = entity.getIcon();
+        if (icon != null) {
+            viewHolder.icon.setImageResource(icon);
+        }
 
         return convertView;
     }

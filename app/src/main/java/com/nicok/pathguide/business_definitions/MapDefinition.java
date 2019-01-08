@@ -26,8 +26,6 @@ public class MapDefinition implements Serializable {
             return new ArrayList<>();
         }
 
-
-
         return nodes.stream().filter(node -> Arrays.stream(node.types.toArray()).anyMatch(x -> ((NodeType)x).isFinal())).collect(Collectors.toList());
     }
 

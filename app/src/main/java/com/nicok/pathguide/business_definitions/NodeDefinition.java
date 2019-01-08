@@ -22,4 +22,12 @@ public class NodeDefinition extends BaseEntityDefinition implements Serializable
     @JsonDeserialize(using = NodeTypesDeserializer.class)
     public List<NodeType> types;
 
+    public Integer getIcon() {
+        if (this.types == null) {
+            return null;
+        }
+
+        return types.get(0).getImageSource();
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.nicok.pathguide.business_definitions.NodeTypes;
 
+import android.content.Context;
+
 import java.io.Serializable;
 
 public abstract class NodeType implements Serializable {
@@ -12,7 +14,7 @@ public abstract class NodeType implements Serializable {
         return false;
     }
 
-    public String getImageSource() {
+    public Integer getImageSource() {
         return null;
     }
 
