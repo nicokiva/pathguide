@@ -1,62 +1,37 @@
 package com.nicok.pathguide.activities;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
-
+import android.os.IBinder;
 import com.nicok.pathguide.constants.ExtrasParameterNames;
-import com.nicok.pathguide.business_definitions.MapDefinition;
-import com.nicok.pathguide.helpers.reader.FileReader;
-
-
-import com.nicok.pathguide.helpers.reader.IReader;
-import com.nicok.pathguide.helpers.serializer.SerializeWrapper;
+import com.nicok.pathguide.services.BeaconService;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 
-public class MainActivity extends AppCompatActivity {
-    private MapDefinition map = null;
-    private IReader reader = new FileReader();
-    private SerializeWrapper serializeWrapper = new SerializeWrapper();
+public class MainActivity extends AppPathGuideActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
 
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
-        holdToDisplayScreen();
 
-        loadDataAndRedirectToDestinationsList();
+        super.startServiceAndBind();
     }
 
-    private void holdToDisplayScreen() {
-        /* This is used to display the Splash screen */
-//        try {
-//            Thread.sleep(4000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-    }
+    @Override
+    protected void onServiceLoaded() {
+        if (!getService().loadMap()) {
+            return;
+        }
 
-    private void loadDataAndRedirectToDestinationsList() {
-        map = loadMap();
-
+        unBindService();
         Intent myIntent = new Intent(MainActivity.this, DestinationActivity.class);
-        myIntent.putExtra(ExtrasParameterNames.MAP, map);
         MainActivity.this.startActivity(myIntent);
     }
-
-    private MapDefinition loadMap() {
-        try {
-            String map = reader.readAsset("map.json", this);
-
-            return serializeWrapper.deserialize(map, MapDefinition.class);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-
 }

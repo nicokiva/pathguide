@@ -17,7 +17,31 @@ import java.util.stream.Collectors;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-public class DestinationActivity extends AppCompatActivity implements SelectDestinationDialogFragment.SelectDestinationDialogListener {
+public class DestinationActivity extends AppPathGuideActivity implements SelectDestinationDialogFragment.SelectDestinationDialogListener {
+
+    @Override
+    protected void onServiceLoaded() {
+        Intent intent = getIntent();
+        MapDefinition map = getService().getMap();
+
+        List<NodeDefinition> nodes = map.getFinalNodes();
+
+        ListView destinationsList = findViewById(R.id.available_destination_list);
+        NodeEntityAdapter adapter = new NodeEntityAdapter(this, android.R.layout.simple_list_item_1, nodes.stream().collect(Collectors.toList()));
+        destinationsList.setAdapter(adapter);
+
+        destinationsList.setOnItemClickListener((parent, view, position, id) -> {
+            BaseEntityDefinition itemValue = (NodeDefinition)destinationsList.getItemAtPosition(position);
+
+            Bundle data = new Bundle();
+            data.putString(ExtrasParameterNames.SELECTED_DESTINATION_NAME, itemValue.description);
+            data.putInt(ExtrasParameterNames.SELECTED_DESTINATION_ICON, ((NodeDefinition) itemValue).getIcon());
+
+            DialogFragment dialog = new SelectDestinationDialogFragment();
+            dialog.setArguments(data);
+            dialog.show(getSupportFragmentManager(), "SelectDestinationDialogFragment");
+        });
+    }
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
@@ -42,25 +66,6 @@ public class DestinationActivity extends AppCompatActivity implements SelectDest
         setTitle(R.string.destination_title);
         setContentView(R.layout.activity_destination);
 
-        Intent intent = getIntent();
-        MapDefinition map = (MapDefinition) intent.getSerializableExtra(ExtrasParameterNames.MAP);
-
-        List<NodeDefinition> nodes = map.getFinalNodes();
-
-        ListView destinationsList = findViewById(R.id.available_destination_list);
-        NodeEntityAdapter adapter = new NodeEntityAdapter(this, android.R.layout.simple_list_item_1, nodes.stream().collect(Collectors.toList()));
-        destinationsList.setAdapter(adapter);
-
-        destinationsList.setOnItemClickListener((parent, view, position, id) -> {
-            BaseEntityDefinition itemValue = (NodeDefinition)destinationsList.getItemAtPosition(position);
-
-            Bundle data = new Bundle();
-            data.putString(ExtrasParameterNames.SELECTED_DESTINATION_NAME, itemValue.description);
-            data.putInt(ExtrasParameterNames.SELECTED_DESTINATION_ICON, ((NodeDefinition) itemValue).getIcon());
-
-            DialogFragment dialog = new SelectDestinationDialogFragment();
-            dialog.setArguments(data);
-            dialog.show(getSupportFragmentManager(), "SelectDestinationDialogFragment");
-        });
+        super.startServiceAndBind();
     }
 }
