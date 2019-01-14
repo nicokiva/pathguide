@@ -1,7 +1,8 @@
 package com.nicok.pathguide.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.nicok.pathguide.constants.ExtrasParameterNames;
@@ -11,49 +12,15 @@ import com.nicok.pathguide.business_definitions.MapDefinition;
 import com.nicok.pathguide.business_definitions.NodeDefinition;
 import com.nicok.pathguide.fragments.SelectDestinationDialogFragment;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 public class DestinationActivity extends AppPathGuideActivity implements SelectDestinationDialogFragment.SelectDestinationDialogListener {
 
-    @Override
-    protected void onServiceLoaded() {
-        Intent intent = getIntent();
-        MapDefinition map = getService().getMap();
-
-        List<NodeDefinition> nodes = map.getFinalNodes();
-
-        ListView destinationsList = findViewById(R.id.available_destination_list);
-        NodeEntityAdapter adapter = new NodeEntityAdapter(this, android.R.layout.simple_list_item_1, nodes.stream().collect(Collectors.toList()));
-        destinationsList.setAdapter(adapter);
-
-        destinationsList.setOnItemClickListener((parent, view, position, id) -> {
-            BaseEntityDefinition itemValue = (NodeDefinition)destinationsList.getItemAtPosition(position);
-
-            Bundle data = new Bundle();
-            data.putString(ExtrasParameterNames.SELECTED_DESTINATION_NAME, itemValue.description);
-            data.putInt(ExtrasParameterNames.SELECTED_DESTINATION_ICON, ((NodeDefinition) itemValue).getIcon());
-
-            DialogFragment dialog = new SelectDestinationDialogFragment();
-            dialog.setArguments(data);
-            dialog.show(getSupportFragmentManager(), "SelectDestinationDialogFragment");
-        });
-    }
-
-    @Override
-    public void onDialogPositiveClick(DialogFragment dialog) {
-        int a = 1;
-        // Calculates path
-    }
-
-    @Override
-    public void onDialogNegativeClick(DialogFragment dialog) {
-        int a = 1;
-        // Do nothing
-    }
+    ListView destinationsList;
 
     @Override
     public void onBackPressed() {
@@ -67,5 +34,49 @@ public class DestinationActivity extends AppPathGuideActivity implements SelectD
         setContentView(R.layout.activity_destination);
 
         super.startServiceAndBind();
+
+        destinationsList = findViewById(R.id.available_destination_list);
     }
+
+    @Override
+    protected void onServiceLoaded() {
+        MapDefinition map = getService().getMap();
+
+        prepareDestinationsList(map.getFinalNodes());
+
+        // TODO: WILL REMOVE WHEN BEACONS INTEGRATED
+        getService().setCurrentLocation(map.getFinalNodes().get(0));
+    }
+
+    private void prepareDestinationsList(List<NodeDefinition> nodes) {
+        NodeEntityAdapter adapter = new NodeEntityAdapter(this, android.R.layout.simple_list_item_1, nodes.stream().collect(Collectors.toList()));
+        destinationsList.setAdapter(adapter);
+        destinationsList.setOnItemClickListener(this::onItemClickListener);
+    }
+
+    private void onItemClickListener(AdapterView<?> parent, View view, int position, long id) {
+        BaseEntityDefinition itemValue = (NodeDefinition)destinationsList.getItemAtPosition(position);
+
+        Bundle data = new Bundle();
+        data.putString(ExtrasParameterNames.ENTITY_NAME, itemValue.description);
+        data.putInt(ExtrasParameterNames.ENTITY_ICON, ((NodeDefinition) itemValue).getIcon());
+        data.putSerializable(ExtrasParameterNames.ENTITY_DATA, (NodeDefinition) itemValue);
+
+        DialogFragment dialog = new SelectDestinationDialogFragment();
+        dialog.setArguments(data);
+        dialog.show(getSupportFragmentManager(), "SelectDestinationDialogFragment");
+    }
+
+    @Override
+    public void onDialogPositiveClick(Serializable destination) {
+        if (destination == null) {
+            return;
+        }
+
+        getService().setDestination((NodeDefinition) destination);
+    }
+
+    @Override
+    public void onDialogNegativeClick(Serializable entityData) { }
+
 }

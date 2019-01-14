@@ -1,29 +1,35 @@
 package com.nicok.pathguide.graph;
 
 import com.nicok.pathguide.business_definitions.EdgeDefinition;
+import com.nicok.pathguide.business_definitions.Graph;
 import com.nicok.pathguide.business_definitions.NodeDefinition;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class GraphUnitTest {
-    private Node bano = new Node(createNode("000", "Bano"));
-    private Node aula204 = new Node(createNode("001", "Aula 204"));
-    private Node aula205 = new Node(createNode("002", "Aula 205"));
-    private Node aula206 = new Node(createNode("003", "Aula 206"));
-    private Node beacon01 = new Node(createNode("004", "Beacon 01"));
+    private NodeDefinition bano = createNode("000", "Bano");
+    private NodeDefinition aula204 = createNode("001", "Aula 204");
+    private NodeDefinition aula205 = createNode("002", "Aula 205");
+    private NodeDefinition aula206 = createNode("003", "Aula 206");
+    private NodeDefinition beacon01 = createNode("004", "Beacon 01");
 
-    private Node[] nodes = {
-        bano,
-        aula204,
-        aula205,
-        aula206,
-        beacon01
-    };
+    private List<NodeDefinition> nodes = new ArrayList<>();
 
-    private Edge[] edges;
+    public GraphUnitTest(){
+        nodes.add(bano);
+        nodes.add(aula204);
+        nodes.add(aula205);
+        nodes.add(aula206);
+        nodes.add(beacon01);
+    }
+
+    private List<EdgeDefinition> edges;
 
     private NodeDefinition createNode(String id, String description) {
         NodeDefinition node = new NodeDefinition();
@@ -33,33 +39,39 @@ public class GraphUnitTest {
         return node;
     }
 
+    private EdgeDefinition createEdge(NodeDefinition fromNode, NodeDefinition toNode) {
+        EdgeDefinition edge = new EdgeDefinition();
+        edge.fromNode = fromNode;
+        edge.toNode = toNode;
+
+        return edge;
+    }
+
     @Before
     public void reset() {
-        edges = null;
+        edges = new ArrayList<>();
     }
 
     @Test
     public void should_bano_be_properly_connected() {
-        this.edges = new Edge[]{
-            new Edge(bano, beacon01, new EdgeDefinition()),
+        this.edges.add(createEdge(bano, beacon01));
 
-            new Edge(aula204, beacon01, new EdgeDefinition()),
-            new Edge(aula204, aula205, new EdgeDefinition()),
-            new Edge(aula204, aula206, new EdgeDefinition()),
+        this.edges.add(createEdge(aula204, beacon01));
+        this.edges.add(createEdge(aula204, aula205));
+        this.edges.add(createEdge(aula204, aula206));
 
-            new Edge(aula205, beacon01, new EdgeDefinition()),
-            new Edge(aula205, aula204, new EdgeDefinition()),
-            new Edge(aula205, aula206, new EdgeDefinition()),
+        this.edges.add(createEdge(aula205, beacon01));
+        this.edges.add(createEdge(aula205, aula204));
+        this.edges.add(createEdge(aula205, aula206));
 
-            new Edge(aula206, beacon01, new EdgeDefinition()),
-            new Edge(aula206, aula204, new EdgeDefinition()),
-            new Edge(aula206, aula205, new EdgeDefinition()),
+        this.edges.add(createEdge(aula206, beacon01));
+        this.edges.add(createEdge(aula206, aula204));
+        this.edges.add(createEdge(aula206, aula205));
 
-            new Edge(beacon01, bano, new EdgeDefinition()),
-            new Edge(beacon01, aula204, new EdgeDefinition()),
-            new Edge(beacon01, aula205, new EdgeDefinition()),
-            new Edge(beacon01, aula206, new EdgeDefinition()),
-        };
+        this.edges.add(createEdge(beacon01, bano));
+        this.edges.add(createEdge(beacon01, aula204));
+        this.edges.add(createEdge(beacon01, aula205));
+        this.edges.add(createEdge(beacon01, aula206));
 
         Graph g = new Graph(nodes, edges);
         g.calculateDistanceFrom(bano);
@@ -72,12 +84,10 @@ public class GraphUnitTest {
 
     @Test
     public void should_bano_be_properly_connected_big_graph() {
-        this.edges = new Edge[]{
-            new Edge(bano, beacon01, new EdgeDefinition()),
-            new Edge(beacon01, aula204, new EdgeDefinition()),
-            new Edge(aula204, aula205, new EdgeDefinition()),
-            new Edge(aula205, aula206, new EdgeDefinition()),
-        };
+        this.edges.add(createEdge(bano, beacon01));
+        this.edges.add(createEdge(beacon01, aula204));
+        this.edges.add(createEdge(aula204, aula205));
+        this.edges.add(createEdge(aula205, aula206));
 
         Graph g = new Graph(nodes, edges);
         g.calculateDistanceFrom(bano);
@@ -90,10 +100,8 @@ public class GraphUnitTest {
 
     @Test
     public void bidirectional_connection() {
-        this.edges = new Edge[]{
-                new Edge(bano, beacon01, new EdgeDefinition()),
-                new Edge(beacon01, bano, new EdgeDefinition())
-        };
+        this.edges.add(createEdge(bano, beacon01));
+        this.edges.add(createEdge(beacon01, bano));
 
         Graph g = new Graph(nodes, edges);
         g.calculateDistanceFrom(bano);
@@ -107,14 +115,11 @@ public class GraphUnitTest {
 
     @Test
     public void should_set_smaller_distance() {
-        this.edges = new Edge[]{
-            new Edge(bano, beacon01, new EdgeDefinition()),
-            new Edge(beacon01, aula204, new EdgeDefinition()),
-            new Edge(aula204, aula205, new EdgeDefinition()),
-            new Edge(aula205, aula206, new EdgeDefinition()),
-
-            new Edge(bano, aula206, new EdgeDefinition()),
-        };
+        this.edges.add(createEdge(bano, beacon01));
+        this.edges.add(createEdge(beacon01, aula204));
+        this.edges.add(createEdge(aula204, aula205));
+        this.edges.add(createEdge(aula205, aula206));
+        this.edges.add(createEdge(bano, aula206));
 
         Graph g = new Graph(nodes, edges);
         g.calculateDistanceFrom(bano);

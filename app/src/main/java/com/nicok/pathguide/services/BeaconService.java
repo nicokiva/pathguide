@@ -6,6 +6,8 @@ import android.os.Binder;
 import android.os.IBinder;
 
 import com.nicok.pathguide.business_definitions.MapDefinition;
+import com.nicok.pathguide.business_definitions.NodeDefinition;
+import com.nicok.pathguide.business_definitions.Graph;
 import com.nicok.pathguide.helpers.reader.FileReader;
 import com.nicok.pathguide.helpers.reader.IReader;
 import com.nicok.pathguide.helpers.serializer.SerializeWrapper;
@@ -13,6 +15,11 @@ import com.nicok.pathguide.helpers.serializer.SerializeWrapper;
 public class BeaconService extends Service {
 
     private MapDefinition map = null;
+    private NodeDefinition destination = null;
+    private NodeDefinition currentLocation = null;
+
+    private Graph graph;
+
     private IReader reader = new FileReader();
     private SerializeWrapper serializeWrapper = new SerializeWrapper();
 
@@ -39,18 +46,6 @@ public class BeaconService extends Service {
         super.onDestroy();
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int a = 0;
-            }
-        });
-
-        return START_STICKY;
-    }
-
     public MapDefinition getMap () {
         return map;
     }
@@ -60,23 +55,40 @@ public class BeaconService extends Service {
             String serializedMap = reader.readAsset("map.json", this);
 
             map = serializeWrapper.deserialize(serializedMap, MapDefinition.class);
+            map.setupEntities();
 
-            return true;
+            graph = new Graph(map.getNodes(), map.getEdges());
+
+            return map != null;
         } catch (Exception e) {
             return false;
         }
     }
 
-//    setDestination() {
-//
-//    }
-//
-//    private calcPath() {
-//        activity.changeLocation(node)
-//    }
-//
-//    getCurrentLocation() {
-//
-//    }
+    public void setCurrentLocation(NodeDefinition currentLocation){
+        this.currentLocation = currentLocation;
+    }
+
+    public void setDestination(NodeDefinition destination) {
+        this.destination = destination;
+
+        if (destination == null) {
+            return;
+        }
+
+        this.calculateDinstancesFromLocation();
+    }
+
+    private void calculateDinstancesFromLocation() {
+        if (destination == null || map == null || currentLocation == null) {
+            return;
+        }
+
+        graph.calculateDistanceFrom(currentLocation);
+    }
+
+    private NodeDefinition getCurrentLocation() {
+        return this.currentLocation;
+    }
 
 }

@@ -22,11 +22,35 @@ public class MapDefinition implements Serializable {
     public List<EdgeDefinition> edges;
 
     public List<NodeDefinition> getFinalNodes() {
-        if (this.nodes == null) {
+        return getNodes().stream().filter(node -> Arrays.stream(node.types.toArray()).anyMatch(x -> ((NodeType)x).isFinal())).collect(Collectors.toList());
+    }
+
+    public List<NodeDefinition> getNodes() {
+        if (nodes == null) {
             return new ArrayList<>();
         }
 
-        return nodes.stream().filter(node -> Arrays.stream(node.types.toArray()).anyMatch(x -> ((NodeType)x).isFinal())).collect(Collectors.toList());
+        return nodes;
+    }
+
+    public List<EdgeDefinition> getEdges() {
+        if(edges == null) {
+            return new ArrayList<>();
+        }
+
+        return edges;
+    }
+
+    public void setupEntities() {
+        for (EdgeDefinition edge: edges) {
+            NodeDefinition from = nodes.stream().filter(node -> node.id.equals(edge.from)).findFirst().get();
+            NodeDefinition to = nodes.stream().filter(node -> node.id.equals(edge.to)).findFirst().get();
+
+            edge.setFromTo(from, to);
+
+            from.addEdge(edge);
+            to.addEdge(edge);
+        }
     }
 
 }

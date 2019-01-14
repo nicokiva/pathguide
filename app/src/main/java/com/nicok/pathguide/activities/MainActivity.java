@@ -25,6 +25,11 @@ public class MainActivity extends AppPathGuideActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        return;
+    }
+
+    @Override
     protected void onServiceLoaded() {
         if (!getService().loadMap()) {
             return;

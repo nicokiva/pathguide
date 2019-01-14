@@ -5,8 +5,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.nicok.pathguide.business_definitions.NodeTypes.BathroomType;
 import com.nicok.pathguide.business_definitions.NodeTypes.ClassroomType;
 import com.nicok.pathguide.business_definitions.NodeTypes.GatewayType;
@@ -21,7 +19,6 @@ public class NodeTypesDeserializer extends JsonDeserializer<List<NodeType>> {
     @Override
     public List<NodeType> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
             throws IOException, JsonProcessingException {
-//        NodeType definition = NodeType.build();
 
         JsonNode rawTypes = jsonParser.getCodec().readTree(jsonParser);
         if (!rawTypes.isArray()) {

@@ -2,7 +2,8 @@ package com.nicok.pathguide.constants;
 
 public class ExtrasParameterNames {
 
-    public static final String SELECTED_DESTINATION_NAME = "selected_destination_name";
-    public static final String SELECTED_DESTINATION_ICON = "selected_destination_icon";
+    public static final String ENTITY_NAME = "entity_name";
+    public static final String ENTITY_ICON = "entity_icon";
+    public static final String ENTITY_DATA = "entity_data";
 
 }

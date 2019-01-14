@@ -14,11 +14,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.Serializable;
+
 public class SelectDestinationDialogFragment extends DialogFragment {
 
     public interface SelectDestinationDialogListener {
-        void onDialogPositiveClick(DialogFragment dialog);
-        void onDialogNegativeClick(DialogFragment dialog);
+        void onDialogPositiveClick(Serializable entityData);
+        void onDialogNegativeClick(Serializable entityData);
     }
 
     SelectDestinationDialogListener listener;
@@ -40,8 +42,10 @@ public class SelectDestinationDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        String destinationName = getArguments().getString(ExtrasParameterNames.SELECTED_DESTINATION_NAME);
-        Integer destinationIcon = getArguments().getInt(ExtrasParameterNames.SELECTED_DESTINATION_ICON);
+        String entityName = getArguments().getString(ExtrasParameterNames.ENTITY_NAME);
+        Integer entityIcon = getArguments().getInt(ExtrasParameterNames.ENTITY_ICON);
+
+        Serializable entityData = getArguments().getSerializable(ExtrasParameterNames.ENTITY_DATA);
 
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -49,15 +53,15 @@ public class SelectDestinationDialogFragment extends DialogFragment {
 
         View view = inflater.inflate(R.layout.select_destination_dialog_fragment, null);
         TextView question = view.findViewById(R.id.tv_select_destination_question);
-        question.setText(getResources().getString(R.string.select_destination_dialog).replace("{{destination}}", destinationName));
-        ((ImageView)view.findViewById(R.id.img_icon)).setImageResource(destinationIcon);
+        question.setText(getResources().getString(R.string.select_destination_dialog).replace("{{destination}}", entityName));
+        ((ImageView)view.findViewById(R.id.img_icon)).setImageResource(entityIcon);
 
         builder.setView(view)
             .setPositiveButton(android.R.string.yes, (dialog, id) -> {
-                listener.onDialogPositiveClick(SelectDestinationDialogFragment.this);
+                listener.onDialogPositiveClick(entityData);
             })
             .setNegativeButton(android.R.string.no, (dialog, id) -> {
-                listener.onDialogNegativeClick(SelectDestinationDialogFragment.this);
+                listener.onDialogNegativeClick(entityData);
             });
 
         return builder.create();
