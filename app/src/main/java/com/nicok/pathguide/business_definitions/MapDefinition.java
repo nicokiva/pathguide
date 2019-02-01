@@ -41,6 +41,10 @@ public class MapDefinition implements Serializable {
         return edges;
     }
 
+    public NodeDefinition getNodeById(String id) {
+        return this.nodes.stream().filter(node -> node.id.equals(id)).findFirst().get();
+    }
+
     public void setupEntities() {
         for (EdgeDefinition edge: edges) {
             NodeDefinition from = nodes.stream().filter(node -> node.id.equals(edge.from)).findFirst().get();

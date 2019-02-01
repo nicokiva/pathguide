@@ -10,6 +10,8 @@ import java.io.Serializable;
 
 public abstract class BaseEntityDefinition implements Serializable {
 
+    public boolean visited = false;
+
     @JsonProperty("id")
     public String id;
 

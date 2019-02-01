@@ -125,4 +125,17 @@ public class GraphUnitTest {
         g.calculateDistanceFrom(bano);
         assertEquals(1, (long)g.getDistanceTo(aula206));
     }
+
+//    @Test
+//    public void as() {
+//        this.edges.add(createEdge(bano, beacon01));
+//        this.edges.add(createEdge(beacon01, aula204));
+//        this.edges.add(createEdge(aula204, aula205));
+//        this.edges.add(createEdge(aula205, aula206));
+//        this.edges.add(createEdge(bano, aula206));
+//
+//        Graph g = new Graph(nodes, edges);
+//        //g.generatePath(bano, beacon01);
+//        assertEquals(1, (long)g.getDistanceTo(aula206));
+//    }
 }

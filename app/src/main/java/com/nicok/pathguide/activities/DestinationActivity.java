@@ -5,10 +5,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.nicok.pathguide.business_logic.PathFinder;
 import com.nicok.pathguide.constants.ExtrasParameterNames;
 import com.nicok.pathguide.business_definitions.BaseEntityDefinition;
 import com.nicok.pathguide.adapters.NodeEntityAdapter;
-import com.nicok.pathguide.business_definitions.MapDefinition;
 import com.nicok.pathguide.business_definitions.NodeDefinition;
 import com.nicok.pathguide.fragments.SelectDestinationDialogFragment;
 
@@ -33,19 +33,12 @@ public class DestinationActivity extends AppPathGuideActivity implements SelectD
         setTitle(R.string.destination_title);
         setContentView(R.layout.activity_destination);
 
-        super.startServiceAndBind();
-
         destinationsList = findViewById(R.id.available_destination_list);
-    }
-
-    @Override
-    protected void onServiceLoaded() {
-        MapDefinition map = getService().getMap();
-
-        prepareDestinationsList(map.getFinalNodes());
+        prepareDestinationsList(PathFinder.getMap().getFinalNodes());
 
         // TODO: WILL REMOVE WHEN BEACONS INTEGRATED
-        getService().setCurrentLocation(map.getFinalNodes().get(0));
+        PathFinder.setCurrentLocationAndGetIfChanged(PathFinder.getMap().getFinalNodes().get(0));
+
     }
 
     private void prepareDestinationsList(List<NodeDefinition> nodes) {
@@ -73,10 +66,17 @@ public class DestinationActivity extends AppPathGuideActivity implements SelectD
             return;
         }
 
-        getService().setDestination((NodeDefinition) destination);
+        PathFinder.setDestination((NodeDefinition) destination);
+        startServiceAndBind();
     }
 
     @Override
     public void onDialogNegativeClick(Serializable entityData) { }
+
+
+    @Override
+    protected void onServiceLoaded() {
+        //
+    };
 
 }

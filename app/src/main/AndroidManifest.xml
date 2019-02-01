@@ -25,9 +25,7 @@
         </activity>
 
         <service
-            android:name="com.nicok.pathguide.services.BeaconService"
-            android:enabled="true"
-            android:exported="true" />
+            android:name="com.nicok.pathguide.services.BeaconService" />
     </application>
 
 </manifest>

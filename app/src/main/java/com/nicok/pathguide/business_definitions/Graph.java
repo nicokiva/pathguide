@@ -3,6 +3,7 @@ package com.nicok.pathguide.business_definitions;
 import com.nicok.pathguide.business_definitions.EdgeDefinition;
 import com.nicok.pathguide.business_definitions.NodeDefinition;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Graph {
@@ -28,6 +29,10 @@ public class Graph {
         }
     }
 
+    public EdgeDefinition getNextEdge() {
+        return null;
+    }
+
     private void setDistance(NodeDefinition initialNode, int distanceFromOrigin) {
         if (initialNode.getDistanceFromSource() != null && initialNode.getDistanceFromSource() <= distanceFromOrigin) {
             return;
@@ -49,7 +54,20 @@ public class Graph {
     }
 
     public void calculateDistanceFrom(NodeDefinition initialNode) {
+        /*
+            THIS METHOD SHOULD ONLY CALCULATE DISTANCE TO GENERATE A SIMPLE PATH.
+         */
+
         this.setDistance(initialNode, 0);
+    }
+
+    private LinkedList<BaseEntityDefinition> path;
+    public void calculatePath(NodeDefinition from, NodeDefinition to) {
+        if (from == null || to == null) {
+            return;
+        }
+
+
     }
 
     public List<EdgeDefinition> getEdges() {
