@@ -3,75 +3,112 @@ package com.nicok.pathguide.business_definitions;
 import com.nicok.pathguide.business_definitions.EdgeDefinition;
 import com.nicok.pathguide.business_definitions.NodeDefinition;
 
+import org.w3c.dom.Node;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Graph {
 
-    private List<NodeDefinition> nodes;
-    private List<EdgeDefinition> edges;
-    private int noOfEdges;
+    private List<NodeDefinition> nodes = new ArrayList<>();
 
-    public Graph(List<NodeDefinition> nodes, List<EdgeDefinition> edges) {
-        this.edges = edges;
+    private List<NodeDefinition> shortestPath = new ArrayList<>();
+
+    private NodeDefinition destination = null;
+
+    public List<NodeDefinition> getNodes() {
+        return nodes;
+    }
+
+    public Graph(List<NodeDefinition> nodes) {
         this.nodes = nodes;
-        this.noOfEdges = edges.size();
-
-        for(EdgeDefinition edge : edges) {
-            edge.getFromNode().getEdges().add(edge);
-            edge.getToNode().getEdges().add(edge);
-        }
     }
 
-    public void resetDistance() {
-        for(NodeDefinition node : this.nodes) {
-            node.setDistanceFromSource(null);
-        }
-    }
-
-    public EdgeDefinition getNextEdge() {
-        return null;
-    }
-
-    private void setDistance(NodeDefinition initialNode, int distanceFromOrigin) {
-        if (initialNode.getDistanceFromSource() != null && initialNode.getDistanceFromSource() <= distanceFromOrigin) {
-            return;
-        }
-
-        initialNode.setDistanceFromSource(distanceFromOrigin);
-
-        for(EdgeDefinition edge : initialNode.getEdges()) {
-            if (edge.getToNode().equals(initialNode)) {
-                continue;
+    private static NodeDefinition getLowestDistanceNode(Set<NodeDefinition> unsettledNodes) {
+        NodeDefinition lowestDistanceNode = null;
+        int lowestDistance = Integer.MAX_VALUE;
+        for (NodeDefinition node: unsettledNodes) {
+            int nodeDistance = node.getDistance();
+            if (nodeDistance < lowestDistance) {
+                lowestDistance = nodeDistance;
+                lowestDistanceNode = node;
             }
+        }
+        return lowestDistanceNode;
+    }
 
-            setDistance(edge.getToNode(), distanceFromOrigin + 1);
+    private static void calculateMinimumDistance(NodeDefinition evaluationNode, Integer edgeWeigh, NodeDefinition sourceNode) {
+        Integer sourceDistance = sourceNode.getDistance();
+        if (sourceDistance + edgeWeigh < evaluationNode.getDistance()) {
+            evaluationNode.setDistance(sourceDistance + edgeWeigh);
+            LinkedList<NodeDefinition> shortestPath = new LinkedList<>(sourceNode.getShortestPath());
+
+
+            shortestPath.add(sourceNode);
+            evaluationNode.setShortestPath(shortestPath);
         }
     }
 
-    public Integer getDistanceTo(NodeDefinition toNode) {
-        return toNode.getDistanceFromSource();
+    private void resetPath() {
+        for (NodeDefinition node: this.getNodes()) {
+            node.setDistance(Integer.MAX_VALUE);
+            node.setShortestPath(new LinkedList<>());
+        }
     }
 
-    public void calculateDistanceFrom(NodeDefinition initialNode) {
-        /*
-            THIS METHOD SHOULD ONLY CALCULATE DISTANCE TO GENERATE A SIMPLE PATH.
-         */
+    private void calculateShortestPathFromSource(NodeDefinition source) {
+        this.resetPath();
+        source.setDistance(0);
 
-        this.setDistance(initialNode, 0);
-    }
+        Set<NodeDefinition> settledNodes = new HashSet<>();
+        Set<NodeDefinition> unsettledNodes = new HashSet<>();
 
-    private LinkedList<BaseEntityDefinition> path;
-    public void calculatePath(NodeDefinition from, NodeDefinition to) {
-        if (from == null || to == null) {
-            return;
+        unsettledNodes.add(source);
+
+        while (unsettledNodes.size() != 0) {
+            NodeDefinition currentNode = getLowestDistanceNode(unsettledNodes);
+            unsettledNodes.remove(currentNode);
+            for (Map.Entry<NodeDefinition, EdgeDefinition> adjacencyPair: currentNode.getAdjacentNodes().entrySet()) {
+                NodeDefinition adjacentNode = adjacencyPair.getKey();
+                if (!settledNodes.contains(adjacentNode)) {
+                    calculateMinimumDistance(adjacentNode, 1, currentNode);
+                    unsettledNodes.add(adjacentNode);
+                }
+            }
+            settledNodes.add(currentNode);
         }
 
-
     }
 
-    public List<EdgeDefinition> getEdges() {
-        return edges;
+    public EdgeDefinition updateNodeAndGetInstructions(NodeDefinition currentLocation) {
+        if (!this.shortestPath.contains(currentLocation) || !this.shortestPath.contains(this.destination)) {
+            this.calculateShortestPath(currentLocation, this.destination);
+        }
+
+        NodeDefinition nextLocation = this.shortestPath.get(this.shortestPath.indexOf(currentLocation) + 1);
+
+        return currentLocation.getAdjacentNodes().get(nextLocation);
+    }
+
+    public Integer calculateShortestPath(NodeDefinition from, NodeDefinition to) {
+        if (this.getNodes().size() == 0) {
+            return null;
+        }
+
+        this.calculateShortestPathFromSource(from);
+
+        NodeDefinition destination = this.getNodes().stream().filter(node -> node.equals(to)).findFirst().get();
+        this.shortestPath = destination.getShortestPath();
+        this.shortestPath.add(destination);
+        this.destination = to;
+
+        return this.shortestPath.size() - 1;
     }
 
 }

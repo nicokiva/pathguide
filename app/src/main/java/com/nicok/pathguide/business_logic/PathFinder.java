@@ -16,8 +16,6 @@ public class PathFinder {
     private static NodeDefinition destination = null;
     private static NodeDefinition currentLocation = null;
 
-    private static Graph graph;
-
     private static IReader reader = new FileReader();
     private static SerializeWrapper serializeWrapper = new SerializeWrapper();
 
@@ -26,19 +24,13 @@ public class PathFinder {
             String serializedMap = PathFinder.reader.readAsset("map.json", context);
 
             PathFinder.map = serializeWrapper.deserialize(serializedMap, MapDefinition.class);
-            //PathFinder.map.setupEntities();
-
-            PathFinder.graph = new Graph(PathFinder.map.getNodes(), PathFinder.map.getEdges());
+            PathFinder.map.setupEntities();
 
             return map != null;
         } catch (Exception e) {
             return false;
         }
     }
-
-//    public static EdgeDefinition getNextInstructions() {
-//
-//    }
 
     public static MapDefinition getMap () {
         return PathFinder.map;
@@ -80,8 +72,10 @@ public class PathFinder {
     }
 
     public static EdgeDefinition getNextPath() {
-        return PathFinder.graph.getNextEdge();
+//        return PathFinder.graph.getNextEdge();
+        return null;
     }
+
 
     public static NodeDefinition getCurrentLocation() {
         return PathFinder.currentLocation;

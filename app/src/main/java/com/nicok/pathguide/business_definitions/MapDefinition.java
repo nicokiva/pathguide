@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nicok.pathguide.business_definitions.NodeTypes.NodeType;
 
+import org.w3c.dom.Node;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,46 +17,52 @@ import java.util.stream.Collectors;
 
 public class MapDefinition implements Serializable {
 
-    @JsonProperty("nodes")
-    public List<NodeDefinition> nodes;
-
-    @JsonProperty("edges")
-    public List<EdgeDefinition> edges;
+//    @JsonProperty("nodes")
+//    public List<NodeDefinition> nodes;
+//
+//    @JsonProperty("edges")
+//    public List<EdgeDefinition> edges;
+//
+//    private Graph graph;
 
     public List<NodeDefinition> getFinalNodes() {
-        return getNodes().stream().filter(node -> Arrays.stream(node.types.toArray()).anyMatch(x -> ((NodeType)x).isFinal())).collect(Collectors.toList());
+        //return getNodes().stream().filter(node -> Arrays.stream(node.types.toArray()).anyMatch(x -> ((NodeType)x).isFinal())).collect(Collectors.toList());
+        return null;
     }
 
     public List<NodeDefinition> getNodes() {
-        if (nodes == null) {
-            return new ArrayList<>();
-        }
+//        if (nodes == null) {
+//            return new ArrayList<>();
+//        }
+//
+//        return nodes;
 
-        return nodes;
+        return null;
     }
 
     public List<EdgeDefinition> getEdges() {
-        if(edges == null) {
-            return new ArrayList<>();
-        }
-
-        return edges;
+//        if(edges == null) {
+//            return new ArrayList<>();
+//        }
+//
+//        return edges;
+        return null;
     }
 
     public NodeDefinition getNodeById(String id) {
-        return this.nodes.stream().filter(node -> node.id.equals(id)).findFirst().get();
+//        return this.nodes.stream().filter(node -> node.id.equals(id)).findFirst().get();
+        return null;
     }
 
     public void setupEntities() {
-        for (EdgeDefinition edge: edges) {
-            NodeDefinition from = nodes.stream().filter(node -> node.id.equals(edge.from)).findFirst().get();
-            NodeDefinition to = nodes.stream().filter(node -> node.id.equals(edge.to)).findFirst().get();
-
-            edge.setFromTo(from, to);
-
-            from.addEdge(edge);
-            to.addEdge(edge);
-        }
+//        for (EdgeDefinition edge: edges) {
+//            NodeDefinition from = this.nodes.stream().filter(node -> node.id.equals(edge.from)).findFirst().get();
+//            NodeDefinition to = this.nodes.stream().filter(node -> node.id.equals(edge.to)).findFirst().get();
+//
+//            from.addDestination(to, edge);
+//        }
+//
+//        this.graph = new Graph(this.nodes);
     }
 
 }

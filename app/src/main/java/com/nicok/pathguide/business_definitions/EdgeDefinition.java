@@ -20,21 +20,4 @@ public class EdgeDefinition extends BaseEntityDefinition implements Serializable
     @JsonProperty("instructions")
     public String instructions;
 
-    public void setFromTo(NodeDefinition from, NodeDefinition to) {
-        fromNode = from;
-        toNode = to;
-    }
-
-    public NodeDefinition getFromNode() {
-        return fromNode;
-    }
-
-    public NodeDefinition getToNode() {
-        return toNode;
-    }
-
-    public int getLength() {
-        return 0;
-    }
-
 }

@@ -5,9 +5,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.nicok.pathguide.business_definitions.NodeTypes.NodeType;
 
+import org.w3c.dom.Node;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
@@ -23,6 +28,14 @@ public class NodeDefinition extends BaseEntityDefinition implements Serializable
     @JsonDeserialize(using = NodeTypesDeserializer.class)
     public List<NodeType> types;
 
+    private Integer distance = null;
+
+    private String name = null;
+
+    Map<NodeDefinition, EdgeDefinition> adjacentNodes = new HashMap<>();
+
+    private List<NodeDefinition> shortestPath = new LinkedList<>();
+
     public Integer getIcon() {
         if (this.types == null) {
             return null;
@@ -31,27 +44,33 @@ public class NodeDefinition extends BaseEntityDefinition implements Serializable
         return types.get(0).getImageSource();
     }
 
-    public void addEdge(EdgeDefinition edge) {
-        edges.add(edge);
+    public List<NodeDefinition> getShortestPath() {
+        return this.shortestPath;
     }
 
-    private Integer distanceFromSource = null;
-    private ArrayList<EdgeDefinition> edges = new ArrayList<>();
-
-    public Integer getDistanceFromSource() {
-        return distanceFromSource;
+    public void setShortestPath(List<NodeDefinition> shortestPath) {
+        this.shortestPath = shortestPath;
     }
 
-    public void setDistanceFromSource(Integer distanceFromSource) {
-        this.distanceFromSource = distanceFromSource;
+    public void setDistance(Integer distance) {
+        this.distance = distance;
     }
 
-    public ArrayList<EdgeDefinition> getEdges() {
-        return edges;
+    public int getDistance() {
+        return this.distance;
     }
 
-    public void setEdges(ArrayList<EdgeDefinition> edges) {
-        this.edges = edges;
+    public Map<NodeDefinition, EdgeDefinition> getAdjacentNodes() {
+        return adjacentNodes;
+    }
+
+    public void addDestination(NodeDefinition destination, EdgeDefinition edge) {
+        adjacentNodes.put(destination, edge);
+    }
+
+    public NodeDefinition(String id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
 }
