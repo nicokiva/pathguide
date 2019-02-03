@@ -17,52 +17,47 @@ import java.util.stream.Collectors;
 
 public class MapDefinition implements Serializable {
 
-//    @JsonProperty("nodes")
-//    public List<NodeDefinition> nodes;
-//
-//    @JsonProperty("edges")
-//    public List<EdgeDefinition> edges;
-//
-//    private Graph graph;
+    @JsonProperty("nodes")
+    public List<NodeDefinition> nodes;
+
+    @JsonProperty("edges")
+    public List<EdgeDefinition> edges;
+
+    private Graph graph;
 
     public List<NodeDefinition> getFinalNodes() {
-        //return getNodes().stream().filter(node -> Arrays.stream(node.types.toArray()).anyMatch(x -> ((NodeType)x).isFinal())).collect(Collectors.toList());
-        return null;
+        return getNodes().stream().filter(node -> Arrays.stream(node.types.toArray()).anyMatch(x -> ((NodeType)x).isFinal())).collect(Collectors.toList());
     }
 
     public List<NodeDefinition> getNodes() {
-//        if (nodes == null) {
-//            return new ArrayList<>();
-//        }
-//
-//        return nodes;
+        if (nodes == null) {
+            return new ArrayList<>();
+        }
 
-        return null;
+        return nodes;
     }
 
     public List<EdgeDefinition> getEdges() {
-//        if(edges == null) {
-//            return new ArrayList<>();
-//        }
-//
-//        return edges;
-        return null;
+        if(edges == null) {
+            return new ArrayList<>();
+        }
+
+        return edges;
     }
 
     public NodeDefinition getNodeById(String id) {
-//        return this.nodes.stream().filter(node -> node.id.equals(id)).findFirst().get();
-        return null;
+        return this.nodes.stream().filter(node -> node.id.equals(id)).findFirst().get();
     }
 
     public void setupEntities() {
-//        for (EdgeDefinition edge: edges) {
-//            NodeDefinition from = this.nodes.stream().filter(node -> node.id.equals(edge.from)).findFirst().get();
-//            NodeDefinition to = this.nodes.stream().filter(node -> node.id.equals(edge.to)).findFirst().get();
-//
-//            from.addDestination(to, edge);
-//        }
-//
-//        this.graph = new Graph(this.nodes);
+        for (EdgeDefinition edge: edges) {
+            NodeDefinition from = this.nodes.stream().filter(node -> node.id.equals(edge.from)).findFirst().get();
+            NodeDefinition to = this.nodes.stream().filter(node -> node.id.equals(edge.to)).findFirst().get();
+
+            from.addDestination(to, edge);
+        }
+
+        this.graph = new Graph(this.nodes);
     }
 
 }

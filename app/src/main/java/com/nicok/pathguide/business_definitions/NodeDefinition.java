@@ -1,5 +1,6 @@
 package com.nicok.pathguide.business_definitions;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -28,12 +29,16 @@ public class NodeDefinition extends BaseEntityDefinition implements Serializable
     @JsonDeserialize(using = NodeTypesDeserializer.class)
     public List<NodeType> types;
 
+    @JsonIgnore()
     private Integer distance = null;
 
+    @JsonIgnore()
     private String name = null;
 
+    @JsonIgnore()
     Map<NodeDefinition, EdgeDefinition> adjacentNodes = new HashMap<>();
 
+    @JsonIgnore()
     private List<NodeDefinition> shortestPath = new LinkedList<>();
 
     public Integer getIcon() {
@@ -67,6 +72,8 @@ public class NodeDefinition extends BaseEntityDefinition implements Serializable
     public void addDestination(NodeDefinition destination, EdgeDefinition edge) {
         adjacentNodes.put(destination, edge);
     }
+
+    public NodeDefinition() { }
 
     public NodeDefinition(String id, String name) {
         this.id = id;
