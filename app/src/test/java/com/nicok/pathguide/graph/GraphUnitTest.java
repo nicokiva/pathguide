@@ -23,13 +23,21 @@ public class GraphUnitTest {
 
     private EdgeDefinition banoToBeacon01 = createEdge("Baño to Beacon 01!");
     private EdgeDefinition beacon01ToAula204 = createEdge("Beacon 01 to Aula 204!");
+    private EdgeDefinition beacon01ToAula205 = createEdge("Beacon 01 to Aula 205!");
     private EdgeDefinition beacon01ToAula206 = createEdge("Beacon 01 to Aula 206!");
     private EdgeDefinition beacon01ToBano = createEdge("Beacon 01 to Baño!");
+    private EdgeDefinition aula204ToBeacon01 = createEdge("Aula 204 to Beacon 01!");
     private EdgeDefinition aula204ToAula205 = createEdge("Aula 204 to Aula 205!");
-    private EdgeDefinition banoToAula205 = createEdge("Baño to Aula 205!");
-    private EdgeDefinition banoToAula206 = createEdge("Baño to Aula 206!");
     private EdgeDefinition aula204ToAula206 = createEdge("Aula 204 to Aula 206!");
+    private EdgeDefinition aula205ToBeacon01 = createEdge("Aula 205 to Beacon 01!");
+    private EdgeDefinition aula205ToAula204 = createEdge("Aula 205 to Aula 204!");
+    private EdgeDefinition aula205ToAula206 = createEdge("Aula 205 to Aula 206!");
     private EdgeDefinition aula206ToBeacon01 = createEdge("Aula 206 to Beacon 01!");
+    private EdgeDefinition aula206ToAula204 = createEdge("Aula 206 to Aula 204!");
+    private EdgeDefinition aula206ToAula205 = createEdge("Aula 206 to Aula 205!");
+
+
+    private EdgeDefinition banoToAula206 = createEdge("Baño to Aula 206!");
 
 
     private EdgeDefinition createEdge(String instructions) {
@@ -157,6 +165,45 @@ public class GraphUnitTest {
 
         edge = graph.updateNodeAndGetInstructions(beacon01);
         assertEquals(edge, beacon01ToAula204);
+    }
+
+    @Test
+    public void should_bano_be_connected_to_aula_206_in_two_steps() {
+        bano.addDestination(beacon01, banoToBeacon01);
+        beacon01.addDestination(bano, beacon01ToBano);
+
+        beacon01.addDestination(aula204, beacon01ToAula204);
+        beacon01.addDestination(aula205, beacon01ToAula205);
+        beacon01.addDestination(aula206, beacon01ToAula206);
+
+        aula204.addDestination(aula205, aula204ToAula205);
+        aula204.addDestination(aula206, aula204ToAula206);
+        aula204.addDestination(beacon01, aula204ToBeacon01);
+
+        aula205.addDestination(aula204, aula205ToAula204);
+        aula205.addDestination(aula206, aula205ToAula206);
+        aula205.addDestination(beacon01, aula205ToBeacon01);
+
+        aula206.addDestination(aula204, aula206ToAula204);
+        aula206.addDestination(aula205, aula206ToAula205);
+        aula206.addDestination(beacon01, aula206ToBeacon01);
+        List<NodeDefinition> nodes = new ArrayList<>();
+
+        nodes.add(bano);
+        nodes.add(beacon01);
+        nodes.add(aula204);
+        nodes.add(aula205);
+        nodes.add(aula206);
+
+        Graph graph = new Graph(nodes);
+
+        long steps = graph.calculateShortestPath(aula206, bano);
+        assertEquals(steps, 2);
+        EdgeDefinition edge = graph.updateNodeAndGetInstructions(aula206);
+        assertEquals(edge, aula206ToBeacon01);
+
+        edge = graph.updateNodeAndGetInstructions(beacon01);
+        assertEquals(edge, beacon01ToBano);
     }
 
     @Test

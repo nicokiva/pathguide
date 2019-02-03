@@ -34,11 +34,8 @@ public class DestinationActivity extends AppPathGuideActivity implements SelectD
         setContentView(R.layout.activity_destination);
 
         destinationsList = findViewById(R.id.available_destination_list);
+        //destinationsList.setVisibility(View.VISIBLE);
         prepareDestinationsList(PathFinder.getMap().getFinalNodes());
-
-        // TODO: WILL REMOVE WHEN BEACONS INTEGRATED
-        PathFinder.setCurrentLocationAndGetIfChanged(PathFinder.getMap().getFinalNodes().get(0));
-
     }
 
     private void prepareDestinationsList(List<NodeDefinition> nodes) {

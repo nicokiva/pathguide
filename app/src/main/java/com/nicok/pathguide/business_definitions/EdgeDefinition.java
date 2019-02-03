@@ -20,4 +20,7 @@ public class EdgeDefinition extends BaseEntityDefinition implements Serializable
     @JsonProperty("instructions")
     public String instructions;
 
+    public String getInstructions() {
+        return instructions;
+    }
 }

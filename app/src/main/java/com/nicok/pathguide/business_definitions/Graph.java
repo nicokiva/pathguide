@@ -21,6 +21,19 @@ public class Graph {
     private List<NodeDefinition> shortestPath = new ArrayList<>();
 
     private NodeDefinition destination = null;
+    private NodeDefinition currentLocation = null;
+
+    public boolean hasReachedDestination() {
+        return this.currentLocation != null && this.destination.equals(this.currentLocation);
+    }
+
+    public void setDestination(NodeDefinition destination) {
+        this.destination = destination;
+    }
+
+    public void setCurrentLocation (NodeDefinition currentLocation) {
+        this.currentLocation = currentLocation;
+    }
 
     public List<NodeDefinition> getNodes() {
         return nodes;
@@ -87,6 +100,15 @@ public class Graph {
     }
 
     public EdgeDefinition updateNodeAndGetInstructions(NodeDefinition currentLocation) {
+        if (
+            this.currentLocation != null && this.currentLocation.equals(currentLocation) ||
+            this.destination.equals(currentLocation)
+        ) {
+            this.currentLocation = currentLocation;
+
+            return null;
+        }
+
         if (!this.shortestPath.contains(currentLocation) || !this.shortestPath.contains(this.destination)) {
             this.calculateShortestPath(currentLocation, this.destination);
         }

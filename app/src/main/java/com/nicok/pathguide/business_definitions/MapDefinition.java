@@ -25,8 +25,21 @@ public class MapDefinition implements Serializable {
 
     private Graph graph;
 
+    public EdgeDefinition updateNodeAndGetInstructions(String currentLocationId) {
+        NodeDefinition currentLocation = this.getNodeById(currentLocationId);
+        return this.graph.updateNodeAndGetInstructions(currentLocation);
+    }
+
     public List<NodeDefinition> getFinalNodes() {
         return getNodes().stream().filter(node -> Arrays.stream(node.types.toArray()).anyMatch(x -> ((NodeType)x).isFinal())).collect(Collectors.toList());
+    }
+
+    public void setDestination(NodeDefinition destination) {
+        this.graph.setDestination(destination);
+    }
+
+    public void setCurrentLocation(NodeDefinition currentLocation) {
+        this.graph.setCurrentLocation(currentLocation);
     }
 
     public List<NodeDefinition> getNodes() {
@@ -37,16 +50,12 @@ public class MapDefinition implements Serializable {
         return nodes;
     }
 
-    public List<EdgeDefinition> getEdges() {
-        if(edges == null) {
-            return new ArrayList<>();
-        }
-
-        return edges;
-    }
-
     public NodeDefinition getNodeById(String id) {
         return this.nodes.stream().filter(node -> node.id.equals(id)).findFirst().get();
+    }
+
+    public boolean hasReachedDestination() {
+        return this.graph.hasReachedDestination();
     }
 
     public void setupEntities() {

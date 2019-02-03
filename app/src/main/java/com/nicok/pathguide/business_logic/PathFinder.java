@@ -3,7 +3,6 @@ package com.nicok.pathguide.business_logic;
 import android.content.Context;
 
 import com.nicok.pathguide.business_definitions.EdgeDefinition;
-import com.nicok.pathguide.business_definitions.Graph;
 import com.nicok.pathguide.business_definitions.MapDefinition;
 import com.nicok.pathguide.business_definitions.NodeDefinition;
 import com.nicok.pathguide.helpers.reader.FileReader;
@@ -13,8 +12,6 @@ import com.nicok.pathguide.helpers.serializer.SerializeWrapper;
 public class PathFinder {
 
     private static MapDefinition map = null;
-    private static NodeDefinition destination = null;
-    private static NodeDefinition currentLocation = null;
 
     private static IReader reader = new FileReader();
     private static SerializeWrapper serializeWrapper = new SerializeWrapper();
@@ -36,49 +33,21 @@ public class PathFinder {
         return PathFinder.map;
     }
 
+    public static void reset() {
+        PathFinder.map.setDestination(null);
+        PathFinder.map.setCurrentLocation(null);
+    }
+
     public static boolean hasReachedDestination() {
-        return PathFinder.currentLocation.equals(PathFinder.destination);
+        return PathFinder.map.hasReachedDestination();
     }
 
-    public static NodeDefinition getNodeById(String id) {
-        return PathFinder.map.getNodeById(id);
-    }
-
-    public static boolean setCurrentLocationAndGetIfChanged(NodeDefinition currentLocation){
-        if (PathFinder.currentLocation != null && PathFinder.currentLocation.equals(currentLocation)) {
-            return false;
-        }
-
-        PathFinder.currentLocation = currentLocation;
-        return true;
+    public static EdgeDefinition updateNodeAndGetInstructions(String currentLocationId){
+        return PathFinder.map.updateNodeAndGetInstructions(currentLocationId);
     }
 
     public static void setDestination(NodeDefinition destination) {
-        PathFinder.destination = destination;
-
-        if (PathFinder.destination == null) {
-            return;
-        }
-
-        PathFinder.calculateDinstancesFromLocation();
-    }
-
-    private static void calculateDinstancesFromLocation() {
-        if (PathFinder.destination == null || PathFinder.map == null || PathFinder.currentLocation == null) {
-            return;
-        }
-
-        //PathFinder.graph.calculateDistanceFrom(currentLocation);
-    }
-
-    public static EdgeDefinition getNextPath() {
-//        return PathFinder.graph.getNextEdge();
-        return null;
-    }
-
-
-    public static NodeDefinition getCurrentLocation() {
-        return PathFinder.currentLocation;
+        PathFinder.map.setDestination(destination);
     }
 
 }
