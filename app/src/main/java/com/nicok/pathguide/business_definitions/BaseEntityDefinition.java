@@ -18,4 +18,8 @@ public abstract class BaseEntityDefinition implements Serializable {
     @JsonProperty("description")
     public String description;
 
+    public String getId() {
+        return this.id;
+    }
+
 }

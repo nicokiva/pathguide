@@ -35,9 +35,12 @@ public class BeaconService extends Service {
         super.onDestroy();
     }
 
+    private BeaconsListener listener;
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        new BeaconsListener(this).start();
+        listener = new BeaconsListener(this);
+        listener.start();
 
         // will need to start beacons detection.
         return Service.START_NOT_STICKY;

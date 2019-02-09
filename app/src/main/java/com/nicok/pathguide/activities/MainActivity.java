@@ -8,11 +8,18 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.speech.tts.TextToSpeech;
 
+import com.estimote.mustard.rx_goodness.rx_requirements_wizard.Requirement;
+import com.estimote.mustard.rx_goodness.rx_requirements_wizard.RequirementsWizardFactory;
 import com.nicok.pathguide.business_logic.PathFinder;
 import com.nicok.pathguide.constants.ExtrasParameterNames;
 import com.nicok.pathguide.services.BeaconService;
 
+import java.util.List;
+
 import androidx.appcompat.app.AppCompatActivity;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function0;
+import kotlin.jvm.functions.Function1;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -32,14 +39,34 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
-            if (!PathFinder.loadMap(this)) {
-                return;
-            }
-
-            Intent myIntent = new Intent(MainActivity.this, DestinationActivity.class);
-            MainActivity.this.startActivity(myIntent);
+            this.checkEstimoteRequirements();
         }
     }
+
+    private void checkEstimoteRequirements () {
+        RequirementsWizardFactory.createEstimoteRequirementsWizard().fulfillRequirements(
+                this,
+                () -> {
+                    if (!PathFinder.loadMap(getApplicationContext())) {
+                        return null;
+                    }
+
+                    Intent myIntent = new Intent(MainActivity.this, DestinationActivity.class);
+                    MainActivity.this.startActivity(myIntent);
+
+                    return null;
+                },
+                (requirements) -> {
+                    /* scanning won't work, handle this case in your app */
+                    return null;
+                },
+
+                (throwable) -> {
+                    /* Oops, some error occurred, handle it here! */
+                    return null;
+                }
+            );
+        };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

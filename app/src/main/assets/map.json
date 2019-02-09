@@ -1,7 +1,7 @@
 {
   "nodes": [
     {
-      "id": "f001102000",
+      "id": "bano",
       "floor": -2,
       "description": "Baño",
       "extra": "Independencia 1 - 2do subsuelo",
@@ -11,9 +11,9 @@
     },
 
     {
-      "id": "f001102001",
+      "id": "cama",
       "floor": -2,
-      "description": "Aula 206",
+      "description": "Cama",
       "extra": "Independencia 1 - 2do subsuelo",
       "types": [
         "classroom"
@@ -21,9 +21,9 @@
     },
 
     {
-      "id": "f001102002",
+      "id": "cocina",
       "floor": -2,
-      "description": "Aula 205",
+      "description": "Cocina",
       "extra": "Independencia 1 - 2do subsuelo",
       "types": [
         "classroom"
@@ -31,115 +31,29 @@
     },
 
     {
-      "id": "f001102003",
+      "id": "entrada",
       "floor": -2,
-      "description": "Aula 204",
+      "description": "Entrada",
       "extra": "Independencia 1 - 2do subsuelo",
       "types": [
         "classroom"
-      ]
-    },
-
-    {
-      "id": "b001102056",
-      "floor": -2,
-      "description": "Beacon 02",
-      "types": [
-        "gateway"
       ]
     }
   ],
 
   "edges": [
     {
-      "id": "e001102020",
-      "from": "f001102000",
-      "to": "b001102056",
-      "instructions": "Baño a Beacon 02."
+      "id": "e0001",
+      "from": "bano",
+      "to": "cama",
+      "instructions": "Baño a Cama"
     },
 
     {
-      "id": "e001102021",
-      "from": "b001102056",
-      "to": "f001102000",
-      "instructions": "Beacon 02 a Baño"
-    },
-
-    {
-      "id": "e001102022",
-      "from": "b001102056",
-      "to": "f001102003",
-      "instructions": "Caminar hacia la derecha 5 pasos, girar a la izquierda, caminar derecho 3 pasos, girar a la derecha."
-    },
-    {
-      "id": "e001102023",
-      "from": "b001102056",
-      "to": "f001102002",
-      "instructions": "Caminar hacia adelante 5 pasos hasta llegar a la pared, girar a la derecha y caminar hacia adelante 10 pasos."
-    },
-    {
-      "id": "e001102024",
-      "from": "b001102056",
-      "to": "f001102001",
-      "instructions": "Girar a la derecha y caminar hacia adelante 10 pasos."
-    },
-
-
-    {
-      "id": "e001102025",
-      "from": "f001102003",
-      "to": "b001102056",
-      "instructions": "Girar a la izquierda, caminar 5 pasos, girar a la derecha avanzar 10 pasos."
-    },
-    {
-      "id": "e001102026",
-      "from": "f001102003",
-      "to": "f001102002",
-      "instructions": "Girar a la izquierda, caminar 15 pasos."
-    },
-    {
-      "id": "e001102040",
-      "from": "f001102003",
-      "to": "f001102002",
-      "instructions": "Girar a la izquierda, caminar 5 pasos, girar a la derecha avanzar 10 pasos, girar a la izquierda y avanzar 10 pasos."
-    },
-
-    {
-      "id": "e001102041",
-      "from": "f001102002",
-      "to": "b001102056",
-      "instructions": "Avanzar 10 pasos, girar a la izquierda y caminr hacia adelante 5 pasos."
-    },
-    {
-      "id": "e001102042",
-      "from": "f001102002",
-      "to": "f001102003",
-      "instructions": "Caminar derecho 12 pasos, girar a la derecha."
-    },
-    {
-      "id": "e001102051",
-      "from": "f001102002",
-      "to": "f001102001",
-      "instructions": "Girar a la izquierda, caminar 5 pasos, girar a la derecha."
-    },
-
-    {
-      "id": "e001102052",
-      "from": "f001102001",
-      "to": "b001102056",
-      "instructions": "Caminar hacia adelante 10 pasos."
-    },
-    {
-      "id": "e001102053",
-      "from": "f001102001",
-      "to": "f001102003",
-      "instructions": "Caminar derecho 12 pasos, girar a la derecha, caminar derecho 5 pasos."
-    },
-    {
-      "id": "e001102054",
-      "from": "f001102001",
-      "to": "f001102002",
-      "instructions": "Girar a la derecha, caminar derecho 5 pasos."
+      "id": "e0002",
+      "from": "cama",
+      "to": "cocina",
+      "instructions": "Cama a Cocina"
     }
   ]
 }
