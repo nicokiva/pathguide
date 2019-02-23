@@ -45,7 +45,7 @@ public class BeaconsListener extends Thread {
                 .forTag(context.getString(R.string.beacons_tag))
                 .inCustomRange(1.0)
                 .onContextChange(proximityZoneContexts -> {
-g                    if(proximityZoneContexts.size() != 1) {
+                    if(proximityZoneContexts.size() != 1) {
                         return null;
                     }
 
