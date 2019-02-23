@@ -9,6 +9,10 @@
 
     <string name="arrived_message">Has arribado a destino</string>
 
+    <string name="beacons_tag">pathguide</string>
+    <string name="beacons_api_key">path-guide-bkq</string>
+    <string name="beacons_api_app_token">a8f5f1ee5914fefc3d3af67b894c5f89</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

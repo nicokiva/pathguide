@@ -17,7 +17,10 @@ import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
-public class NodeDefinition extends BaseEntityDefinition implements Serializable {
+public class NodeDefinition implements Serializable {
+
+    @JsonProperty("tag")
+    public String tag;
 
     @JsonProperty("extra")
     public String extra;
@@ -28,6 +31,16 @@ public class NodeDefinition extends BaseEntityDefinition implements Serializable
     @JsonProperty("types")
     @JsonDeserialize(using = NodeTypesDeserializer.class)
     public List<NodeType> types;
+
+    @JsonProperty("description")
+    public String description;
+
+    @JsonProperty("id")
+    public String id;
+
+    public String getId() {
+        return id;
+    }
 
     @JsonIgnore()
     private Integer distance = null;
@@ -80,4 +93,7 @@ public class NodeDefinition extends BaseEntityDefinition implements Serializable
         this.name = name;
     }
 
+    public String getTag() {
+        return tag;
+    }
 }

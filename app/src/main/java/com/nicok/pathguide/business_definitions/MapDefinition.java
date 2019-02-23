@@ -31,7 +31,12 @@ public class MapDefinition implements Serializable {
     }
 
     public List<NodeDefinition> getFinalNodes() {
-        return getNodes().stream().filter(node -> Arrays.stream(node.types.toArray()).anyMatch(x -> ((NodeType)x).isFinal())).collect(Collectors.toList());
+        return nodes.stream()
+                .filter(
+                    node -> Arrays.stream(node.types.toArray()).anyMatch(x -> ((NodeType)x).isFinal()) &&
+                    edges.stream().anyMatch(edge -> edge.to.equals(node.getTag()))
+                )
+                .collect(Collectors.toList());
     }
 
     public void setDestination(NodeDefinition destination) {
@@ -51,7 +56,7 @@ public class MapDefinition implements Serializable {
     }
 
     public NodeDefinition getNodeById(String id) {
-        return this.nodes.stream().filter(node -> node.id.equals(id)).findFirst().get();
+        return this.nodes.stream().filter(node -> node.getId().equals(id)).findFirst().get();
     }
 
     public boolean hasReachedDestination() {
@@ -60,8 +65,8 @@ public class MapDefinition implements Serializable {
 
     public void setupEntities() {
         for (EdgeDefinition edge: edges) {
-            NodeDefinition from = this.nodes.stream().filter(node -> node.id.equals(edge.from)).findFirst().get();
-            NodeDefinition to = this.nodes.stream().filter(node -> node.id.equals(edge.to)).findFirst().get();
+            NodeDefinition from = this.nodes.stream().filter(node -> node.getTag().equals(edge.from)).findFirst().get();
+            NodeDefinition to = this.nodes.stream().filter(node -> node.getTag().equals(edge.to)).findFirst().get();
 
             from.addDestination(to, edge);
         }

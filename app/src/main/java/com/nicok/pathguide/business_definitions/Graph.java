@@ -33,6 +33,7 @@ public class Graph {
 
     public void setCurrentLocation (NodeDefinition currentLocation) {
         this.currentLocation = currentLocation;
+        this.shortestPath = new LinkedList<>();
     }
 
     public List<NodeDefinition> getNodes() {
@@ -100,14 +101,16 @@ public class Graph {
     }
 
     public EdgeDefinition updateNodeAndGetInstructions(NodeDefinition currentLocation) {
-        if (
-            this.currentLocation != null && this.currentLocation.equals(currentLocation) ||
-            this.destination.equals(currentLocation)
-        ) {
-            this.currentLocation = currentLocation;
-
+        if (this.currentLocation != null && this.currentLocation.equals(currentLocation)) {
             return null;
         }
+
+        if (this.destination.equals(currentLocation)) {
+            this.currentLocation = currentLocation;
+            return null;
+        }
+
+        this.currentLocation = currentLocation;
 
         if (!this.shortestPath.contains(currentLocation) || !this.shortestPath.contains(this.destination)) {
             this.calculateShortestPath(currentLocation, this.destination);

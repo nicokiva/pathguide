@@ -7,7 +7,6 @@ import android.widget.ListView;
 
 import com.nicok.pathguide.business_logic.PathFinder;
 import com.nicok.pathguide.constants.ExtrasParameterNames;
-import com.nicok.pathguide.business_definitions.BaseEntityDefinition;
 import com.nicok.pathguide.adapters.NodeEntityAdapter;
 import com.nicok.pathguide.business_definitions.NodeDefinition;
 import com.nicok.pathguide.fragments.SelectDestinationDialogFragment;
@@ -34,7 +33,6 @@ public class DestinationActivity extends AppPathGuideActivity implements SelectD
         setContentView(R.layout.activity_destination);
 
         destinationsList = findViewById(R.id.available_destination_list);
-        //destinationsList.setVisibility(View.VISIBLE);
         prepareDestinationsList(PathFinder.getMap().getFinalNodes());
     }
 
@@ -45,7 +43,7 @@ public class DestinationActivity extends AppPathGuideActivity implements SelectD
     }
 
     private void onItemClickListener(AdapterView<?> parent, View view, int position, long id) {
-        BaseEntityDefinition itemValue = (NodeDefinition)destinationsList.getItemAtPosition(position);
+        NodeDefinition itemValue = (NodeDefinition)destinationsList.getItemAtPosition(position);
 
         Bundle data = new Bundle();
         data.putString(ExtrasParameterNames.ENTITY_NAME, itemValue.description);

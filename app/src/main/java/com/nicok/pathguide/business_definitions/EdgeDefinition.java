@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
-public class EdgeDefinition extends BaseEntityDefinition implements Serializable {
+public class EdgeDefinition implements Serializable {
 
     @JsonProperty("from")
     public String from;

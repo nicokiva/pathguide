@@ -23,10 +23,11 @@ public class BeaconsListener extends Thread {
     private TextToSpeech mTts;
     private boolean ttsEnabled = false;
 
-    EstimoteCloudCredentials cloudCredentials = new EstimoteCloudCredentials("path-guide-bkq", "a8f5f1ee5914fefc3d3af67b894c5f89");
-    List<ProximityObserver.Handler> observationHandlers;
+    EstimoteCloudCredentials cloudCredentials;
+    ProximityObserver.Handler observationHandler;
 
     public BeaconsListener(Context context) {
+        cloudCredentials = new EstimoteCloudCredentials(context.getString(R.string.beacons_api_key), context.getString(R.string.beacons_api_app_token));
         this.context = context;
 
         this.mTts = new TextToSpeech(context, (int status) -> {
@@ -35,32 +36,29 @@ public class BeaconsListener extends Thread {
     }
 
     private void observeBeacons() {
-        observationHandlers = new ArrayList<>();
-
-        for (NodeDefinition node: PathFinder.getMap().getNodes()) {
             ProximityObserver proximityObserver = new ProximityObserverBuilder(context, cloudCredentials)
                     .withBalancedPowerMode()
                     .onError(throwable -> { return null; })
                     .build();
 
             ProximityZone zone = new ProximityZoneBuilder()
-                    .forTag(node.getId())
-                    .inCustomRange(1.0)
-                    .onEnter(proximityZoneContext ->  {
-//                        this.changeLocation(proximityZoneContext);
+                .forTag(context.getString(R.string.beacons_tag))
+                .inCustomRange(1.0)
+                .onContextChange(proximityZoneContexts -> {
+g                    if(proximityZoneContexts.size() != 1) {
                         return null;
-                    })
-                    .onExit(proximityZoneContext ->  {
-                        return null;
-                    })
-                    .build();
+                    }
 
-            observationHandlers.add(proximityObserver.startObserving(zone));
-        }
+                    this.changeLocation(proximityZoneContexts.iterator().next());
+                    return null;
+                })
+                .build();
+
+            observationHandler = proximityObserver.startObserving(zone);
     }
 
     public void changeLocation(ProximityZoneContext proximityZoneContext) {
-        this.tryChangeLocation(proximityZoneContext.getTag());
+        this.tryChangeLocation(proximityZoneContext.getDeviceId());
 
         try {
             if (PathFinder.hasReachedDestination()) {
@@ -71,7 +69,6 @@ public class BeaconsListener extends Thread {
                 this.shutDown();
 
                 this.interrupt();
-                return;
             }
         } catch (InterruptedException e) {
             // does nothing
@@ -87,9 +84,7 @@ public class BeaconsListener extends Thread {
         mTts.stop();
         mTts.shutdown();
 
-        for (ProximityObserver.Handler handler: observationHandlers) {
-            handler.stop();
-        }
+        observationHandler.stop();
     }
 
     private void tryChangeLocation(String currentLocationId) {
