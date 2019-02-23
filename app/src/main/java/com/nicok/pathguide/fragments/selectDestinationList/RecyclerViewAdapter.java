@@ -1,28 +1,25 @@
-package com.nicok.pathguide.fragments;
+package com.nicok.pathguide.fragments.selectDestinationList;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nicok.pathguide.fragments.SelectDestinationListFragment.OnListFragmentInteractionListener;
-import com.nicok.pathguide.fragments.dummy.DummyContent.DummyItem;
+import com.nicok.pathguide.business_definitions.NodeDefinition;
+import com.nicok.pathguide.fragments.selectDestinationList.Fragment.OnListFragmentInteractionListener;
+import com.nicok.pathguide.activities.R;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
-public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<NodeDefinition> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyItemRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public RecyclerViewAdapter(List<NodeDefinition> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -30,15 +27,20 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_item, parent, false);
+                .inflate(R.layout.fragment_destination, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.description.setText(mValues.get(position).description);
+        holder.extra.setText(mValues.get(position).extra);
+
+        Integer icon = mValues.get(position).getIcon();
+        if (icon != null) {
+            holder.icon.setImageResource(icon);
+        }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,20 +61,22 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public final TextView description;
+        public final TextView extra;
+        public final ImageView icon;
+        public NodeDefinition mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            description = (TextView) view.findViewById(R.id.tv_description);
+            extra = (TextView) view.findViewById(R.id.tv_extra);
+            icon = (ImageView) view.findViewById(R.id.img_icon);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + description.getText() + "'";
         }
     }
 }

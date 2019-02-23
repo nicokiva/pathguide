@@ -1,4 +1,4 @@
-package com.nicok.pathguide.fragments;
+package com.nicok.pathguide.fragments.selectDestinationDialog;
 
 import com.nicok.pathguide.activities.R;
 import com.nicok.pathguide.constants.ExtrasParameterNames;
@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import java.io.Serializable;
 
-public class SelectDestinationDialogFragment extends DialogFragment {
+public class Fragment extends DialogFragment {
 
     public interface SelectDestinationDialogListener {
         void onDialogPositiveClick(Serializable entityData);

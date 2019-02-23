@@ -1,9 +1,8 @@
-package com.nicok.pathguide.fragments;
+package com.nicok.pathguide.fragments.selectDestinationList;
 
 import android.content.Context;
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,11 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nicok.pathguide.R;
-import com.nicok.pathguide.fragments.dummy.DummyContent;
-import com.nicok.pathguide.fragments.dummy.DummyContent.DummyItem;
-
-import java.util.List;
+import com.nicok.pathguide.activities.R;
+import com.nicok.pathguide.business_definitions.NodeDefinition;
+import com.nicok.pathguide.business_logic.PathFinder;
+import com.nicok.pathguide.fragments.selectDestinationDialog.Fragment.SelectDestinationDialogListener;
 
 /**
  * A fragment representing a list of Items.
@@ -24,7 +22,7 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class SelectDestinationListFragment extends Fragment {
+public class Fragment extends androidx.fragment.app.Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -36,13 +34,13 @@ public class SelectDestinationListFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public SelectDestinationListFragment() {
+    public Fragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static SelectDestinationListFragment newInstance(int columnCount) {
-        SelectDestinationListFragment fragment = new SelectDestinationListFragment();
+    public static Fragment newInstance(int columnCount) {
+        Fragment fragment = new Fragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -61,7 +59,7 @@ public class SelectDestinationListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_item_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_destination_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -72,7 +70,7 @@ public class SelectDestinationListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new RecyclerViewAdapter(PathFinder.getMap().getFinalNodes(), mListener));
         }
         return view;
     }
@@ -107,6 +105,6 @@ public class SelectDestinationListFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(NodeDefinition item);
     }
 }

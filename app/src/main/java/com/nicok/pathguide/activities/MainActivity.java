@@ -43,22 +43,27 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private Unit goToDestinationsList(){
+        if (!PathFinder.loadMap(getApplicationContext())) {
+            return null;
+        }
+
+        Intent myIntent = new Intent(MainActivity.this, DestinationActivity.class);
+        MainActivity.this.startActivity(myIntent);
+
+        return null;
+    }
+
     private void checkEstimoteRequirements () {
         RequirementsWizardFactory.createEstimoteRequirementsWizard().fulfillRequirements(
                 this,
                 () -> {
-                    if (!PathFinder.loadMap(getApplicationContext())) {
-                        return null;
-                    }
-
-                    Intent myIntent = new Intent(MainActivity.this, DestinationActivity.class);
-                    MainActivity.this.startActivity(myIntent);
-
-                    return null;
+                    return this.goToDestinationsList();
                 },
                 (requirements) -> {
                     /* scanning won't work, handle this case in your app */
-                    return null;
+                    return this.goToDestinationsList();
+//                    return null;
                 },
 
                 (throwable) -> {
