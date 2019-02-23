@@ -14,14 +14,7 @@ import android.view.ViewGroup;
 import com.nicok.pathguide.activities.R;
 import com.nicok.pathguide.business_definitions.NodeDefinition;
 import com.nicok.pathguide.business_logic.PathFinder;
-import com.nicok.pathguide.fragments.selectDestinationDialog.Fragment.SelectDestinationDialogListener;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
 public class Fragment extends androidx.fragment.app.Fragment {
 
     // TODO: Customize parameter argument names
@@ -30,22 +23,7 @@ public class Fragment extends androidx.fragment.app.Fragment {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public Fragment() {
-    }
-
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static Fragment newInstance(int columnCount) {
-        Fragment fragment = new Fragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    public Fragment() { }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,11 +35,9 @@ public class Fragment extends androidx.fragment.app.Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_destination_list, container, false);
 
-        // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
@@ -72,6 +48,7 @@ public class Fragment extends androidx.fragment.app.Fragment {
             }
             recyclerView.setAdapter(new RecyclerViewAdapter(PathFinder.getMap().getFinalNodes(), mListener));
         }
+
         return view;
     }
 
@@ -79,11 +56,11 @@ public class Fragment extends androidx.fragment.app.Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
         if (context instanceof OnListFragmentInteractionListener) {
             mListener = (OnListFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
+            throw new RuntimeException(context.toString() + " must implement OnListFragmentInteractionListener");
         }
     }
 
@@ -93,18 +70,7 @@ public class Fragment extends androidx.fragment.app.Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(NodeDefinition item);
     }
 }
