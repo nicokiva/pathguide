@@ -1,16 +1,13 @@
 package com.nicok.pathguide.graph;
 
-import com.nicok.pathguide.business_definitions.EdgeDefinition;
-import com.nicok.pathguide.business_definitions.Graph;
-import com.nicok.pathguide.business_definitions.NodeDefinition;
+import com.nicok.pathguide.businessDefinitions.EdgeDefinition;
+import com.nicok.pathguide.businessDefinitions.Graph;
+import com.nicok.pathguide.businessDefinitions.NodeDefinition;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.Assert.*;
 

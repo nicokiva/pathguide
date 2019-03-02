@@ -2,8 +2,10 @@ package com.nicok.pathguide.activities;
 
 import android.os.Bundle;
 
-import com.nicok.pathguide.business_definitions.NodeDefinition;
-import com.nicok.pathguide.business_logic.PathFinder;
+import com.nicok.pathguide.businessDefinitions.NodeDefinition;
+import com.nicok.pathguide.businessLogic.PathFinder;
+import com.nicok.pathguide.businessDefinitions.NodeDefinition;
+import com.nicok.pathguide.businessLogic.PathFinder;
 import com.nicok.pathguide.constants.ExtrasParameterNames;
 import com.nicok.pathguide.fragments.selectDestinationDialog.Fragment;
 import com.nicok.pathguide.fragments.selectDestinationDialog.Fragment.SelectDestinationDialogListener;

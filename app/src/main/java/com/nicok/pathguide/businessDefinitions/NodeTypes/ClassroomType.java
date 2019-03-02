@@ -1,6 +1,4 @@
-package com.nicok.pathguide.business_definitions.NodeTypes;
-
-import android.content.Context;
+package com.nicok.pathguide.businessDefinitions.NodeTypes;
 
 import com.nicok.pathguide.activities.R;
 

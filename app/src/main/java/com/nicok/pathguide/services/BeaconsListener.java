@@ -10,12 +10,8 @@ import com.estimote.proximity_sdk.api.ProximityZone;
 import com.estimote.proximity_sdk.api.ProximityZoneBuilder;
 import com.estimote.proximity_sdk.api.ProximityZoneContext;
 import com.nicok.pathguide.activities.R;
-import com.nicok.pathguide.business_definitions.EdgeDefinition;
-import com.nicok.pathguide.business_definitions.NodeDefinition;
-import com.nicok.pathguide.business_logic.PathFinder;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.nicok.pathguide.businessDefinitions.EdgeDefinition;
+import com.nicok.pathguide.businessLogic.PathFinder;
 
 public class BeaconsListener extends Thread {
 

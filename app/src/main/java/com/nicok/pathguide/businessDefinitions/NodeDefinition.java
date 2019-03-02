@@ -1,15 +1,12 @@
-package com.nicok.pathguide.business_definitions;
+package com.nicok.pathguide.businessDefinitions;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.nicok.pathguide.business_definitions.NodeTypes.NodeType;
-
-import org.w3c.dom.Node;
+import com.nicok.pathguide.businessDefinitions.NodeTypes.NodeType;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;

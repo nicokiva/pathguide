@@ -1,10 +1,10 @@
-package com.nicok.pathguide.business_logic;
+package com.nicok.pathguide.businessLogic;
 
 import android.content.Context;
 
-import com.nicok.pathguide.business_definitions.EdgeDefinition;
-import com.nicok.pathguide.business_definitions.MapDefinition;
-import com.nicok.pathguide.business_definitions.NodeDefinition;
+import com.nicok.pathguide.businessDefinitions.EdgeDefinition;
+import com.nicok.pathguide.businessDefinitions.MapDefinition;
+import com.nicok.pathguide.businessDefinitions.NodeDefinition;
 import com.nicok.pathguide.helpers.reader.FileReader;
 import com.nicok.pathguide.helpers.reader.IReader;
 import com.nicok.pathguide.helpers.serializer.SerializeWrapper;

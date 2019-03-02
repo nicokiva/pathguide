@@ -1,9 +1,4 @@
-package com.nicok.pathguide.business_definitions;
-
-import com.nicok.pathguide.business_definitions.EdgeDefinition;
-import com.nicok.pathguide.business_definitions.NodeDefinition;
-
-import org.w3c.dom.Node;
+package com.nicok.pathguide.businessDefinitions;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -11,8 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Graph {
 

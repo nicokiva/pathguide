@@ -1,14 +1,14 @@
-package com.nicok.pathguide.business_definitions;
+package com.nicok.pathguide.businessDefinitions;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.nicok.pathguide.business_definitions.NodeTypes.BathroomType;
-import com.nicok.pathguide.business_definitions.NodeTypes.ClassroomType;
-import com.nicok.pathguide.business_definitions.NodeTypes.GatewayType;
-import com.nicok.pathguide.business_definitions.NodeTypes.NodeType;
+import com.nicok.pathguide.businessDefinitions.NodeTypes.BathroomType;
+import com.nicok.pathguide.businessDefinitions.NodeTypes.ClassroomType;
+import com.nicok.pathguide.businessDefinitions.NodeTypes.GatewayType;
+import com.nicok.pathguide.businessDefinitions.NodeTypes.NodeType;
 
 import java.io.IOException;
 import java.util.ArrayList;

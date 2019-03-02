@@ -1,25 +1,14 @@
 package com.nicok.pathguide.activities;
 
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.speech.tts.TextToSpeech;
 
-import com.estimote.mustard.rx_goodness.rx_requirements_wizard.Requirement;
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.RequirementsWizardFactory;
-import com.nicok.pathguide.business_logic.PathFinder;
-import com.nicok.pathguide.constants.ExtrasParameterNames;
-import com.nicok.pathguide.services.BeaconService;
-
-import java.util.List;
+import com.nicok.pathguide.businessLogic.PathFinder;
 
 import androidx.appcompat.app.AppCompatActivity;
 import kotlin.Unit;
-import kotlin.jvm.functions.Function0;
-import kotlin.jvm.functions.Function1;
 
 
 public class MainActivity extends AppCompatActivity {
