@@ -64,9 +64,9 @@ public class CurrentLocationPathListAdapter extends ArrayAdapter<NodeDefinition>
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-//        int color = position == 0 ? R.color.colorSelected : R.color.colorUnselected;
-//
-//        convertView.setBackgroundColor(getContext().getColor(color));
+        int color = position == 0 ? R.color.colorSelected : R.color.colorUnselected;
+
+        convertView.setBackgroundColor(getContext().getColor(color));
         viewHolder.description.setText(entity.description);
         viewHolder.extra.setText(entity.extra);
 
