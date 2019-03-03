@@ -29,6 +29,10 @@ public class Graph {
         this.shortestPath = new LinkedList<>();
     }
 
+    public List<NodeDefinition> getShortestPath() {
+        return shortestPath;
+    }
+
     public List<NodeDefinition> getNodes() {
         return nodes;
     }

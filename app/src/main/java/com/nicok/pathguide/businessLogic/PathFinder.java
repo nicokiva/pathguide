@@ -9,6 +9,9 @@ import com.nicok.pathguide.helpers.reader.FileReader;
 import com.nicok.pathguide.helpers.reader.IReader;
 import com.nicok.pathguide.helpers.serializer.SerializeWrapper;
 
+import java.nio.file.Path;
+import java.util.List;
+
 public class PathFinder {
 
     private static MapDefinition map = null;
@@ -38,6 +41,10 @@ public class PathFinder {
         PathFinder.map.setCurrentLocation(null);
     }
 
+    public static List<NodeDefinition> getShortestPath() {
+        return PathFinder.map.getShortestPath();
+    }
+
     public static boolean hasReachedDestination() {
         return PathFinder.map.hasReachedDestination();
     }
@@ -47,6 +54,7 @@ public class PathFinder {
     }
 
     public static void setDestination(NodeDefinition destination) {
+        PathFinder.reset();
         PathFinder.map.setDestination(destination);
     }
 

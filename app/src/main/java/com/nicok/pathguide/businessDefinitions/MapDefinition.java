@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nicok.pathguide.businessDefinitions.NodeTypes.NodeType;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,16 +44,12 @@ public class MapDefinition implements Serializable {
         this.graph.setCurrentLocation(currentLocation);
     }
 
-    public List<NodeDefinition> getNodes() {
-        if (nodes == null) {
-            return new ArrayList<>();
-        }
-
-        return nodes;
-    }
-
     public NodeDefinition getNodeById(String id) {
         return this.nodes.stream().filter(node -> node.getId().equals(id)).findFirst().get();
+    }
+
+    public List<NodeDefinition> getShortestPath() {
+        return this.graph.getShortestPath();
     }
 
     public boolean hasReachedDestination() {

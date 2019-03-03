@@ -52,7 +52,7 @@ public class NodeDefinition implements Serializable {
     private List<NodeDefinition> shortestPath = new LinkedList<>();
 
     public Integer getIcon() {
-        if (this.types == null) {
+        if (types == null || types.size() == 0) {
             return null;
         }
 

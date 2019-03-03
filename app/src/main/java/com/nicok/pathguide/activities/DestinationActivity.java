@@ -1,5 +1,6 @@
 package com.nicok.pathguide.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -8,15 +9,16 @@ import android.widget.ListView;
 import com.nicok.pathguide.businessDefinitions.NodeDefinition;
 import com.nicok.pathguide.businessLogic.PathFinder;
 import com.nicok.pathguide.constants.ExtrasParameterNames;
-import com.nicok.pathguide.adapters.NodeEntityAdapter;
+import com.nicok.pathguide.adapters.DestinationRowAdapter;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-public class DestinationActivity extends AppPathGuideActivity implements com.nicok.pathguide.fragments.selectDestinationDialog.Fragment.SelectDestinationDialogListener {
+public class DestinationActivity extends AppCompatActivity implements com.nicok.pathguide.fragments.selectDestinationDialog.Fragment.SelectDestinationDialogListener {
 
     ListView destinationsList;
 
@@ -36,7 +38,7 @@ public class DestinationActivity extends AppPathGuideActivity implements com.nic
     }
 
     private void prepareDestinationsList(List<NodeDefinition> nodes) {
-        NodeEntityAdapter adapter = new NodeEntityAdapter(this, android.R.layout.simple_list_item_1, nodes.stream().collect(Collectors.toList()));
+        DestinationRowAdapter adapter = new DestinationRowAdapter(this, android.R.layout.simple_list_item_1, nodes);
         destinationsList.setAdapter(adapter);
         destinationsList.setOnItemClickListener(this::onItemClickListener);
     }
@@ -61,16 +63,12 @@ public class DestinationActivity extends AppPathGuideActivity implements com.nic
         }
 
         PathFinder.setDestination((NodeDefinition) destination);
-        startServiceAndBind();
+
+        Intent myIntent = new Intent(DestinationActivity.this, CurrentLocationActivity.class);
+        DestinationActivity.this.startActivity(myIntent);
     }
 
     @Override
     public void onDialogNegativeClick(Serializable entityData) { }
-
-
-    @Override
-    protected void onServiceLoaded() {
-        //
-    };
 
 }

@@ -6,4 +6,9 @@ public class ExtrasParameterNames {
     public static final String ENTITY_ICON = "entity_icon";
     public static final String ENTITY_DATA = "entity_data";
 
+    public static final String NODES_ENTITY_DATA = "nodes_" + ENTITY_DATA;
+    public static final String EDGE_ENTITY_DATA = "edge_" + ENTITY_DATA;
+
+    public static final String CURRENT_LOCATION = "current_location";
+
 }
