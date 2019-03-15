@@ -22,6 +22,10 @@ public class NodeDefinition implements Serializable {
     @JsonProperty("extra")
     public String extra;
 
+    public String getExtra() {
+        return extra;
+    }
+
     @JsonProperty("floor")
     public int floor;
 
@@ -31,6 +35,10 @@ public class NodeDefinition implements Serializable {
 
     @JsonProperty("description")
     public String description;
+
+    public String getDescription() {
+        return description;
+    }
 
     @JsonProperty("id")
     public String id;

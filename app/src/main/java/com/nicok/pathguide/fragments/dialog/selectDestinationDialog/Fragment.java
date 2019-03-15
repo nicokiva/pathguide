@@ -1,7 +1,8 @@
-package com.nicok.pathguide.fragments.selectDestinationDialog;
+package com.nicok.pathguide.fragments.dialog.selectDestinationDialog;
 
 import com.nicok.pathguide.activities.R;
 import com.nicok.pathguide.constants.ExtrasParameterNames;
+import com.nicok.pathguide.fragments.dialog.DialogFragmentBase;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -16,30 +17,7 @@ import android.widget.TextView;
 
 import java.io.Serializable;
 
-public class Fragment extends DialogFragment {
-
-    public interface SelectDestinationDialogListener {
-        void onDialogPositiveClick(Serializable entityData);
-        void onDialogNegativeClick(Serializable entityData);
-    }
-
-    SelectDestinationDialogListener listener;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        if (!(context instanceof SelectDestinationDialogListener)){
-            return;
-        }
-
-        try {
-            listener = (SelectDestinationDialogListener)context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement SelectDestinationDialogListener");
-        }
-    }
-
+public class Fragment extends DialogFragmentBase {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         String entityName = getArguments().getString(ExtrasParameterNames.ENTITY_NAME);
@@ -61,7 +39,7 @@ public class Fragment extends DialogFragment {
                 listener.onDialogPositiveClick(entityData);
             })
             .setNegativeButton(android.R.string.no, (dialog, id) -> {
-                listener.onDialogNegativeClick(entityData);
+                listener.onDialogNegativeClick();
             });
 
         return builder.create();

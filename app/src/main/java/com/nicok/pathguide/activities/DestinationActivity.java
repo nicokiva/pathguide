@@ -10,15 +10,15 @@ import com.nicok.pathguide.businessDefinitions.NodeDefinition;
 import com.nicok.pathguide.businessLogic.PathFinder;
 import com.nicok.pathguide.constants.ExtrasParameterNames;
 import com.nicok.pathguide.adapters.DestinationRowAdapter;
+import com.nicok.pathguide.fragments.dialog.selectDestinationDialog.Fragment;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-public class DestinationActivity extends AppCompatActivity implements com.nicok.pathguide.fragments.selectDestinationDialog.Fragment.SelectDestinationDialogListener {
+public class DestinationActivity extends AppCompatActivity implements Fragment.DialogFragmentBaseListener{
 
     ListView destinationsList;
 
@@ -51,7 +51,7 @@ public class DestinationActivity extends AppCompatActivity implements com.nicok.
         data.putInt(ExtrasParameterNames.ENTITY_ICON, ((NodeDefinition) itemValue).getIcon());
         data.putSerializable(ExtrasParameterNames.ENTITY_DATA, (NodeDefinition) itemValue);
 
-        DialogFragment dialog = new com.nicok.pathguide.fragments.selectDestinationDialog.Fragment();
+        DialogFragment dialog = new Fragment();
         dialog.setArguments(data);
         dialog.show(getSupportFragmentManager(), "SelectDestinationDialogFragment");
     }
@@ -69,6 +69,6 @@ public class DestinationActivity extends AppCompatActivity implements com.nicok.
     }
 
     @Override
-    public void onDialogNegativeClick(Serializable entityData) { }
+    public void onDialogNegativeClick() { }
 
 }

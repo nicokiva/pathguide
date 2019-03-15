@@ -25,7 +25,7 @@ public class DestinationRowAdapter extends ArrayAdapter<NodeDefinition> {
     private List<NodeDefinition> data = null;
     Context context;
 
-    public DestinationRowAdapter(Context context, int resource, List<NodeDefinition> data) {
+    public DestinationRowAdapter(Context context, int resource, List<NodeDefinition > data) {
         super(context, resource, data);
 
         this.data = data;

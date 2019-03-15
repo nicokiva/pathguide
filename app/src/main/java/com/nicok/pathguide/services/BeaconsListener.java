@@ -60,7 +60,7 @@ public class BeaconsListener extends Thread {
 
         observationHandler = proximityObserver.startObserving(zone);
 
-//        this.tryChangeLocation("c5f8eb0b3d42236c47b0d4c3eb048904");
+        this.tryChangeLocation("c5f8eb0b3d42236c47b0d4c3eb048904");
     }
 
     public void changeLocation(ProximityZoneContext proximityZoneContext) {
