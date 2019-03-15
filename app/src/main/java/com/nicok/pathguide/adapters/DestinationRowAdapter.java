@@ -21,7 +21,6 @@ public class DestinationRowAdapter extends ArrayAdapter<NodeDefinition> {
         ImageView icon;
     }
 
-
     private List<NodeDefinition> data = null;
     Context context;
 

@@ -106,14 +106,18 @@ public class BeaconsListener extends Thread {
     private void inform(NodeDefinition[] shortestPath, EdgeDefinition edge) {
         String instructions = edge.getInstructions();
 
+        this.showCurrentLocation(shortestPath, edge);
+
+        this.speakService.speak(instructions);
+    }
+
+    private void showCurrentLocation(NodeDefinition[] shortestPath, EdgeDefinition edge) {
         Bundle data = new Bundle();
         data.putSerializable(ExtrasParameterNames.NODES_ENTITY_DATA, shortestPath);
         data.putSerializable(ExtrasParameterNames.EDGE_ENTITY_DATA, edge);
         Intent intent = new Intent(ExtrasParameterNames.CURRENT_LOCATION);
         intent.putExtras(data);
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-
-        this.speakService.speak(instructions);
     }
 
 }
