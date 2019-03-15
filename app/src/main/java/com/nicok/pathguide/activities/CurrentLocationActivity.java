@@ -11,21 +11,21 @@ import com.nicok.pathguide.businessDefinitions.NodeDefinition;
 import com.nicok.pathguide.businessLogic.PathFinder;
 import com.nicok.pathguide.constants.ExtrasParameterNames;
 import com.nicok.pathguide.fragments.dialog.cancelDialog.Fragment;
+import com.nicok.pathguide.services.SpeakService;
 
 import java.io.Serializable;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 
 public class CurrentLocationActivity extends AppPathGuideActivity implements com.nicok.pathguide.fragments.dialog.selectDestinationDialog.Fragment.DialogFragmentBaseListener {
-
-    Toolbar mTopToolbar;
 
     TextView description;
     TextView extra;
     TextView instructions;
     Button cancel;
+    Button repeatInstructions;
+
+    SpeakService speakService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,9 @@ public class CurrentLocationActivity extends AppPathGuideActivity implements com
         this.extra = findViewById(R.id.tv_extra);
         this.instructions = findViewById(R.id.tv_instructions);
         this.cancel = findViewById(R.id.bt_cancel);
+        this.repeatInstructions = findViewById(R.id.bt_repeat_instructions);
+
+        this.speakService = SpeakService.getInstance(getApplicationContext());
     }
 
     @Override
@@ -63,7 +66,13 @@ public class CurrentLocationActivity extends AppPathGuideActivity implements com
         this.extra.setText(node.getExtra());
         this.instructions.setText(edge.getInstructions());
 
+
         cancel.setOnClickListener(v -> onTryCancelTrip());
+        repeatInstructions.setOnClickListener(v -> onRepeatInstructions(edge));
+    }
+
+    private void onRepeatInstructions(EdgeDefinition edge) {
+        this.speakService.speak(edge.instructions);
     }
 
     private void onTryCancelTrip() {
@@ -72,6 +81,7 @@ public class CurrentLocationActivity extends AppPathGuideActivity implements com
     }
 
     private void onCancelTrip() {
+        this.speakService.shutdown();
         PathFinder.reset();
         Intent myIntent = new Intent(CurrentLocationActivity.this, DestinationActivity.class);
         CurrentLocationActivity.this.startActivity(myIntent);

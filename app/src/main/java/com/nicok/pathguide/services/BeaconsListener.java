@@ -3,7 +3,6 @@ package com.nicok.pathguide.services;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 
 import com.estimote.proximity_sdk.api.EstimoteCloudCredentials;
 import com.estimote.proximity_sdk.api.ProximityObserver;
@@ -24,19 +23,16 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 public class BeaconsListener extends Thread {
 
     private Context context;
-    private TextToSpeech mTts;
-    private boolean ttsEnabled = false;
 
     EstimoteCloudCredentials cloudCredentials;
     ProximityObserver.Handler observationHandler;
+    SpeakService speakService;
 
     public BeaconsListener(Context context) {
         cloudCredentials = new EstimoteCloudCredentials(context.getString(R.string.beacons_api_key), context.getString(R.string.beacons_api_app_token));
         this.context = context;
 
-        this.mTts = new TextToSpeech(context, (int status) -> {
-            ttsEnabled = status == TextToSpeech.SUCCESS;
-        });
+        this.speakService = SpeakService.getInstance(context);
     }
 
     private void observeBeacons() {
@@ -60,6 +56,7 @@ public class BeaconsListener extends Thread {
 
         observationHandler = proximityObserver.startObserving(zone);
 
+        // TODO: Remove when everything is ok
         this.tryChangeLocation("c5f8eb0b3d42236c47b0d4c3eb048904");
     }
 
@@ -70,7 +67,7 @@ public class BeaconsListener extends Thread {
             if (PathFinder.hasReachedDestination()) {
                 PathFinder.reset();
 
-                this.speak(context.getString(R.string.arrived_message));
+                this.speakService.speak(context.getString(R.string.arrived_message));
                 Thread.sleep(4000); // Required to give app time to speak last message.
                 this.shutDown();
 
@@ -87,8 +84,7 @@ public class BeaconsListener extends Thread {
     }
 
     private void shutDown() {
-        mTts.stop();
-        mTts.shutdown();
+        this.speakService.shutdown();
 
         observationHandler.stop();
     }
@@ -117,15 +113,7 @@ public class BeaconsListener extends Thread {
         intent.putExtras(data);
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 
-        this.speak(instructions);
-    }
-
-    private void speak(String message) {
-        if (!ttsEnabled) {
-            return;
-        }
-
-        mTts.speak(message, TextToSpeech.QUEUE_ADD, null, null);
+        this.speakService.speak(instructions);
     }
 
 }

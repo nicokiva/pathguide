@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.CurrentLocationActivity"
-    tools:padding="15dp">
+    android:padding="15dp"
+    tools:context=".activities.CurrentLocationActivity">
 
     <include
         android:id="@+id/activity_current_location_unknown"
@@ -14,6 +14,7 @@
         android:layout_height="wrap_content" />
 
     <include
+        android:visibility="gone"
         android:id="@+id/activity_current_location_known"
         layout="@layout/activity_current_location_known"
         android:layout_width="match_parent"

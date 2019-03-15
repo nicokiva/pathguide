@@ -14,6 +14,7 @@
     <string name="beacons_api_app_token">a8f5f1ee5914fefc3d3af67b894c5f89</string>
 
     <string name="current_location_title">Ubicación actual</string>
+    <string name="current_location_repeat_instructions">Repetir Instrucciones</string>
     <string name="current_location_cancel">Cancelar viaje</string>
 
     <string name="current_location_cancel_confirm">Está seguro que desea cancelar el viaje?</string>
