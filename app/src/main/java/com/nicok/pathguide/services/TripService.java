@@ -19,6 +19,22 @@ public class TripService {
     private Context context;
     SpeakService speakService;
 
+    public TripService(Context context) {
+        this.context = context;
+
+        this.speakService = SpeakService.getInstance(context);
+    }
+
+    private static TripService _instance = null;
+    public static TripService getInstance(Context context) {
+        if (_instance == null) {
+            _instance = new TripService(context);
+        }
+
+        return _instance;
+    }
+
+
     public void finish() {
         this.speakService.speak(context.getString(R.string.arrived_message));
         try {
@@ -84,21 +100,6 @@ public class TripService {
         Intent intent = new Intent(ExtrasParameterNames.CURRENT_LOCATION);
         intent.putExtras(data);
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-    }
-
-    public TripService(Context context) {
-        this.context = context;
-
-        this.speakService = SpeakService.getInstance(context);
-    }
-
-    private static TripService _instance = null;
-    public static TripService getInstance(Context context) {
-        if (_instance == null) {
-            _instance = new TripService(context);
-        }
-
-        return _instance;
     }
 
 }

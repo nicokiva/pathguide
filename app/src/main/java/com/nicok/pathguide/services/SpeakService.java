@@ -14,23 +14,6 @@ public class SpeakService {
         });
     }
 
-    public void shutdown() {
-        mTts.stop();
-        mTts.shutdown();
-
-        this.mTts = null;
-        _instance = null;
-    }
-
-    public void speak(String message) {
-        if (!ttsEnabled) {
-            return;
-        }
-
-        mTts.speak(message, TextToSpeech.QUEUE_ADD, null, null);
-    }
-
-
     private static SpeakService _instance = null;
     public static SpeakService getInstance(Context context) {
         if (_instance == null) {
@@ -46,6 +29,22 @@ public class SpeakService {
         }
 
         return _instance;
+    }
+
+    public void shutdown() {
+        mTts.stop();
+        mTts.shutdown();
+
+        this.mTts = null;
+        _instance = null;
+    }
+
+    public void speak(String message) {
+        if (!ttsEnabled) {
+            return;
+        }
+
+        mTts.speak(message, TextToSpeech.QUEUE_ADD, null, null);
     }
 
 }
