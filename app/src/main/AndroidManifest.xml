@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.nicok.pathguide.services.BeaconService" />
+        <service android:name="com.nicok.pathguide.services.AppPathGuideService" />
     </application>
 
 </manifest>

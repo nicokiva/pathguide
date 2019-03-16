@@ -10,7 +10,7 @@ import com.estimote.proximity_sdk.api.ProximityZoneBuilder;
 import com.estimote.proximity_sdk.api.ProximityZoneContext;
 import com.nicok.pathguide.activities.R;
 
-public class BeaconsListener extends Thread {
+public class BeaconsService extends Thread {
 
     private Context context;
 
@@ -18,7 +18,7 @@ public class BeaconsListener extends Thread {
     ProximityObserver.Handler observationHandler;
     TripService tripService;
 
-    public BeaconsListener(Context context) {
+    public BeaconsService(Context context) {
         cloudCredentials = new EstimoteCloudCredentials(context.getString(R.string.beacons_api_key), context.getString(R.string.beacons_api_app_token));
         this.context = context;
 

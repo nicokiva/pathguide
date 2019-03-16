@@ -10,14 +10,14 @@ import android.os.Bundle;
 import android.os.IBinder;
 
 import com.nicok.pathguide.constants.ExtrasParameterNames;
-import com.nicok.pathguide.services.BeaconService;
+import com.nicok.pathguide.services.AppPathGuideService;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public abstract class AppPathGuideActivity extends AppCompatActivity {
     private Intent serviceIntent;
-    private BeaconService service;
+    private AppPathGuideService service;
     private ServiceConnection serviceConnection;
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
@@ -32,7 +32,7 @@ public abstract class AppPathGuideActivity extends AppCompatActivity {
     protected abstract void onServiceLoaded();
 
     protected void startServiceAndBind() {
-        serviceIntent = new Intent(getApplicationContext(), BeaconService.class);
+        serviceIntent = new Intent(getApplicationContext(), AppPathGuideService.class);
 
         startService(serviceIntent);
         bindService();
@@ -50,7 +50,7 @@ public abstract class AppPathGuideActivity extends AppCompatActivity {
         unbindService(serviceConnection);
     }
 
-    protected BeaconService getService() {
+    protected AppPathGuideService getService() {
         return service;
     }
 
@@ -66,7 +66,7 @@ public abstract class AppPathGuideActivity extends AppCompatActivity {
             serviceConnection = new ServiceConnection() {
                 @Override
                 public void onServiceConnected(ComponentName name, IBinder iBinder) {
-                    BeaconService.BeaconServiceBinder binder = (BeaconService.BeaconServiceBinder) iBinder;
+                    AppPathGuideService.BeaconServiceBinder binder = (AppPathGuideService.BeaconServiceBinder) iBinder;
                     service = binder.getService();
 
                     onServiceLoaded();
