@@ -49,6 +49,10 @@ public class PathFinder {
         return PathFinder.map.hasReachedDestination();
     }
 
+    public static EdgeDefinition getCurrentInstructions() {
+        return PathFinder.map.getCurrnentInstructions();
+    }
+
     public static EdgeDefinition updateNodeAndGetInstructions(String currentLocationId){
         return PathFinder.map.updateNodeAndGetInstructions(currentLocationId);
     }

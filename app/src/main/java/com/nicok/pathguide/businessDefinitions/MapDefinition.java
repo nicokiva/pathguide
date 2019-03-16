@@ -27,6 +27,10 @@ public class MapDefinition implements Serializable {
         return this.graph.updateNodeAndGetInstructions(currentLocation);
     }
 
+    public EdgeDefinition getCurrnentInstructions() {
+        return this.graph.getCurrentInstructions();
+    }
+
     public List<NodeDefinition> getFinalNodes() {
         return nodes.stream()
                 .filter(

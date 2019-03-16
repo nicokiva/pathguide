@@ -51,6 +51,10 @@ public class TripService {
         }
     }
 
+    public void repeatInstructions() {
+        this.speakService.speak(PathFinder.getCurrentInstructions().instructions);
+    }
+
     public void tryChangeLocation(String currentLocationId) {
         EdgeDefinition edge = PathFinder.updateNodeAndGetInstructions(currentLocationId);
         List<NodeDefinition> shortestPath = PathFinder.getShortestPath();

@@ -11,7 +11,6 @@ import com.nicok.pathguide.businessDefinitions.NodeDefinition;
 import com.nicok.pathguide.services.TripService;
 import com.nicok.pathguide.constants.ExtrasParameterNames;
 import com.nicok.pathguide.fragments.dialog.cancelDialog.Fragment;
-import com.nicok.pathguide.services.SpeakService;
 
 import java.io.Serializable;
 
@@ -25,7 +24,6 @@ public class CurrentLocationActivity extends AppPathGuideActivity implements com
     Button cancel;
     Button repeatInstructions;
 
-    SpeakService speakService;
     TripService tripService;
 
     @Override
@@ -40,7 +38,6 @@ public class CurrentLocationActivity extends AppPathGuideActivity implements com
         this.cancel = findViewById(R.id.bt_cancel);
         this.repeatInstructions = findViewById(R.id.bt_repeat_instructions);
 
-        this.speakService = SpeakService.getInstance(getApplicationContext());
         this.tripService = TripService.getInstance(getApplicationContext());
     }
 
@@ -74,7 +71,7 @@ public class CurrentLocationActivity extends AppPathGuideActivity implements com
     }
 
     private void onRepeatInstructions(EdgeDefinition edge) {
-        this.speakService.speak(edge.instructions);
+        this.tripService.repeatInstructions();
     }
 
     private void onTryCancelTrip() {

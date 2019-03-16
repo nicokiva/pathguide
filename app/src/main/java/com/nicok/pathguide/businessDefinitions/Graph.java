@@ -97,6 +97,12 @@ public class Graph {
 
     }
 
+    public EdgeDefinition getCurrentInstructions() {
+        NodeDefinition nextLocation = this.shortestPath.get(this.shortestPath.indexOf(this.currentLocation) + 1);
+
+        return this.currentLocation.getAdjacentNodes().get(nextLocation);
+    }
+
     public EdgeDefinition updateNodeAndGetInstructions(NodeDefinition currentLocation) {
         if (this.currentLocation != null && this.currentLocation.equals(currentLocation)) {
             return null;
@@ -113,9 +119,7 @@ public class Graph {
             this.calculateShortestPath(currentLocation, this.destination);
         }
 
-        NodeDefinition nextLocation = this.shortestPath.get(this.shortestPath.indexOf(currentLocation) + 1);
-
-        return currentLocation.getAdjacentNodes().get(nextLocation);
+        return this.getCurrentInstructions();
     }
 
     public Integer calculateShortestPath(NodeDefinition from, NodeDefinition to) {
