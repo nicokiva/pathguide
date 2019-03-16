@@ -11,6 +11,7 @@ import com.nicok.pathguide.businessLogic.PathFinder;
 import com.nicok.pathguide.constants.ExtrasParameterNames;
 import com.nicok.pathguide.adapters.DestinationRowAdapter;
 import com.nicok.pathguide.fragments.dialog.selectDestinationDialog.Fragment;
+import com.nicok.pathguide.services.TripService;
 
 import java.io.Serializable;
 import java.util.List;
@@ -21,6 +22,7 @@ import androidx.fragment.app.DialogFragment;
 public class DestinationActivity extends AppCompatActivity implements Fragment.DialogFragmentBaseListener{
 
     ListView destinationsList;
+    TripService tripService;
 
     @Override
     public void onBackPressed() {
@@ -33,8 +35,9 @@ public class DestinationActivity extends AppCompatActivity implements Fragment.D
         setTitle(R.string.destination_title);
         setContentView(R.layout.activity_destination);
 
-        destinationsList = findViewById(R.id.available_destination_list);
-        prepareDestinationsList(PathFinder.getMap().getFinalNodes());
+        this.tripService = TripService.getInstance(getApplicationContext());
+        this.destinationsList = findViewById(R.id.available_destination_list);
+        this.prepareDestinationsList(tripService.getFinalNodes());
     }
 
     private void prepareDestinationsList(List<NodeDefinition> nodes) {
@@ -62,7 +65,7 @@ public class DestinationActivity extends AppCompatActivity implements Fragment.D
             return;
         }
 
-        PathFinder.setDestination((NodeDefinition) destination);
+        tripService.setDestination((NodeDefinition) destination);
 
         Intent myIntent = new Intent(DestinationActivity.this, CurrentLocationActivity.class);
         DestinationActivity.this.startActivity(myIntent);

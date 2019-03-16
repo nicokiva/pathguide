@@ -10,6 +10,7 @@ import com.nicok.pathguide.businessLogic.PathFinder;
 import com.nicok.pathguide.constants.ExtrasParameterNames;
 import com.nicok.pathguide.activities.R;
 
+import java.nio.file.Path;
 import java.util.List;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -34,6 +35,13 @@ public class TripService {
         return _instance;
     }
 
+    public List<NodeDefinition> getFinalNodes() {
+        return PathFinder.getFinalNodes();
+    }
+
+    public void setDestination(NodeDefinition destination) {
+        PathFinder.setDestination(destination);
+    }
 
     public void finish() {
         this.speakService.speak(context.getString(R.string.arrived_message));

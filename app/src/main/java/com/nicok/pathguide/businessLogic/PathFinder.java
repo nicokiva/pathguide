@@ -32,8 +32,8 @@ public class PathFinder {
         }
     }
 
-    public static MapDefinition getMap () {
-        return PathFinder.map;
+    public static List<NodeDefinition> getFinalNodes() {
+        return map.getFinalNodes();
     }
 
     public static void reset() {
