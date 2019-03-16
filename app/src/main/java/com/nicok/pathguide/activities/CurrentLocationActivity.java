@@ -39,6 +39,9 @@ public class CurrentLocationActivity extends AppPathGuideActivity implements com
         this.repeatInstructions = findViewById(R.id.bt_repeat_instructions);
 
         this.tripService = TripService.getInstance(getApplicationContext());
+
+        // This button is shared between known and unknown
+        this.cancel.setOnClickListener(v -> onTryCancelTrip());
     }
 
     @Override
@@ -64,7 +67,6 @@ public class CurrentLocationActivity extends AppPathGuideActivity implements com
         this.extra.setText(node.getExtra());
         this.instructions.setText(edge.getInstructions());
 
-        this.cancel.setOnClickListener(v -> onTryCancelTrip());
         this.repeatInstructions.setOnClickListener(v -> onRepeatInstructions(edge));
     }
 

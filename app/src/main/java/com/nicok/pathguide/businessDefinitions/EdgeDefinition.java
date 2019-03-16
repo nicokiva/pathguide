@@ -9,18 +9,23 @@ import java.io.Serializable;
 
 public class EdgeDefinition implements Serializable {
 
+    @JsonProperty("distance")
+    public Integer distance;
+
     @JsonProperty("from")
     public String from;
-    public NodeDefinition fromNode;
 
     @JsonProperty("to")
     public String to;
-    public NodeDefinition toNode;
 
     @JsonProperty("instructions")
     public String instructions;
 
     public String getInstructions() {
         return instructions;
+    }
+
+    public Integer getDistance() {
+        return distance;
     }
 }

@@ -18,28 +18,27 @@ public class GraphUnitTest {
     private NodeDefinition aula206 = new NodeDefinition("003", "Aula 206");
     private NodeDefinition beacon01 = new NodeDefinition("004", "Beacon 01");
 
-    private EdgeDefinition banoToBeacon01 = createEdge("Baño to Beacon 01!");
-    private EdgeDefinition beacon01ToAula204 = createEdge("Beacon 01 to Aula 204!");
-    private EdgeDefinition beacon01ToAula205 = createEdge("Beacon 01 to Aula 205!");
-    private EdgeDefinition beacon01ToAula206 = createEdge("Beacon 01 to Aula 206!");
-    private EdgeDefinition beacon01ToBano = createEdge("Beacon 01 to Baño!");
-    private EdgeDefinition aula204ToBeacon01 = createEdge("Aula 204 to Beacon 01!");
-    private EdgeDefinition aula204ToAula205 = createEdge("Aula 204 to Aula 205!");
-    private EdgeDefinition aula204ToAula206 = createEdge("Aula 204 to Aula 206!");
-    private EdgeDefinition aula205ToBeacon01 = createEdge("Aula 205 to Beacon 01!");
-    private EdgeDefinition aula205ToAula204 = createEdge("Aula 205 to Aula 204!");
-    private EdgeDefinition aula205ToAula206 = createEdge("Aula 205 to Aula 206!");
-    private EdgeDefinition aula206ToBeacon01 = createEdge("Aula 206 to Beacon 01!");
-    private EdgeDefinition aula206ToAula204 = createEdge("Aula 206 to Aula 204!");
-    private EdgeDefinition aula206ToAula205 = createEdge("Aula 206 to Aula 205!");
+    private EdgeDefinition banoToBeacon01 = createEdge("Baño to Beacon 01!", 1);
+    private EdgeDefinition beacon01ToAula204 = createEdge("Beacon 01 to Aula 204!", 2);
+    private EdgeDefinition beacon01ToAula205 = createEdge("Beacon 01 to Aula 205!", 3);
+    private EdgeDefinition beacon01ToAula206 = createEdge("Beacon 01 to Aula 206!", 4);
+    private EdgeDefinition beacon01ToBano = createEdge("Beacon 01 to Baño!", 1);
+    private EdgeDefinition aula204ToBeacon01 = createEdge("Aula 204 to Beacon 01!", 2);
+    private EdgeDefinition aula204ToAula205 = createEdge("Aula 204 to Aula 205!", 5);
+    private EdgeDefinition aula204ToAula206 = createEdge("Aula 204 to Aula 206!", 6);
+    private EdgeDefinition aula205ToBeacon01 = createEdge("Aula 205 to Beacon 01!", 3);
+    private EdgeDefinition aula205ToAula204 = createEdge("Aula 205 to Aula 204!", 5);
+    private EdgeDefinition aula205ToAula206 = createEdge("Aula 205 to Aula 206!", 7);
+    private EdgeDefinition aula206ToBeacon01 = createEdge("Aula 206 to Beacon 01!", 4);
+    private EdgeDefinition aula206ToAula204 = createEdge("Aula 206 to Aula 204!", 6);
+    private EdgeDefinition aula206ToAula205 = createEdge("Aula 206 to Aula 205!", 7);
 
+    private EdgeDefinition banoToAula206 = createEdge("Baño to Aula 206!", 8);
 
-    private EdgeDefinition banoToAula206 = createEdge("Baño to Aula 206!");
-
-
-    private EdgeDefinition createEdge(String instructions) {
+    private EdgeDefinition createEdge(String instructions, Integer distance) {
         EdgeDefinition edge = new EdgeDefinition();
         edge.instructions = instructions;
+        edge.distance = distance;
 
         return edge;
     }

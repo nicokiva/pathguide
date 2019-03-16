@@ -88,7 +88,7 @@ public class Graph {
             for (Map.Entry<NodeDefinition, EdgeDefinition> adjacencyPair: currentNode.getAdjacentNodes().entrySet()) {
                 NodeDefinition adjacentNode = adjacencyPair.getKey();
                 if (!settledNodes.contains(adjacentNode)) {
-                    calculateMinimumDistance(adjacentNode, 1, currentNode);
+                    calculateMinimumDistance(adjacentNode, adjacencyPair.getValue().getDistance(), currentNode);
                     unsettledNodes.add(adjacentNode);
                 }
             }

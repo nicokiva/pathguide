@@ -44,40 +44,48 @@
     }
   ],
 
-  "edges": [{
-    "from": "aula203",
-    "to": "beacon02",
-    "instructions": "Aula 203 - Beacon 02"
-  },
+  "edges": [
     {
+      "distance": 3,
+      "from": "aula203",
+      "to": "beacon02",
+      "instructions": "Aula 203 - Beacon 02"
+    },
+    {
+      "distance": 4,
       "from": "aula203",
       "to": "bano",
       "instructions": "Aula 203 - Baño"
     },
 
     {
+      "distance": 3,
       "from": "beacon02",
       "to": "aula203",
       "instructions": "Beacon 02 - Aula 203"
     },
     {
+      "distance": 2,
       "from": "beacon02",
       "to": "aula205",
       "instructions": "Beacon 02 - Aula 205"
     },
     {
+      "distance": 1,
       "from": "beacon02",
       "to": "bano",
       "instructions": "Beacon 02 - Baño"
     },
 
     {
+      "distance": 2,
       "from": "aula205",
       "to": "beacon02",
       "instructions": "Aula 205 - Beacon 02"
     },
 
     {
+      "distance": 1,
       "from": "bano",
       "to": "beacon02",
       "instructions": "Baño - Beacon 02"
