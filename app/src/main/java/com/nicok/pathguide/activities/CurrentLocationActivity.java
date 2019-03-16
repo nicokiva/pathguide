@@ -64,9 +64,8 @@ public class CurrentLocationActivity extends AppPathGuideActivity implements com
         this.extra.setText(node.getExtra());
         this.instructions.setText(edge.getInstructions());
 
-
         this.cancel.setOnClickListener(v -> onTryCancelTrip());
-        .repeatInstructions.setOnClickListener(v -> onRepeatInstructions(edge));
+        this.repeatInstructions.setOnClickListener(v -> onRepeatInstructions(edge));
     }
 
     private void onRepeatInstructions(EdgeDefinition edge) {
