@@ -40,4 +40,12 @@ public class SpeakService {
         return _instance;
     }
 
+    public static SpeakService getInstance() throws Exception {
+        if (_instance == null) {
+            throw new Exception("SpeakService has not been initialized.");
+        }
+
+        return _instance;
+    }
+
 }

@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.nicok.pathguide.businessDefinitions.EdgeDefinition;
 import com.nicok.pathguide.businessDefinitions.NodeDefinition;
-import com.nicok.pathguide.businessLogic.PathFinder;
+import com.nicok.pathguide.services.TripService;
 import com.nicok.pathguide.constants.ExtrasParameterNames;
 import com.nicok.pathguide.fragments.dialog.cancelDialog.Fragment;
 import com.nicok.pathguide.services.SpeakService;
@@ -26,6 +26,7 @@ public class CurrentLocationActivity extends AppPathGuideActivity implements com
     Button repeatInstructions;
 
     SpeakService speakService;
+    TripService tripService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class CurrentLocationActivity extends AppPathGuideActivity implements com
         this.repeatInstructions = findViewById(R.id.bt_repeat_instructions);
 
         this.speakService = SpeakService.getInstance(getApplicationContext());
+        this.tripService = TripService.getInstance(getApplicationContext());
     }
 
     @Override
@@ -81,8 +83,7 @@ public class CurrentLocationActivity extends AppPathGuideActivity implements com
     }
 
     private void onCancelTrip() {
-        this.speakService.shutdown();
-        PathFinder.reset();
+        this.tripService.cancel();
         Intent myIntent = new Intent(CurrentLocationActivity.this, DestinationActivity.class);
         CurrentLocationActivity.this.startActivity(myIntent);
     }
