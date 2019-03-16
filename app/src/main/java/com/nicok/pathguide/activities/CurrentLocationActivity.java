@@ -56,7 +56,6 @@ public class CurrentLocationActivity extends AppPathGuideActivity implements com
         findViewById(R.id.activity_current_location_known).setVisibility(View.VISIBLE);
         findViewById(R.id.activity_current_location_unknown).setVisibility(View.GONE);
 
-
         this.setView(nodes[0], edge);
     }
 
@@ -66,8 +65,8 @@ public class CurrentLocationActivity extends AppPathGuideActivity implements com
         this.instructions.setText(edge.getInstructions());
 
 
-        cancel.setOnClickListener(v -> onTryCancelTrip());
-        repeatInstructions.setOnClickListener(v -> onRepeatInstructions(edge));
+        this.cancel.setOnClickListener(v -> onTryCancelTrip());
+        .repeatInstructions.setOnClickListener(v -> onRepeatInstructions(edge));
     }
 
     private void onRepeatInstructions(EdgeDefinition edge) {
