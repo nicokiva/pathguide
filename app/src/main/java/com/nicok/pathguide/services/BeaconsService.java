@@ -45,9 +45,6 @@ public class BeaconsService extends Thread {
             .build();
 
         observationHandler = proximityObserver.startObserving(zone);
-
-        // TODO: Remove when everything is ok
-        tripService.tryChangeLocation("c5f8eb0b3d42236c47b0d4c3eb048904");
     }
 
     public void tryChangeLocation(ProximityZoneContext proximityZoneContext) {
