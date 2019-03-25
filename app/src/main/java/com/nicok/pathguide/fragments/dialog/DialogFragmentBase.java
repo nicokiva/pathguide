@@ -16,19 +16,10 @@ public abstract class DialogFragmentBase extends DialogFragment {
 
     protected DialogFragmentBaseListener listener;
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public DialogFragmentBase setListener(DialogFragmentBaseListener listener) {
+        this.listener = listener;
 
-        if (!(context instanceof DialogFragmentBaseListener)){
-            return;
-        }
-
-        try {
-            listener = (DialogFragmentBaseListener)context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement SelectDestinationDialogListener");
-        }
+        return this;
     }
 
 }

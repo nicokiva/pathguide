@@ -18,6 +18,7 @@ import android.widget.TextView;
 import java.io.Serializable;
 
 public class Fragment extends DialogFragmentBase {
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         String entityName = getArguments().getString(ExtrasParameterNames.ENTITY_NAME);

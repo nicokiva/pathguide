@@ -1,4 +1,4 @@
-package com.nicok.pathguide.adapters;
+package com.nicok.pathguide.viewHandlers.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

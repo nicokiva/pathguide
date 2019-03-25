@@ -1,23 +1,31 @@
-package com.nicok.pathguide.adapters;
+package com.nicok.pathguide.viewHandlers;
 
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nicok.pathguide.activities.R;
 import com.nicok.pathguide.businessDefinitions.EdgeDefinition;
 import com.nicok.pathguide.businessDefinitions.NodeDefinition;
+import com.nicok.pathguide.fragments.dialog.DialogFragmentBase;
+import com.nicok.pathguide.fragments.dialog.cancelDialog.Fragment;
 
-public class CurrentLocationAdapter {
+import java.io.Serializable;
 
-    public interface CurrentLocationAdapterListener {
-        void onRepeatInstructionsClick(EdgeDefinition edge);
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+
+public class CurrentLocationViewHandler extends ViewHandlerBase implements IViewHandler {
+
+    public interface CurrentLocationViewHandlerListener {
+        void onRepeatInstructionsClick();
         void onCancelTripClick();
     }
 
-    protected CurrentLocationAdapterListener listener;
+    private CurrentLocationViewHandlerListener listener;
 
     TextView description;
     TextView extra;
@@ -28,7 +36,9 @@ public class CurrentLocationAdapter {
     ViewGroup currentLocationUnknown;
 
 
-    public CurrentLocationAdapter(View view, CurrentLocationAdapterListener listener) {
+    public CurrentLocationViewHandler(Context context, View view, CurrentLocationViewHandlerListener listener) {
+        super(context);
+
         this.description = view.findViewById(R.id.tv_description);
         this.extra = view.findViewById(R.id.tv_extra);
         this.instructions = view.findViewById(R.id.tv_instructions);
@@ -41,25 +51,40 @@ public class CurrentLocationAdapter {
         this.listener = listener;
 
         // This button is shared between known and unknown
-        this.cancel.setOnClickListener(v -> listener.onCancelTripClick());
+        this.cancel.setOnClickListener(v -> onCancelTripClick());
     }
 
-    public void setView(NodeDefinition node, EdgeDefinition edge) {
+    private void onCancelTripClick() {
+        DialogFragment dialog = new Fragment()
+            .setListener(new DialogFragmentBase.DialogFragmentBaseListener() {
+                @Override
+                public void onDialogPositiveClick(@Nullable Serializable entityData) {
+                    listener.onCancelTripClick();
+                }
+
+                @Override
+                public void onDialogNegativeClick() { }
+            });
+            dialog.show(((AppCompatActivity)context).getSupportFragmentManager(), "cancelDialogFragment");
+    }
+
+    public IViewHandler setView(NodeDefinition node, EdgeDefinition edge) {
         if (node == null || edge == null) {
             this.currentLocationKnown.setVisibility(View.GONE);
             this.currentLocationUnknown.setVisibility(View.VISIBLE);
 
-            return;
+            return this;
         }
 
         this.description.setText(node.getDescription());
         this.extra.setText(node.getExtra());
         this.instructions.setText(edge.getInstructions());
 
-        this.repeatInstructions.setOnClickListener(v -> listener.onRepeatInstructionsClick(edge));
+        this.repeatInstructions.setOnClickListener(v -> listener.onRepeatInstructionsClick());
 
         this.currentLocationKnown.setVisibility(View.VISIBLE);
         this.currentLocationUnknown.setVisibility(View.GONE);
 
+        return this;
     }
 }

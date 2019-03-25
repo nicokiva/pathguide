@@ -8,11 +8,8 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
-import com.nicok.pathguide.adapters.CurrentLocationAdapter;
+import com.nicok.pathguide.viewHandlers.CurrentLocationViewHandler;
 import com.nicok.pathguide.businessDefinitions.EdgeDefinition;
 import com.nicok.pathguide.businessDefinitions.NodeDefinition;
 import com.nicok.pathguide.services.AppPathGuideService;
@@ -26,11 +23,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-public class CurrentLocationActivity extends AppCompatActivity implements com.nicok.pathguide.fragments.dialog.selectDestinationDialog.Fragment.DialogFragmentBaseListener {
+public class CurrentLocationActivity extends AppCompatActivity {
 
     TripService tripService;
 
-    private CurrentLocationAdapter currentLocationAdapter;
+    private CurrentLocationViewHandler currentLocationViewHandler;
 
     private Intent serviceIntent;
     private AppPathGuideService service;
@@ -39,8 +36,8 @@ public class CurrentLocationActivity extends AppCompatActivity implements com.ni
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-        Bundle bundle = intent.getExtras();
-        onMessageReceived(bundle);
+            Bundle bundle = intent.getExtras();
+            onMessageReceived(bundle);
         }
     };
 
@@ -51,27 +48,20 @@ public class CurrentLocationActivity extends AppCompatActivity implements com.ni
         startServiceAndBind();
 
         this.tripService = TripService.getInstance(getApplicationContext());
-        this.currentLocationAdapter = new CurrentLocationAdapter(getWindow().getDecorView().getRootView(), new CurrentLocationAdapter.CurrentLocationAdapterListener() {
+        this.currentLocationViewHandler = new CurrentLocationViewHandler(this, getWindow().getDecorView().getRootView(), new CurrentLocationViewHandler.CurrentLocationViewHandlerListener() {
             @Override
-            public void onRepeatInstructionsClick(EdgeDefinition edge) {
-                onRepeatInstructions(edge);
-            }
+            public void onRepeatInstructionsClick() { onRepeatInstructions(); }
 
             @Override
             public void onCancelTripClick() {
-                onTryCancelTrip();
+                onCancelTrip();
             }
         });
     }
 
     /* ACTIONS */
-    private void onRepeatInstructions(EdgeDefinition edge) {
+    private void onRepeatInstructions() {
         this.tripService.repeatInstructions();
-    }
-
-    private void onTryCancelTrip() {
-        DialogFragment dialog = new Fragment();
-        dialog.show(getSupportFragmentManager(), "cancelDialogFragment");
     }
 
     private void onCancelTrip() {
@@ -80,13 +70,6 @@ public class CurrentLocationActivity extends AppCompatActivity implements com.ni
         CurrentLocationActivity.this.startActivity(myIntent);
     }
 
-    @Override
-    public void onDialogPositiveClick(Serializable destination) {
-        onCancelTrip();
-    }
-
-    @Override
-    public void onDialogNegativeClick() { }
     /* /ACTIONS */
 
 
@@ -143,7 +126,7 @@ public class CurrentLocationActivity extends AppCompatActivity implements com.ni
 
         NodeDefinition node = nodes != null && nodes.length > 0 ? nodes[0] : null;
 
-        this.currentLocationAdapter.setView(node, edge);
+        this.currentLocationViewHandler.setView(node, edge);
     }
 
     /* /SERVICE CONNECTOR */
