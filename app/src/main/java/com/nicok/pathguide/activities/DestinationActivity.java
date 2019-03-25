@@ -7,7 +7,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.nicok.pathguide.businessDefinitions.NodeDefinition;
-import com.nicok.pathguide.businessLogic.PathFinder;
 import com.nicok.pathguide.constants.ExtrasParameterNames;
 import com.nicok.pathguide.adapters.DestinationRowAdapter;
 import com.nicok.pathguide.fragments.dialog.selectDestinationDialog.Fragment;
