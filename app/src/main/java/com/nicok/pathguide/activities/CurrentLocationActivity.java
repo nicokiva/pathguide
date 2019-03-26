@@ -15,18 +15,13 @@ import com.nicok.pathguide.businessDefinitions.NodeDefinition;
 import com.nicok.pathguide.services.AppPathGuideService;
 import com.nicok.pathguide.services.TripService;
 import com.nicok.pathguide.constants.ExtrasParameterNames;
-import com.nicok.pathguide.fragments.dialog.cancelDialog.Fragment;
-
-import java.io.Serializable;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class CurrentLocationActivity extends AppCompatActivity {
 
     TripService tripService;
-
     private CurrentLocationViewHandler currentLocationViewHandler;
 
     private Intent serviceIntent;
@@ -37,7 +32,7 @@ public class CurrentLocationActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             Bundle bundle = intent.getExtras();
-            onMessageReceived(bundle);
+            updateLocation(bundle);
         }
     };
 
@@ -70,11 +65,20 @@ public class CurrentLocationActivity extends AppCompatActivity {
         CurrentLocationActivity.this.startActivity(myIntent);
     }
 
+    protected void updateLocation(Bundle bundle) {
+        NodeDefinition[] nodes = (NodeDefinition[])bundle.getSerializable(ExtrasParameterNames.NODES_ENTITY_DATA);
+        EdgeDefinition edge = (EdgeDefinition)bundle.getSerializable(ExtrasParameterNames.EDGE_ENTITY_DATA);
+
+        NodeDefinition node = nodes != null && nodes.length > 0 ? nodes[0] : null;
+
+        this.currentLocationViewHandler.setView(node, edge);
+    }
     /* /ACTIONS */
 
 
 
     /* SERVICE CONNECTOR */
+    // TODO: Every service stuff should be relocated.
     protected void startServiceAndBind() {
         serviceIntent = new Intent(getApplicationContext(), AppPathGuideService.class);
 
@@ -119,15 +123,5 @@ public class CurrentLocationActivity extends AppCompatActivity {
 
         bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
-
-    protected void onMessageReceived(Bundle bundle) {
-        NodeDefinition[] nodes = (NodeDefinition[])bundle.getSerializable(ExtrasParameterNames.NODES_ENTITY_DATA);
-        EdgeDefinition edge = (EdgeDefinition)bundle.getSerializable(ExtrasParameterNames.EDGE_ENTITY_DATA);
-
-        NodeDefinition node = nodes != null && nodes.length > 0 ? nodes[0] : null;
-
-        this.currentLocationViewHandler.setView(node, edge);
-    }
-
     /* /SERVICE CONNECTOR */
 }
