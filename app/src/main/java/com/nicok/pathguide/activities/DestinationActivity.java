@@ -14,7 +14,7 @@ import java.io.Serializable;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class DestinationActivity extends AppCompatActivity implements DestinationViewHandler.DestinationViewHandlerListener {
+public class DestinationActivity extends LoadableActivity implements DestinationViewHandler.DestinationViewHandlerListener {
 
     TripService tripService;
     IViewHandler viewHandler;
@@ -30,12 +30,16 @@ public class DestinationActivity extends AppCompatActivity implements Destinatio
         setTitle(R.string.destination_title);
         setContentView(R.layout.activity_destination);
 
+        this.startLoading();
+
         this.tripService = TripService.getInstance(getApplicationContext());
         this.viewHandler = new DestinationViewHandler(this, getWindow().getDecorView().getRootView(), destination -> {
             tripService.setDestination(destination);
 
             Intent myIntent = new Intent(DestinationActivity.this, CurrentLocationActivity.class);
             DestinationActivity.this.startActivity(myIntent);
+
+            this.finishLoading();
         })
         .setView(tripService.getFinalNodes());
     }
