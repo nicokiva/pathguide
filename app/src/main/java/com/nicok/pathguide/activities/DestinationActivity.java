@@ -30,7 +30,6 @@ public class DestinationActivity extends LoadableActivity implements Destination
         setTitle(R.string.destination_title);
         setContentView(R.layout.activity_destination);
 
-        this.startLoading();
 
         this.tripService = TripService.getInstance(getApplicationContext());
         this.viewHandler = new DestinationViewHandler(this, getWindow().getDecorView().getRootView(), destination -> {
@@ -43,6 +42,16 @@ public class DestinationActivity extends LoadableActivity implements Destination
         })
         .setView(tripService.getFinalNodes());
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // Map will be fetch and loaded at this point.
+        this.startLoading();
+        this.finishLoading();
+    }
+
 
     @Override
     public void onSelectedItem(NodeDefinition destination) {

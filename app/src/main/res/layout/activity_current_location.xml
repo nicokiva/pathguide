@@ -1,29 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityPaneTitle="@string/destination_title"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="15dp"
-    tools:context=".activities.CurrentLocationActivity">
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="15dp"
+        tools:context=".activities.CurrentLocationActivity">
+
+        <include
+            android:id="@+id/activity_current_location_unknown"
+            layout="@layout/activity_current_location_unknown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include
+            android:visibility="gone"
+            android:id="@+id/activity_current_location_known"
+            layout="@layout/activity_current_location_known"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/bt_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/current_location_cancel" />
+
+    </LinearLayout>
 
     <include
-        android:id="@+id/activity_current_location_unknown"
-        layout="@layout/activity_current_location_unknown"
+        android:id="@+id/loading_spinner"
+        layout="@layout/loading_spinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:visibility="visible" />
 
-    <include
-        android:visibility="gone"
-        android:id="@+id/activity_current_location_known"
-        layout="@layout/activity_current_location_known"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/bt_cancel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/current_location_cancel" />
-
-</LinearLayout>
+</FrameLayout>

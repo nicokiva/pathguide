@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 
 import com.nicok.pathguide.viewHandlers.CurrentLocationViewHandler;
@@ -16,10 +17,9 @@ import com.nicok.pathguide.services.AppPathGuideService;
 import com.nicok.pathguide.services.TripService;
 import com.nicok.pathguide.constants.ExtrasParameterNames;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-public class CurrentLocationActivity extends AppCompatActivity {
+public class CurrentLocationActivity extends LoadableActivity {
 
     TripService tripService;
     private CurrentLocationViewHandler currentLocationViewHandler;
@@ -54,6 +54,14 @@ public class CurrentLocationActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        this.startLoading();
+        new Handler().postDelayed(() -> finishLoading(), 2000);
+    }
+
     /* ACTIONS */
     private void onRepeatInstructions() {
         this.tripService.repeatInstructions();
@@ -66,6 +74,8 @@ public class CurrentLocationActivity extends AppCompatActivity {
     }
 
     protected void updateLocation(Bundle bundle) {
+        this.finishLoading();
+
         NodeDefinition[] nodes = (NodeDefinition[])bundle.getSerializable(ExtrasParameterNames.NODES_ENTITY_DATA);
         EdgeDefinition edge = (EdgeDefinition)bundle.getSerializable(ExtrasParameterNames.EDGE_ENTITY_DATA);
 

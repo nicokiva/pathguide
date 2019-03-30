@@ -1,19 +1,27 @@
 package com.nicok.pathguide.activities;
 
+import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public abstract class LoadableActivity extends AppCompatActivity {
 
-    private boolean isLoading = false;
+    private View spinner;
+
+    protected void onStart() {
+        super.onStart();
+        spinner = this.findViewById(R.id.loading_spinner);
+
+        spinner.setOnClickListener(null);
+    }
 
     protected void startLoading() {
-        this.findViewById(R.id.loading_spinner).setVisibility(View.VISIBLE);
+        this.spinner.setVisibility(View.VISIBLE);
     }
 
     protected void finishLoading() {
-        this.findViewById(R.id.loading_spinner).setVisibility(View.GONE);
+        this.spinner.setVisibility(View.GONE);
     }
 
 }
