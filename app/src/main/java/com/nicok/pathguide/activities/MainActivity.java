@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public Unit onRequirementsMissing(List<? extends Requirement> requirements) {
+                // TODO: Harcoded as AVD does not support bluetooth.
                 return goToDestinationsList();
             }
 
