@@ -10,7 +10,6 @@ import com.nicok.pathguide.businessLogic.PathFinder;
 import com.nicok.pathguide.constants.ExtrasParameterNames;
 import com.nicok.pathguide.activities.R;
 
-import java.nio.file.Path;
 import java.util.List;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -18,12 +17,12 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 public class TripService {
 
     private Context context;
-    SpeakService speakService;
+    TextToSpeechService textToSpeechService;
 
     public TripService(Context context) {
         this.context = context;
 
-        this.speakService = SpeakService.getInstance(context);
+        this.textToSpeechService = TextToSpeechService.getInstance(context);
     }
 
     private static TripService _instance = null;
@@ -44,7 +43,7 @@ public class TripService {
     }
 
     public void finish() {
-        this.speakService.speak(context.getString(R.string.arrived_message));
+        this.textToSpeechService.speak(context.getString(R.string.arrived_message));
         try {
             Thread.sleep(4000); // Required to give app time to speak last message.
         } catch (InterruptedException e) {
@@ -69,14 +68,14 @@ public class TripService {
         PathFinder.reset();
 
         try {
-            this.speakService.shutdown();
+            this.textToSpeechService.shutdown();
         } catch (Exception e) {
 
         }
     }
 
     public void repeatInstructions() {
-        this.speakService.speak(PathFinder.getCurrentInstructions().instructions);
+        this.textToSpeechService.speak(PathFinder.getCurrentInstructions().instructions);
     }
 
     public void tryChangeLocation(String currentLocationId) {
@@ -98,7 +97,7 @@ public class TripService {
 
         this.showCurrentLocation(shortestPath, edge);
 
-        this.speakService.speak(instructions);
+        this.textToSpeechService.speak(instructions);
     }
 
     private void showCurrentLocation(NodeDefinition[] shortestPath, EdgeDefinition edge) {

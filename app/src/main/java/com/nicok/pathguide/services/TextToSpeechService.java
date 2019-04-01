@@ -3,29 +3,33 @@ package com.nicok.pathguide.services;
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
 
-public class SpeakService {
+public class TextToSpeechService {
+
+    public static final String ACTION_CHECK_TTS_DATA = TextToSpeech.Engine.ACTION_CHECK_TTS_DATA;
+    public static final String ACTION_INSTALL_TTS_DATA = TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA;
+    public static final int CHECK_VOICE_DATA_PASS = TextToSpeech.Engine.CHECK_VOICE_DATA_PASS;
 
     private TextToSpeech mTts;
     private boolean ttsEnabled = false;
 
-    public SpeakService(Context context) {
+    public TextToSpeechService(Context context) {
         this.mTts = new TextToSpeech(context, (int status) -> {
             ttsEnabled = status == TextToSpeech.SUCCESS;
         });
     }
 
-    private static SpeakService _instance = null;
-    public static SpeakService getInstance(Context context) {
+    private static TextToSpeechService _instance = null;
+    public static TextToSpeechService getInstance(Context context) {
         if (_instance == null) {
-            _instance = new SpeakService(context);
+            _instance = new TextToSpeechService(context);
         }
 
         return _instance;
     }
 
-    public static SpeakService getInstance() throws Exception {
+    public static TextToSpeechService getInstance() throws Exception {
         if (_instance == null) {
-            throw new Exception("SpeakService has not been initialized.");
+            throw new Exception("TextToSpeechService has not been initialized.");
         }
 
         return _instance;
@@ -46,5 +50,4 @@ public class SpeakService {
 
         mTts.speak(message, TextToSpeech.QUEUE_ADD, null, null);
     }
-
 }

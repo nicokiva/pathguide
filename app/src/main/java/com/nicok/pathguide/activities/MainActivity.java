@@ -2,11 +2,11 @@ package com.nicok.pathguide.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.Requirement;
 import com.nicok.pathguide.businessLogic.PathFinder;
 import com.nicok.pathguide.services.BeaconsService;
+import com.nicok.pathguide.services.TextToSpeechService;
 
 import java.util.List;
 
@@ -21,11 +21,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == MAIN_ACTIVITY) {
-            if (resultCode != TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
+            if (resultCode != TextToSpeechService.CHECK_VOICE_DATA_PASS) {
 
                 // missing data, redirects to install it
                 Intent installIntent = new Intent();
-                installIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+                installIntent.setAction(TextToSpeechService.ACTION_INSTALL_TTS_DATA);
                 startActivity(installIntent);
                 return;
 
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Intent checkIntent = new Intent();
-        checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+        checkIntent.setAction(TextToSpeechService.ACTION_CHECK_TTS_DATA);
         startActivityForResult(checkIntent, MAIN_ACTIVITY);
     }
 
