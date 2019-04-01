@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 
-import com.estimote.mustard.rx_goodness.rx_requirements_wizard.RequirementsWizardFactory;
+import com.estimote.mustard.rx_goodness.rx_requirements_wizard.Requirement;
 import com.nicok.pathguide.businessLogic.PathFinder;
+import com.nicok.pathguide.services.BeaconsService;
+
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import kotlin.Unit;
@@ -28,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
-            this.checkEstimoteRequirements();
+            this.checkBeaconsRequirements();
         }
     }
 
@@ -43,29 +46,27 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
-    private void checkEstimoteRequirements () {
-        RequirementsWizardFactory.createEstimoteRequirementsWizard().fulfillRequirements(
-                this,
-                () -> {
-                    return this.goToDestinationsList();
-                },
-                (requirements) -> {
-                    /* scanning won't work, handle this case in your app */
-                    return this.goToDestinationsList();
-//                    return null;
-                },
+    private void checkBeaconsRequirements() {
+        BeaconsService.isEnabled(this, new BeaconsService.BeaconsServiceListener() {
+            @Override
+            public Unit onRequirementsFulfilled() {
+                return goToDestinationsList();
+            }
 
-                (throwable) -> {
-                    /* Oops, some error occurred, handle it here! */
-                    return null;
-                }
-            );
-        };
+            @Override
+            public Unit onRequirementsMissing(List<? extends Requirement> requirements) {
+                return goToDestinationsList();
+            }
+
+            @Override
+            public Unit onError(Throwable error) {
+                return null;
+            }
+        });
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

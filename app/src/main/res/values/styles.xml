@@ -5,9 +5,4 @@
 
     </style>
 
-
-    <style name="SplashTheme" parent="AppTheme">
-        <item name="android:windowBackground">@layout/splash</item>
-    </style>
-
 </resources>

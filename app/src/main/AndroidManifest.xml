@@ -9,21 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CurrentLocationActivity"></activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DestinationActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".DestinationActivity" android:label="@string/destination_title" />
+        <activity android:name=".CurrentLocationActivity" android:label="@string/current_location_title" />
 
         <service android:name="com.nicok.pathguide.services.AppPathGuideService" />
     </application>

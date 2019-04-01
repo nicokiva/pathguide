@@ -27,9 +27,7 @@ public class DestinationActivity extends LoadableActivity implements Destination
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.destination_title);
         setContentView(R.layout.activity_destination);
-
 
         this.tripService = TripService.getInstance(getApplicationContext());
         this.viewHandler = new DestinationViewHandler(this, getWindow().getDecorView().getRootView(), destination -> {
