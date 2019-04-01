@@ -10,7 +10,7 @@ import com.nicok.pathguide.activities.R;
 import com.nicok.pathguide.businessDefinitions.NodeDefinition;
 import com.nicok.pathguide.constants.ExtrasParameterNames;
 import com.nicok.pathguide.fragments.dialog.DialogFragmentBase;
-import com.nicok.pathguide.fragments.dialog.selectDestinationDialog.Fragment;
+import com.nicok.pathguide.fragments.dialog.selectDestination.Fragment;
 import com.nicok.pathguide.viewHandlers.adapters.DestinationRowAdapter;
 
 import java.io.Serializable;

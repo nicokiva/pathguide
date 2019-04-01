@@ -4,15 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.nicok.pathguide.businessDefinitions.NodeDefinition;
-import com.nicok.pathguide.constants.ExtrasParameterNames;
 import com.nicok.pathguide.viewHandlers.DestinationViewHandler;
 import com.nicok.pathguide.viewHandlers.IViewHandler;
-import com.nicok.pathguide.fragments.dialog.selectDestinationDialog.Fragment;
 import com.nicok.pathguide.services.TripService;
-
-import java.io.Serializable;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class DestinationActivity extends LoadableActivity implements DestinationViewHandler.DestinationViewHandlerListener {
 

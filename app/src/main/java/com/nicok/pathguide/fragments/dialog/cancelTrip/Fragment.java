@@ -1,21 +1,13 @@
-package com.nicok.pathguide.fragments.dialog.cancelDialog;
+package com.nicok.pathguide.fragments.dialog.cancelTrip;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.nicok.pathguide.activities.R;
-import com.nicok.pathguide.constants.ExtrasParameterNames;
 import com.nicok.pathguide.fragments.dialog.DialogFragmentBase;
-
-import java.io.Serializable;
-
-import androidx.fragment.app.DialogFragment;
 
 public class Fragment extends DialogFragmentBase {
 

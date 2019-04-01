@@ -10,7 +10,7 @@ import com.nicok.pathguide.activities.R;
 import com.nicok.pathguide.businessDefinitions.EdgeDefinition;
 import com.nicok.pathguide.businessDefinitions.NodeDefinition;
 import com.nicok.pathguide.fragments.dialog.DialogFragmentBase;
-import com.nicok.pathguide.fragments.dialog.cancelDialog.Fragment;
+import com.nicok.pathguide.fragments.dialog.cancelTrip.Fragment;
 
 import java.io.Serializable;
 
