@@ -16,6 +16,12 @@ import kotlin.Unit;
 
 public class MainActivity extends AppCompatActivity {
 
+    private PathFinder pathFinder = null;
+
+    public MainActivity() {
+        this.pathFinder = PathFinder.getInstance(this);
+    }
+
     private final int MAIN_ACTIVITY = 1;
 
     @Override
@@ -36,10 +42,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Unit goToDestinationsList(){
-        if (!PathFinder.loadMap(getApplicationContext())) {
-            return null;
-        }
-
         Intent myIntent = new Intent(MainActivity.this, DestinationActivity.class);
         MainActivity.this.startActivity(myIntent);
 

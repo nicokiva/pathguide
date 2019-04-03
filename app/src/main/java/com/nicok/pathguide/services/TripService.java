@@ -5,23 +5,27 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.nicok.pathguide.businessDefinitions.EdgeDefinition;
+import com.nicok.pathguide.businessDefinitions.MapDefinition;
 import com.nicok.pathguide.businessDefinitions.NodeDefinition;
 import com.nicok.pathguide.businessLogic.PathFinder;
 import com.nicok.pathguide.constants.ExtrasParameterNames;
 import com.nicok.pathguide.activities.R;
 
+import java.nio.file.Path;
 import java.util.List;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class TripService {
 
+    private PathFinder pathFinder = null;
     private Context context;
-    TextToSpeechService textToSpeechService;
+    private TextToSpeechService textToSpeechService;
 
     public TripService(Context context) {
         this.context = context;
 
+        this.pathFinder = PathFinder.getInstance(context);
         this.textToSpeechService = TextToSpeechService.getInstance(context);
     }
 
@@ -34,12 +38,31 @@ public class TripService {
         return _instance;
     }
 
+    public interface LoadMapServiceListener {
+        public void onSuccess(MapDefinition map);
+        public void onFail();
+    }
+
+    public void loadMap(LoadMapServiceListener listener) {
+        pathFinder.loadMap(new PathFinder.LoadMapServiceListener() {
+            @Override
+            public void onSuccess(MapDefinition map) {
+                listener.onSuccess(map);
+            }
+
+            @Override
+            public void onFail() {
+                listener.onFail();
+            }
+        });
+    }
+
     public List<NodeDefinition> getFinalNodes() {
-        return PathFinder.getFinalNodes();
+        return pathFinder.getFinalNodes();
     }
 
     public void setDestination(NodeDefinition destination) {
-        PathFinder.setDestination(destination);
+        pathFinder.setDestination(destination);
     }
 
     public void finish() {
@@ -55,7 +78,7 @@ public class TripService {
 
     public boolean hasChangeLocationAndReachedToEnd(String deviceId) {
         this.tryChangeLocation(deviceId);
-        boolean hasReachedToEnd = PathFinder.hasReachedDestination();
+        boolean hasReachedToEnd = pathFinder.hasReachedDestination();
 
         if (hasReachedToEnd) {
             this.finish();
@@ -65,7 +88,7 @@ public class TripService {
     }
 
     public void cancel() {
-        PathFinder.reset();
+        pathFinder.reset();
 
         try {
             this.textToSpeechService.shutdown();
@@ -75,12 +98,12 @@ public class TripService {
     }
 
     public void repeatInstructions() {
-        this.textToSpeechService.speak(PathFinder.getCurrentInstructions().instructions);
+        this.textToSpeechService.speak(pathFinder.getCurrentInstructions().instructions);
     }
 
     public void tryChangeLocation(String currentLocationId) {
-        EdgeDefinition edge = PathFinder.updateNodeAndGetInstructions(currentLocationId);
-        List<NodeDefinition> shortestPath = PathFinder.getShortestPath();
+        EdgeDefinition edge = pathFinder.updateNodeAndGetInstructions(currentLocationId);
+        List<NodeDefinition> shortestPath = pathFinder.getShortestPath();
 
         NodeDefinition[] itemsArray = new NodeDefinition[shortestPath.size()];
         itemsArray = shortestPath.toArray(itemsArray);

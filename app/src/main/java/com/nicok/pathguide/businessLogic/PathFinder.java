@@ -8,58 +8,85 @@ import com.nicok.pathguide.businessDefinitions.NodeDefinition;
 import com.nicok.pathguide.helpers.reader.FileReader;
 import com.nicok.pathguide.helpers.reader.IReader;
 import com.nicok.pathguide.helpers.serializer.SerializeWrapper;
+import com.nicok.pathguide.services.HttpService;
+import com.nicok.pathguide.services.MapService;
 
 import java.nio.file.Path;
 import java.util.List;
 
 public class PathFinder {
 
-    private static MapDefinition map = null;
-
-    private static IReader reader = new FileReader();
-    private static SerializeWrapper serializeWrapper = new SerializeWrapper();
-
-    public static boolean loadMap(Context context) {
-        try {
-            String serializedMap = PathFinder.reader.readAsset("map.json", context);
-
-            PathFinder.map = serializeWrapper.deserialize(serializedMap, MapDefinition.class);
-            PathFinder.map.setupEntities();
-
-            return map != null;
-        } catch (Exception e) {
-            return false;
+    private static PathFinder _instance = null;
+    public static PathFinder getInstance(Context context) {
+        if (_instance == null) {
+            _instance = new PathFinder(context);
         }
+
+        return _instance;
     }
 
-    public static List<NodeDefinition> getFinalNodes() {
+    public PathFinder(Context context) {
+        this.mapService = MapService.getInstance(context);
+    }
+
+
+    private MapDefinition map = null;
+    private MapService mapService = null;
+
+
+    public interface LoadMapServiceListener {
+        public void onSuccess(MapDefinition map);
+        public void onFail();
+    }
+
+    private void setMap(MapDefinition map) {
+        this.map = map;
+        this.map.setupEntities();
+    }
+
+    public void loadMap(LoadMapServiceListener listener) {
+        this.mapService.load(new MapService.LoadMapServiceListener() {
+            @Override
+            public void onSuccess(MapDefinition map) {
+                setMap(map);
+                listener.onSuccess(map);
+            }
+
+            @Override
+            public void onFail() {
+
+            }
+        });
+    }
+
+    public List<NodeDefinition> getFinalNodes() {
         return map.getFinalNodes();
     }
 
-    public static void reset() {
-        PathFinder.map.setDestination(null);
-        PathFinder.map.setCurrentLocation(null);
+    public void reset() {
+        map.setDestination(null);
+        map.setCurrentLocation(null);
     }
 
-    public static List<NodeDefinition> getShortestPath() {
-        return PathFinder.map.getShortestPath();
+    public List<NodeDefinition> getShortestPath() {
+        return map.getShortestPath();
     }
 
-    public static boolean hasReachedDestination() {
-        return PathFinder.map.hasReachedDestination();
+    public boolean hasReachedDestination() {
+        return map.hasReachedDestination();
     }
 
-    public static EdgeDefinition getCurrentInstructions() {
-        return PathFinder.map.getCurrnentInstructions();
+    public EdgeDefinition getCurrentInstructions() {
+        return map.getCurrnentInstructions();
     }
 
-    public static EdgeDefinition updateNodeAndGetInstructions(String currentLocationId){
-        return PathFinder.map.updateNodeAndGetInstructions(currentLocationId);
+    public EdgeDefinition updateNodeAndGetInstructions(String currentLocationId){
+        return map.updateNodeAndGetInstructions(currentLocationId);
     }
 
-    public static void setDestination(NodeDefinition destination) {
-        PathFinder.reset();
-        PathFinder.map.setDestination(destination);
+    public void setDestination(NodeDefinition destination) {
+        this.reset();
+        map.setDestination(destination);
     }
 
 }

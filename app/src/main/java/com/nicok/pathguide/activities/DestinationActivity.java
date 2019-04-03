@@ -3,6 +3,7 @@ package com.nicok.pathguide.activities;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.nicok.pathguide.businessDefinitions.MapDefinition;
 import com.nicok.pathguide.businessDefinitions.NodeDefinition;
 import com.nicok.pathguide.viewHandlers.DestinationViewHandler;
 import com.nicok.pathguide.viewHandlers.IViewHandler;
@@ -24,6 +25,20 @@ public class DestinationActivity extends LoadableActivity implements Destination
         setContentView(R.layout.activity_destination);
 
         this.tripService = TripService.getInstance(getApplicationContext());
+        tripService.loadMap(new TripService.LoadMapServiceListener() {
+            @Override
+            public void onSuccess(MapDefinition map) {
+                setView();
+            }
+
+            @Override
+            public void onFail() {
+
+            }
+        });
+    }
+
+    private void setView() {
         this.viewHandler = new DestinationViewHandler(this, getWindow().getDecorView().getRootView(), destination -> {
             tripService.setDestination(destination);
 
@@ -34,7 +49,6 @@ public class DestinationActivity extends LoadableActivity implements Destination
         })
         .setView(tripService.getFinalNodes());
     }
-
     @Override
     protected void onStart() {
         super.onStart();
