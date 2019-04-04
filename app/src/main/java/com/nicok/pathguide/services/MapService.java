@@ -3,8 +3,6 @@ package com.nicok.pathguide.services;
 import android.content.Context;
 
 import com.nicok.pathguide.businessDefinitions.MapDefinition;
-import com.nicok.pathguide.helpers.reader.FileReader;
-import com.nicok.pathguide.helpers.reader.IReader;
 import com.nicok.pathguide.helpers.serializer.SerializeWrapper;
 
 import java.io.IOException;
@@ -13,15 +11,11 @@ public class MapService {
 
     private Context context;
     private HttpService httpService;
-    private IReader reader = new FileReader();
     private SerializeWrapper serializeWrapper = new SerializeWrapper();
 
-    LoadMapServiceListener listener;
+    private LoadMapServiceListener listener;
 
     public MapService(Context context) {
-        this.httpService = new HttpService();
-
-        this.listener = listener;
         this.context = context;
     }
 
@@ -43,20 +37,24 @@ public class MapService {
     }
 
     public interface LoadMapServiceListener {
-        public void onSuccess(MapDefinition map);
-        public void onFail();
+        void onSuccess(MapDefinition map);
+        void onFail();
     }
 
     public void load(LoadMapServiceListener listener) {
-//        httpService.execute();
+        new HttpService(new HttpService.HttpServiceListener() {
+            @Override
+            public void onSuccess(String body) {
+//                serializedMap = reader.readAsset("map.json", context);
+                try {
 
-        String serializedMap = null;
-        try {
-            serializedMap = reader.readAsset("map.json", context);
-            listener.onSuccess(serializeWrapper.deserialize(serializedMap, MapDefinition.class));
-        } catch (IOException e) {
+                    listener.onSuccess(serializeWrapper.deserialize(body, MapDefinition.class));
+                } catch (IOException e) {
 //            return null;
-        }
-    }
+                }
+            }
 
+            }
+        ).execute();
+    }
 }

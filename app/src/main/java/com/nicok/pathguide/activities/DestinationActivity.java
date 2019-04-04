@@ -20,20 +20,34 @@ public class DestinationActivity extends LoadableActivity implements Destination
     }
 
     @Override
+    protected void finishLoading() {
+        super.finishLoading();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_destination);
 
         this.tripService = TripService.getInstance(getApplicationContext());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        this.startLoading();
         tripService.loadMap(new TripService.LoadMapServiceListener() {
             @Override
             public void onSuccess(MapDefinition map) {
                 setView();
+
+                finishLoading();
             }
 
             @Override
             public void onFail() {
-
+                finishLoading();
             }
         });
     }
@@ -48,14 +62,6 @@ public class DestinationActivity extends LoadableActivity implements Destination
             this.finishLoading();
         })
         .setView(tripService.getFinalNodes());
-    }
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        // Map will be fetch and loaded at this point.
-        this.startLoading();
-        this.finishLoading();
     }
 
 

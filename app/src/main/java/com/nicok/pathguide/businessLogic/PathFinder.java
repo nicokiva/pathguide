@@ -5,13 +5,8 @@ import android.content.Context;
 import com.nicok.pathguide.businessDefinitions.EdgeDefinition;
 import com.nicok.pathguide.businessDefinitions.MapDefinition;
 import com.nicok.pathguide.businessDefinitions.NodeDefinition;
-import com.nicok.pathguide.helpers.reader.FileReader;
-import com.nicok.pathguide.helpers.reader.IReader;
-import com.nicok.pathguide.helpers.serializer.SerializeWrapper;
-import com.nicok.pathguide.services.HttpService;
 import com.nicok.pathguide.services.MapService;
 
-import java.nio.file.Path;
 import java.util.List;
 
 public class PathFinder {
