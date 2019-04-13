@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.nio.charset.Charset;
+
 public class HttpService extends AsyncTask<String, Void, String> {
 
     public interface HttpServiceListener {
@@ -20,6 +22,9 @@ public class HttpService extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... strings) {
         RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters()
+                .add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
+
         String fooResourceUrl = "https://api.myjson.com/bins/qa0ds";
         ResponseEntity<String> response = restTemplate.getForEntity(fooResourceUrl, String.class);
 
