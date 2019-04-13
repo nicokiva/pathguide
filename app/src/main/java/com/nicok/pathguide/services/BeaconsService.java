@@ -35,7 +35,7 @@ public class BeaconsService extends Thread {
     private void observeBeacons() {
         ProximityObserver proximityObserver = new ProximityObserverBuilder(context, cloudCredentials)
                 .withBalancedPowerMode()
-                .onError(throwable -> { return null; })
+                .onError(throwable -> null)
                 .build();
 
         ProximityZone zone = new ProximityZoneBuilder()
@@ -52,6 +52,9 @@ public class BeaconsService extends Thread {
             .build();
 
         observationHandler = proximityObserver.startObserving(zone);
+
+        // TODO: Remove when using beacons
+        tripService.hasChangeLocationAndReachedToEnd("c00c78cad7f2a002a15a4d95887ed813");
     }
 
     @Override

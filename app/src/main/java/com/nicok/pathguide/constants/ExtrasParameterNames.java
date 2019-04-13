@@ -10,5 +10,6 @@ public class ExtrasParameterNames {
     public static final String EDGE_ENTITY_DATA = "edge_" + ENTITY_DATA;
 
     public static final String CURRENT_LOCATION = "current_location";
+    public static final String FINISH_TRIP = "finish_trip";
 
 }

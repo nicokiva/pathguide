@@ -10,10 +10,9 @@ import com.nicok.pathguide.businessDefinitions.NodeDefinition;
 import com.nicok.pathguide.businessLogic.PathFinder;
 import com.nicok.pathguide.constants.ExtrasParameterNames;
 import com.nicok.pathguide.activities.R;
-
-import java.nio.file.Path;
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class TripService {
@@ -39,8 +38,8 @@ public class TripService {
     }
 
     public interface LoadMapServiceListener {
-        public void onSuccess(MapDefinition map);
-        public void onFail();
+        void onSuccess(MapDefinition map);
+        void onFail();
     }
 
     public void loadMap(LoadMapServiceListener listener) {
@@ -67,6 +66,7 @@ public class TripService {
 
     public void finish() {
         this.textToSpeechService.speak(context.getString(R.string.arrived_message));
+
         try {
             Thread.sleep(4000); // Required to give app time to speak last message.
         } catch (InterruptedException e) {
@@ -109,25 +109,46 @@ public class TripService {
         itemsArray = shortestPath.toArray(itemsArray);
 
         if (edge == null) {
+            this.informFinishTrip();
+
             return;
         }
 
-        this.inform(itemsArray, edge);
+        this.informChangeCurrentLocation(itemsArray, edge);
     }
 
-    private void inform(NodeDefinition[] shortestPath, EdgeDefinition edge) {
+    private void informChangeCurrentLocation(NodeDefinition[] shortestPath, EdgeDefinition edge) {
         String instructions = edge.getInstructions();
 
-        this.showCurrentLocation(shortestPath, edge);
+        this.sendMessageCurrentLocation(shortestPath, edge);
 
         this.textToSpeechService.speak(instructions);
     }
 
-    private void showCurrentLocation(NodeDefinition[] shortestPath, EdgeDefinition edge) {
+    private void informFinishTrip() {
+        this.sendMessageFinishTrip();
+    }
+
+    private void sendMessageFinishTrip() {
+        this.sendMessage(ExtrasParameterNames.FINISH_TRIP);
+    }
+
+    private void sendMessageCurrentLocation(NodeDefinition[] shortestPath, EdgeDefinition edge) {
         Bundle data = new Bundle();
+
         data.putSerializable(ExtrasParameterNames.NODES_ENTITY_DATA, shortestPath);
         data.putSerializable(ExtrasParameterNames.EDGE_ENTITY_DATA, edge);
-        Intent intent = new Intent(ExtrasParameterNames.CURRENT_LOCATION);
+
+        this.sendMessage(ExtrasParameterNames.CURRENT_LOCATION, data);
+    }
+
+
+    private void sendMessage(String action) {
+        sendMessage(action, null);
+    }
+
+    private void sendMessage(String action, @Nullable Bundle data) {
+        Intent intent = new Intent(action);
         intent.putExtras(data);
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }

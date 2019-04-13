@@ -30,8 +30,8 @@ public class PathFinder {
 
 
     public interface LoadMapServiceListener {
-        public void onSuccess(MapDefinition map);
-        public void onFail();
+        void onSuccess(MapDefinition map);
+        void onFail();
     }
 
     private void setMap(MapDefinition map) {
