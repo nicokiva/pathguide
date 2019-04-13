@@ -28,11 +28,18 @@ public class CurrentLocationActivity extends LoadableActivity {
     private AppPathGuideService service;
     private ServiceConnection serviceConnection;
 
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver mChangeLocationMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             Bundle bundle = intent.getExtras();
             updateLocation(bundle);
+        }
+    };
+
+    private BroadcastReceiver mFinishTripMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            goToDestinationsList();
         }
     };
 
@@ -62,6 +69,11 @@ public class CurrentLocationActivity extends LoadableActivity {
         new Handler().postDelayed(() -> finishLoading(), 2000);
     }
 
+    private void goToDestinationsList() {
+        Intent myIntent = new Intent(CurrentLocationActivity.this, DestinationActivity.class);
+        CurrentLocationActivity.this.startActivity(myIntent);
+    }
+
     /* ACTIONS */
     private void onRepeatInstructions() {
         this.tripService.repeatInstructions();
@@ -69,8 +81,7 @@ public class CurrentLocationActivity extends LoadableActivity {
 
     private void onCancelTrip() {
         this.tripService.cancel();
-        Intent myIntent = new Intent(CurrentLocationActivity.this, DestinationActivity.class);
-        CurrentLocationActivity.this.startActivity(myIntent);
+        this.goToDestinationsList();
     }
 
     protected void updateLocation(Bundle bundle) {
@@ -101,7 +112,8 @@ public class CurrentLocationActivity extends LoadableActivity {
         super.onStop();
 
         unBindService();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mChangeLocationMessageReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mFinishTripMessageReceiver);
     }
 
     protected void unBindService() {
@@ -112,7 +124,8 @@ public class CurrentLocationActivity extends LoadableActivity {
     protected void onResume() {
         super.onResume();
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter(ExtrasParameterNames.CURRENT_LOCATION));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mChangeLocationMessageReceiver, new IntentFilter(ExtrasParameterNames.CURRENT_LOCATION));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mFinishTripMessageReceiver, new IntentFilter(ExtrasParameterNames.FINISH_TRIP));
     }
 
     public void bindService() {

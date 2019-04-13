@@ -66,6 +66,7 @@ public class TripService {
 
     public void finish() {
         this.textToSpeechService.speak(context.getString(R.string.arrived_message));
+        _instance = null;
 
         try {
             Thread.sleep(4000); // Required to give app time to speak last message.
@@ -88,6 +89,7 @@ public class TripService {
     }
 
     public void cancel() {
+        _instance = null;
         pathFinder.reset();
 
         try {
@@ -149,7 +151,9 @@ public class TripService {
 
     private void sendMessage(String action, @Nullable Bundle data) {
         Intent intent = new Intent(action);
-        intent.putExtras(data);
+        if (data != null) {
+            intent.putExtras(data);
+        }
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
