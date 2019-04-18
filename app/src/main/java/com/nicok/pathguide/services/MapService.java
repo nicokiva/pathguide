@@ -45,7 +45,6 @@ public class MapService {
 
     public void load(LoadMapServiceListener listener) {
         new LoadMapHttpService((HttpService.HttpServiceListener<String>) body -> {
-            //serializedMap = reader.readAsset("map.json", context);
             try {
                 listener.onSuccess(serializeWrapper.deserialize(body, MapDefinition.class));
             } catch (IOException e) {
