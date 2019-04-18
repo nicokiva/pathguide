@@ -18,4 +18,6 @@
     <string name="current_location_cancel">Cancelar viaje</string>
 
     <string name="current_location_cancel_confirm">Está seguro que desea cancelar el viaje?</string>
+
+    <string name="load_map_url">https://api.myjson.com/bins/qa0ds</string>
 </resources>

@@ -48,7 +48,7 @@ public class PathFinder {
             }
 
             @Override
-            public void onFail() {
+            public void onFail(Exception e) {
 
             }
         });

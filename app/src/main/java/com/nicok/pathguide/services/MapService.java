@@ -4,13 +4,15 @@ import android.content.Context;
 
 import com.nicok.pathguide.businessDefinitions.MapDefinition;
 import com.nicok.pathguide.helpers.serializer.SerializeWrapper;
+import com.nicok.pathguide.services.http.HttpService;
+import com.nicok.pathguide.services.http.LoadMapHttpService;
 
 import java.io.IOException;
 
 public class MapService {
 
     private Context context;
-    private HttpService httpService;
+    private LoadMapHttpService loadMapHttpService;
     private SerializeWrapper serializeWrapper = new SerializeWrapper();
 
     private LoadMapServiceListener listener;
@@ -38,23 +40,17 @@ public class MapService {
 
     public interface LoadMapServiceListener {
         void onSuccess(MapDefinition map);
-        void onFail();
+        void onFail(Exception e);
     }
 
     public void load(LoadMapServiceListener listener) {
-        new HttpService(new HttpService.HttpServiceListener() {
-            @Override
-            public void onSuccess(String body) {
-//                serializedMap = reader.readAsset("map.json", context);
-                try {
-
-                    listener.onSuccess(serializeWrapper.deserialize(body, MapDefinition.class));
-                } catch (IOException e) {
-//            return null;
-                }
+        new LoadMapHttpService((HttpService.HttpServiceListener<String>) body -> {
+            //serializedMap = reader.readAsset("map.json", context);
+            try {
+                listener.onSuccess(serializeWrapper.deserialize(body, MapDefinition.class));
+            } catch (IOException e) {
+                listener.onFail(e);
             }
-
-            }
-        ).execute();
+        }, this.context).execute();
     }
 }
