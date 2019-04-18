@@ -46,7 +46,8 @@ public class BeaconsService extends Thread {
                     return null;
                 }
 
-                this.tryChangeLocation(proximityZoneContexts.iterator().next());
+                String deviceId = proximityZoneContexts.iterator().next().getDeviceId();
+                this.tryChangeLocation(deviceId);
                 return null;
             })
             .build();
@@ -54,7 +55,8 @@ public class BeaconsService extends Thread {
         observationHandler = proximityObserver.startObserving(zone);
 
         // TODO: Remove when using beacons
-        tripService.hasChangeLocationAndReachedToEnd("c00c78cad7f2a002a15a4d95887ed813");
+        String deviceId = "c00c78cad7f2a002a15a4d95887ed813";
+        this.tryChangeLocation(deviceId);
     }
 
     @Override
@@ -62,8 +64,9 @@ public class BeaconsService extends Thread {
         this.observeBeacons();
     }
 
-    public void tryChangeLocation(ProximityZoneContext proximityZoneContext) {
-        if (tripService.hasChangeLocationAndReachedToEnd(proximityZoneContext.getDeviceId())) {
+    public void tryChangeLocation(String deviceId) {
+        tripService.tryChangeLocation(deviceId);
+        if (tripService.hasReachedToEnd(deviceId)) {
             observationHandler.stop();
 
             this.interrupt();

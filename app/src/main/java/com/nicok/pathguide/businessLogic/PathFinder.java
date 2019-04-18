@@ -9,6 +9,8 @@ import com.nicok.pathguide.services.MapService;
 
 import java.util.List;
 
+import androidx.annotation.Nullable;
+
 public class PathFinder {
 
     private static PathFinder _instance = null;
@@ -31,7 +33,7 @@ public class PathFinder {
 
     public interface LoadMapServiceListener {
         void onSuccess(MapDefinition map);
-        void onFail();
+        void onFail(Exception e);
     }
 
     private void setMap(MapDefinition map) {
@@ -39,17 +41,26 @@ public class PathFinder {
         this.map.setupEntities();
     }
 
-    public void loadMap(LoadMapServiceListener listener) {
+    public void loadMap() {
+        this.loadMap(null);
+    }
+
+    public void loadMap(@Nullable LoadMapServiceListener listener) {
         this.mapService.load(new MapService.LoadMapServiceListener() {
             @Override
             public void onSuccess(MapDefinition map) {
                 setMap(map);
-                listener.onSuccess(map);
+
+                if (listener != null) {
+                    listener.onSuccess(map);
+                }
             }
 
             @Override
             public void onFail(Exception e) {
-
+                if (listener != null) {
+                    listener.onFail(e);
+                }
             }
         });
     }

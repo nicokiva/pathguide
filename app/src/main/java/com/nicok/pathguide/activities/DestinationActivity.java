@@ -46,7 +46,7 @@ public class DestinationActivity extends LoadableActivity implements Destination
             }
 
             @Override
-            public void onFail() {
+            public void onFail(Exception e) {
                 finishLoading();
             }
         });

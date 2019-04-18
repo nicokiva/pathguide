@@ -39,7 +39,7 @@ public class TripService {
 
     public interface LoadMapServiceListener {
         void onSuccess(MapDefinition map);
-        void onFail();
+        void onFail(Exception e);
     }
 
     public void loadMap(LoadMapServiceListener listener) {
@@ -50,8 +50,8 @@ public class TripService {
             }
 
             @Override
-            public void onFail() {
-                listener.onFail();
+            public void onFail(Exception e) {
+                listener.onFail(e);
             }
         });
     }
@@ -77,8 +77,7 @@ public class TripService {
         this.cancel();
     }
 
-    public boolean hasChangeLocationAndReachedToEnd(String deviceId) {
-        this.tryChangeLocation(deviceId);
+    public boolean hasReachedToEnd(String deviceId) {
         boolean hasReachedToEnd = pathFinder.hasReachedDestination();
 
         if (hasReachedToEnd) {
@@ -117,6 +116,7 @@ public class TripService {
         }
 
         this.informChangeCurrentLocation(itemsArray, edge);
+        pathFinder.loadMap(); // Map is reloaded in order to accept infinite beacons
     }
 
     private void informChangeCurrentLocation(NodeDefinition[] shortestPath, EdgeDefinition edge) {
