@@ -26,7 +26,6 @@ public class PathFinder {
         this.mapService = MapService.getInstance(context);
     }
 
-
     private MapDefinition map = null;
     private MapService mapService = null;
 
@@ -41,11 +40,7 @@ public class PathFinder {
         this.map.setupEntities();
     }
 
-    public void loadMap() {
-        this.loadMap(null);
-    }
-
-    public void loadMap(@Nullable LoadMapServiceListener listener) {
+    public void loadMap(LoadMapServiceListener listener) {
         this.mapService.load(new MapService.LoadMapServiceListener() {
             @Override
             public void onSuccess(MapDefinition map) {

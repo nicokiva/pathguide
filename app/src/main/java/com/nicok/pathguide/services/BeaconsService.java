@@ -13,6 +13,7 @@ import com.estimote.proximity_sdk.api.ProximityZoneBuilder;
 import com.estimote.proximity_sdk.api.ProximityZoneContext;
 import com.nicok.pathguide.activities.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import kotlin.Unit;
@@ -46,7 +47,7 @@ public class BeaconsService extends Thread {
                     return null;
                 }
 
-                String deviceId = proximityZoneContexts.iterator().next().getDeviceId();
+                String deviceId = proximityZoneContexts.iterator().next().getAttachments().get("id");
                 this.tryChangeLocation(deviceId);
                 return null;
             })
@@ -55,8 +56,8 @@ public class BeaconsService extends Thread {
         observationHandler = proximityObserver.startObserving(zone);
 
         // TODO: Remove when using beacons
-        String deviceId = "c00c78cad7f2a002a15a4d95887ed813";
-        this.tryChangeLocation(deviceId);
+//        String deviceId = "1";
+//        this.tryChangeLocation(deviceId);
     }
 
     @Override

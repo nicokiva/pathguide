@@ -20,6 +20,7 @@ public class TripService {
     private PathFinder pathFinder = null;
     private Context context;
     private TextToSpeechService textToSpeechService;
+    private String currentLocationId;
 
     public TripService(Context context) {
         this.context = context;
@@ -89,6 +90,7 @@ public class TripService {
 
     public void cancel() {
         _instance = null;
+        currentLocationId = null;
         pathFinder.reset();
 
         try {
@@ -103,6 +105,11 @@ public class TripService {
     }
 
     public void tryChangeLocation(String currentLocationId) {
+        if (currentLocationId == this.currentLocationId) {
+            return;
+        }
+
+        this.currentLocationId = currentLocationId;
         EdgeDefinition edge = pathFinder.updateNodeAndGetInstructions(currentLocationId);
         List<NodeDefinition> shortestPath = pathFinder.getShortestPath();
 
@@ -116,7 +123,6 @@ public class TripService {
         }
 
         this.informChangeCurrentLocation(itemsArray, edge);
-        pathFinder.loadMap(); // Map is reloaded in order to accept infinite beacons
     }
 
     private void informChangeCurrentLocation(NodeDefinition[] shortestPath, EdgeDefinition edge) {
