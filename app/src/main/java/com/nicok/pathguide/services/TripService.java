@@ -105,7 +105,7 @@ public class TripService {
     }
 
     public void tryChangeLocation(String currentLocationId) {
-        if (currentLocationId == this.currentLocationId) {
+        if (this.currentLocationId != null && currentLocationId.equals(this.currentLocationId)) {
             return;
         }
 
