@@ -78,7 +78,7 @@ public class TripService {
         this.cancel();
     }
 
-    public boolean hasReachedToEnd(String deviceId) {
+    public boolean hasReachedToEnd() {
         boolean hasReachedToEnd = pathFinder.hasReachedDestination();
 
         if (hasReachedToEnd) {
@@ -123,6 +123,7 @@ public class TripService {
         }
 
         this.informChangeCurrentLocation(itemsArray, edge);
+        pathFinder.loadMap();
     }
 
     private void informChangeCurrentLocation(NodeDefinition[] shortestPath, EdgeDefinition edge) {

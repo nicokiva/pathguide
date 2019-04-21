@@ -19,7 +19,9 @@ public class LoadMapHttpService extends HttpService<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... voids) {
-        return super.get(context.getString(R.string.load_map_url));
+        int resource = R.string.load_map_url;
+
+        return super.get(context.getString(resource));
     }
 
 }

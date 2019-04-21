@@ -27,7 +27,7 @@ public class MapDefinition implements Serializable {
         return this.graph.updateNodeAndGetInstructions(currentLocation);
     }
 
-    public EdgeDefinition getCurrnentInstructions() {
+    public EdgeDefinition getCurrentInstructions() {
         return this.graph.getCurrentInstructions();
     }
 
@@ -40,16 +40,27 @@ public class MapDefinition implements Serializable {
                 .collect(Collectors.toList());
     }
 
+    public NodeDefinition getDestination() {
+        return this.graph.getDestination();
+    }
     public void setDestination(NodeDefinition destination) {
         this.graph.setDestination(destination);
     }
 
+
+    public NodeDefinition getCurrentLocation() {
+        return this.graph.getCurrentLocation();
+    }
     public void setCurrentLocation(NodeDefinition currentLocation) {
         this.graph.setCurrentLocation(currentLocation);
     }
 
     public NodeDefinition getNodeById(String id) {
         return this.nodes.stream().filter(node -> node.getId().equals(id)).findFirst().get();
+    }
+
+    public NodeDefinition getNodeByTag(String tag) {
+        return this.nodes.stream().filter(node -> node.getTag().equals(tag)).findFirst().get();
     }
 
     public List<NodeDefinition> getShortestPath() {

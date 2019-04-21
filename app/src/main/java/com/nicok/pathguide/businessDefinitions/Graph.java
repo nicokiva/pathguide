@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class Graph {
 
-    private List<NodeDefinition> nodes = new ArrayList<>();
+    private List<NodeDefinition> nodes;
 
     private List<NodeDefinition> shortestPath = new ArrayList<>();
 
@@ -20,8 +20,16 @@ public class Graph {
         return this.currentLocation != null && this.destination.equals(this.currentLocation);
     }
 
+    public NodeDefinition getDestination() {
+        return destination;
+    }
+
     public void setDestination(NodeDefinition destination) {
         this.destination = destination;
+    }
+
+    public NodeDefinition getCurrentLocation() {
+        return currentLocation;
     }
 
     public void setCurrentLocation (NodeDefinition currentLocation) {

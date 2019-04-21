@@ -9,8 +9,6 @@ import com.nicok.pathguide.services.MapService;
 
 import java.util.List;
 
-import androidx.annotation.Nullable;
-
 public class PathFinder {
 
     private static PathFinder _instance = null;
@@ -38,6 +36,25 @@ public class PathFinder {
     private void setMap(MapDefinition map) {
         this.map = map;
         this.map.setupEntities();
+    }
+
+    // TODO: This is a hack to allow infinite beacons and should be removed when project is done.
+    public void loadMap() {
+        NodeDefinition currentLocation = map.getCurrentLocation();
+        NodeDefinition destination = map.getDestination();
+
+        this.mapService.load(new MapService.LoadMapServiceListener() {
+            @Override
+            public void onSuccess(MapDefinition map) {
+                setMap(map);
+
+                map.setDestination(map.getNodeByTag(destination.tag));
+                map.setCurrentLocation(map.getNodeByTag(currentLocation.tag));
+            }
+
+            @Override
+            public void onFail(Exception e) { }
+        });
     }
 
     public void loadMap(LoadMapServiceListener listener) {
@@ -78,7 +95,7 @@ public class PathFinder {
     }
 
     public EdgeDefinition getCurrentInstructions() {
-        return map.getCurrnentInstructions();
+        return map.getCurrentInstructions();
     }
 
     public EdgeDefinition updateNodeAndGetInstructions(String currentLocationId){
