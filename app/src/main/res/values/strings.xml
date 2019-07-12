@@ -17,6 +17,10 @@
     <string name="current_location_repeat_instructions">Repetir Instrucciones</string>
     <string name="current_location_cancel">Cancelar viaje</string>
 
+    <string name="current_location_unknown">No se puede obtener la ubicación actual, por favor acérquese a alguna estación.</string>
+
+
+
     <string name="current_location_cancel_confirm">Está seguro que desea cancelar el viaje?</string>
 
     <string name="load_map_url">http://23.92.211.122:3001/path</string>

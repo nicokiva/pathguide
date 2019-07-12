@@ -8,7 +8,7 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No se puede obtener la ubicación actual, por favor acérquese a algún punto."
+        android:text="@string/current_location_unknown"
         android:textSize="18sp"
         tools:text="No se puede obtener la ubicación actual, por favor acérquese a algún punto." />
 </LinearLayout>
