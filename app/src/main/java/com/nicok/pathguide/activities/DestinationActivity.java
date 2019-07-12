@@ -9,6 +9,9 @@ import com.nicok.pathguide.viewHandlers.DestinationViewHandler;
 import com.nicok.pathguide.viewHandlers.IViewHandler;
 import com.nicok.pathguide.services.TripService;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class DestinationActivity extends LoadableActivity implements DestinationViewHandler.DestinationViewHandlerListener {
 
     TripService tripService;
@@ -32,6 +35,16 @@ public class DestinationActivity extends LoadableActivity implements Destination
         this.tripService = TripService.getInstance(getApplicationContext());
     }
 
+    private void reload() {
+        tripService.loadMap(new TripService.LoadMapServiceListener() {
+            @Override
+            public void onSuccess(MapDefinition map) { setView(); }
+
+            @Override
+            public void onFail(Exception e) { }
+        });
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -43,6 +56,12 @@ public class DestinationActivity extends LoadableActivity implements Destination
                 setView();
 
                 finishLoading();
+
+                new Timer().scheduleAtFixedRate(new TimerTask(){
+                    @Override
+                    public void run(){ reload(); }
+                }, 0, 5000);
+
             }
 
             @Override

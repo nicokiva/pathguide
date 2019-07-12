@@ -19,5 +19,5 @@
 
     <string name="current_location_cancel_confirm">Está seguro que desea cancelar el viaje?</string>
 
-    <string name="load_map_url">https://api.myjson.com/bins/kzevw</string>
+    <string name="load_map_url">http://23.92.211.122:3001/path</string>
 </resources>
