@@ -20,12 +20,12 @@ public class PathFinder {
         return _instance;
     }
 
-    public PathFinder(Context context) {
+    private PathFinder(Context context) {
         this.mapService = MapService.getInstance(context);
     }
 
     private MapDefinition map = null;
-    private MapService mapService = null;
+    private MapService mapService;
 
 
     public interface LoadMapServiceListener {
@@ -39,7 +39,7 @@ public class PathFinder {
     }
 
     // TODO: This is a hack to allow infinite beacons and should be removed when project is done.
-    public void loadMap() {
+    public void loadMapAndSet() {
         NodeDefinition currentLocation = map.getCurrentLocation();
         NodeDefinition destination = map.getDestination();
 
@@ -61,18 +61,28 @@ public class PathFinder {
         this.mapService.load(new MapService.LoadMapServiceListener() {
             @Override
             public void onSuccess(MapDefinition map) {
-                setMap(map);
-
-                if (listener != null) {
-                    listener.onSuccess(map);
-                }
+                listener.onSuccess(map);
             }
 
             @Override
             public void onFail(Exception e) {
-                if (listener != null) {
-                    listener.onFail(e);
-                }
+                listener.onFail(e);
+            }
+        });
+    }
+
+    public void loadMapAndSet(LoadMapServiceListener listener) {
+        this.loadMap(new PathFinder.LoadMapServiceListener() {
+            @Override
+            public void onSuccess(MapDefinition map) {
+                setMap(map);
+
+                listener.onSuccess(map);
+            }
+
+            @Override
+            public void onFail(Exception e) {
+                listener.onFail(e);
             }
         });
     }

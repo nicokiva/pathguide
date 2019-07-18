@@ -17,12 +17,12 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class TripService {
 
-    private PathFinder pathFinder = null;
+    private PathFinder pathFinder;
     private Context context;
     private TextToSpeechService textToSpeechService;
     private String currentLocationId;
 
-    public TripService(Context context) {
+    private TripService(Context context) {
         this.context = context;
 
         this.pathFinder = PathFinder.getInstance(context);
@@ -43,8 +43,22 @@ public class TripService {
         void onFail(Exception e);
     }
 
-    public void loadMap(LoadMapServiceListener listener) {
+    public void reloadMap(LoadMapServiceListener listener) {
         pathFinder.loadMap(new PathFinder.LoadMapServiceListener() {
+            @Override
+            public void onSuccess(MapDefinition map) {
+                listener.onSuccess(map);
+            }
+
+            @Override
+            public void onFail(Exception e) {
+                listener.onFail(e);
+            }
+        });
+    }
+
+    public void loadMap(LoadMapServiceListener listener) {
+        pathFinder.loadMapAndSet(new PathFinder.LoadMapServiceListener() {
             @Override
             public void onSuccess(MapDefinition map) {
                 listener.onSuccess(map);
@@ -65,7 +79,7 @@ public class TripService {
         pathFinder.setDestination(destination);
     }
 
-    public void finish() {
+    private void finish() {
         this.textToSpeechService.speak(context.getString(R.string.arrived_message));
         _instance = null;
 
@@ -78,7 +92,7 @@ public class TripService {
         this.cancel();
     }
 
-    public boolean hasReachedToEnd() {
+    boolean hasReachedToEnd() {
         boolean hasReachedToEnd = pathFinder.hasReachedDestination();
 
         if (hasReachedToEnd) {
@@ -96,7 +110,7 @@ public class TripService {
         try {
             this.textToSpeechService.shutdown();
         } catch (Exception e) {
-
+            // Nothing needs to be done here.
         }
     }
 
@@ -104,8 +118,8 @@ public class TripService {
         this.textToSpeechService.speak(pathFinder.getCurrentInstructions().instructions);
     }
 
-    public void tryChangeLocation(String currentLocationId) {
-        if (this.currentLocationId != null && currentLocationId.equals(this.currentLocationId)) {
+    void tryChangeLocation(String currentLocationId) {
+        if (currentLocationId.equals(this.currentLocationId)) {
             return;
         }
 
@@ -123,7 +137,7 @@ public class TripService {
         }
 
         this.informChangeCurrentLocation(itemsArray, edge);
-        pathFinder.loadMap();
+        pathFinder.loadMapAndSet();
     }
 
     private void informChangeCurrentLocation(NodeDefinition[] shortestPath, EdgeDefinition edge) {

@@ -18,9 +18,7 @@ public class DestinationActivity extends LoadableActivity implements Destination
     IViewHandler viewHandler;
 
     @Override
-    public void onBackPressed() {
-        return;
-    }
+    public void onBackPressed() {}
 
     @Override
     protected void finishLoading() {
@@ -36,7 +34,7 @@ public class DestinationActivity extends LoadableActivity implements Destination
     }
 
     private void reload() {
-        tripService.loadMap(new TripService.LoadMapServiceListener() {
+        tripService.reloadMap(new TripService.LoadMapServiceListener() {
             @Override
             public void onSuccess(MapDefinition map) { setView(); }
 
