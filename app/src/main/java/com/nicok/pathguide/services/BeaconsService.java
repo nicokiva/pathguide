@@ -2,7 +2,6 @@ package com.nicok.pathguide.services;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Handler;
 
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.Requirement;
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.RequirementsWizardFactory;
@@ -24,11 +23,11 @@ public class BeaconsService extends Thread {
 
     private Context context;
 
-    EstimoteCloudCredentials cloudCredentials;
-    ProximityObserver.Handler observationHandler;
-    TripService tripService;
+    private EstimoteCloudCredentials cloudCredentials;
+    private ProximityObserver.Handler observationHandler;
+    private TripService tripService;
 
-    public BeaconsService(Context context) {
+    BeaconsService(Context context) {
         cloudCredentials = new EstimoteCloudCredentials(context.getString(R.string.beacons_api_key), context.getString(R.string.beacons_api_app_token));
         this.context = context;
 
@@ -64,10 +63,6 @@ public class BeaconsService extends Thread {
             .build();
 
         observationHandler = proximityObserver.startObserving(zone);
-
-        // TODO: Remove when using beacons
-//        String deviceId = "48b341c52ec673e69750ea5fbf850c30";
-//        this.tryChangeLocation(deviceId);
     }
 
     @Override
@@ -76,7 +71,7 @@ public class BeaconsService extends Thread {
     }
 
 
-    public void tryChangeLocation(String deviceId) {
+    private void tryChangeLocation(String deviceId) {
         tripService.tryChangeLocation(deviceId);
         if (tripService.hasReachedToEnd()) {
             observationHandler.stop();
@@ -95,18 +90,10 @@ public class BeaconsService extends Thread {
     public static void isEnabled(Activity callerActivity, BeaconsServiceListener listener) {
         RequirementsWizardFactory.createEstimoteRequirementsWizard().fulfillRequirements(
                 callerActivity,
-                () -> {
-                    return listener.onRequirementsFulfilled();
-                },
-                (requirements) -> {
-                    /* scanning won't work, handle this case in your app */
-                    return listener.onRequirementsMissing(requirements);
-                },
+                listener::onRequirementsFulfilled,
+                listener::onRequirementsMissing, /* scanning won't work, handle this case in your app */
+                listener::onError /* Oops, some error occurred, handle it here! */
 
-                (throwable) -> {
-                    /* Oops, some error occurred, handle it here! */
-                    return listener.onError(throwable);
-                }
         );
     }
 
