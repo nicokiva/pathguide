@@ -13,6 +13,9 @@
     <string name="beacons_api_key">path-guide-bkq</string>
     <string name="beacons_api_app_token">a8f5f1ee5914fefc3d3af67b894c5f89</string>
 
+    <string name="row_destination_name">Name</string>
+    <string name="row_destination_extra">Extra</string>
+
     <string name="current_location_title">Ubicación actual</string>
     <string name="current_location_repeat_instructions">Repetir Instrucciones</string>
     <string name="current_location_cancel">Cancelar viaje</string>

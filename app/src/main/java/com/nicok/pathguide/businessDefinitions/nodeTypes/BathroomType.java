@@ -1,4 +1,4 @@
-package com.nicok.pathguide.businessDefinitions.NodeTypes;
+package com.nicok.pathguide.businessDefinitions.nodeTypes;
 
 import com.nicok.pathguide.activities.R;
 

@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 return null;
             }
         });
-    };
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

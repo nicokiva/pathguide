@@ -2,7 +2,7 @@ package com.nicok.pathguide.businessDefinitions;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.nicok.pathguide.businessDefinitions.NodeTypes.NodeType;
+import com.nicok.pathguide.businessDefinitions.nodeTypes.NodeType;
 
 import java.io.Serializable;
 import java.util.Arrays;

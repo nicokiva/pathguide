@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.nicok.pathguide.businessDefinitions.NodeTypes.NodeType;
+import com.nicok.pathguide.businessDefinitions.nodeTypes.NodeType;
 
 import java.io.Serializable;
 import java.util.HashMap;

@@ -1,14 +1,13 @@
 package com.nicok.pathguide.businessDefinitions;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.nicok.pathguide.businessDefinitions.NodeTypes.BathroomType;
-import com.nicok.pathguide.businessDefinitions.NodeTypes.ClassroomType;
-import com.nicok.pathguide.businessDefinitions.NodeTypes.GatewayType;
-import com.nicok.pathguide.businessDefinitions.NodeTypes.NodeType;
+import com.nicok.pathguide.businessDefinitions.nodeTypes.BathroomType;
+import com.nicok.pathguide.businessDefinitions.nodeTypes.ClassroomType;
+import com.nicok.pathguide.businessDefinitions.nodeTypes.GatewayType;
+import com.nicok.pathguide.businessDefinitions.nodeTypes.NodeType;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ public class NodeTypesDeserializer extends JsonDeserializer<List<NodeType>> {
 
     @Override
     public List<NodeType> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-            throws IOException, JsonProcessingException {
+            throws IOException {
 
         JsonNode rawTypes = jsonParser.getCodec().readTree(jsonParser);
         if (!rawTypes.isArray()) {
