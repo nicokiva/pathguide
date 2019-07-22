@@ -49,7 +49,7 @@ public class PathFinder {
                 setMap(map);
 
                 map.setDestination(map.getNodeByTag(destination.tag));
-                map.setCurrentLocation(map.getNodeByTag(currentLocation.tag));
+                map.updateNodeAndGetInstructions(currentLocation.id);
             }
 
             @Override

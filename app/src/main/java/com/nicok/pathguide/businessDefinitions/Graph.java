@@ -123,7 +123,7 @@ public class Graph {
 
         this.currentLocation = currentLocation;
 
-        if (!this.shortestPath.contains(currentLocation) || !this.shortestPath.contains(this.destination)) {
+        if (!this.shortestPath.contains(currentLocation) || !this.shortestPath.contains(this.destination) || this.shortestPath.get(0) != currentLocation) {
             this.calculateShortestPath(currentLocation, this.destination);
         }
 
