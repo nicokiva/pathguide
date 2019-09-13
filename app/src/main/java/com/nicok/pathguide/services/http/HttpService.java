@@ -1,15 +1,17 @@
 package com.nicok.pathguide.services.http;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 
-import com.nicok.pathguide.activities.R;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.Charset;
+import java.util.Optional;
 
 public abstract class HttpService<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
     public interface HttpServiceListener<Result> {
@@ -23,15 +25,25 @@ public abstract class HttpService<Params, Progress, Result> extends AsyncTask<Pa
         this.context = context;
     }
 
-    public String get(String url) {
+    private boolean isConnected() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) this.context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    public <T> Optional<T> get(String url, Class<T> clazz) {
+        if (!this.isConnected()) {
+            return Optional.empty();
+        }
+
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters()
                 .add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
 
-        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-
-        return response.getBody();
+        ResponseEntity<T> response = restTemplate.getForEntity(url, clazz);
+        return Optional.of(response.getBody());
     }
+
 
     @Override
     protected void onPostExecute(Result s) {

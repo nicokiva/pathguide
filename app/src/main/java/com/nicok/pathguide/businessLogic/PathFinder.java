@@ -8,6 +8,7 @@ import com.nicok.pathguide.businessDefinitions.NodeDefinition;
 import com.nicok.pathguide.services.MapService;
 
 import java.util.List;
+import java.util.Optional;
 
 public class PathFinder {
 
@@ -81,15 +82,11 @@ public class PathFinder {
     }
 
     public void loadMap(LoadMapServiceListener listener) {
-        this.mapService.load(new MapService.LoadMapServiceListener() {
-            @Override
-            public void onSuccess(MapDefinition map) {
+        this.mapService.load(newMap -> {
+            if (newMap.isPresent()) {
+                listener.onSuccess(newMap.get());
+            } else {
                 listener.onSuccess(map);
-            }
-
-            @Override
-            public void onFail(Exception e) {
-                listener.onFail(e);
             }
         });
     }
