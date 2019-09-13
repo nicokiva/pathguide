@@ -22,9 +22,13 @@ public class MapDefinition implements Serializable {
 
     private Graph graph;
 
-    public EdgeDefinition updateNodeAndGetInstructions(String currentLocationId) {
+    public void updateCurrentLocation(String currentLocationId) {
+        this.graph.updateCurrentLocation(this.getNodeById(currentLocationId));
+    }
+
+    public EdgeDefinition getInstructionsTo(String currentLocationId) {
         NodeDefinition currentLocation = this.getNodeById(currentLocationId);
-        return this.graph.updateNodeAndGetInstructions(currentLocation);
+        return this.graph.getInstructionsTo(currentLocation);
     }
 
     public EdgeDefinition getCurrentInstructions() {

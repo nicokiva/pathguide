@@ -12,23 +12,14 @@ import java.io.IOException;
 public class MapService {
 
     private Context context;
-    private LoadMapHttpService loadMapHttpService;
     private SerializeWrapper serializeWrapper = new SerializeWrapper();
 
-    private LoadMapServiceListener listener;
 
     public MapService(Context context) {
         this.context = context;
     }
 
     private static MapService _instance = null;
-    public static MapService getInstance() {
-        if (_instance == null) {
-            throw new IllegalArgumentException();
-        }
-
-        return _instance;
-    }
 
     public static MapService getInstance(Context context) {
         if (_instance == null) {

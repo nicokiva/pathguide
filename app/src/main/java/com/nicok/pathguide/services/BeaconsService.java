@@ -44,18 +44,11 @@ public class BeaconsService extends Thread {
             .forTag(context.getString(R.string.beacons_tag))
             .inCustomRange(1.0)
             .onContextChange(proximityZoneContexts -> {
-                Logger.getLogger("test").log(Level.INFO, ">>>>>>>>>>>>>>>>>>>>> SIZE: " + proximityZoneContexts.size());
-                for (ProximityZoneContext context: proximityZoneContexts) {
-                    Logger.getLogger("test").log(Level.INFO, ">>>>>>>>>>>>>>>>>>>>> GOT: " + context.getAttachments().get("id"));
-                }
-
                 if(proximityZoneContexts.size() != 1) {
                     return null;
                 }
 
                 String deviceId = proximityZoneContexts.iterator().next().getDeviceId();
-
-                Logger.getLogger("test").log(Level.INFO, ">>>>>>>>>>>>>>>>>>>>> CHANGING TO: " + deviceId);
                 this.tryChangeLocation(deviceId);
 
                 return null;
@@ -63,6 +56,10 @@ public class BeaconsService extends Thread {
             .build();
 
         observationHandler = proximityObserver.startObserving(zone);
+
+        // TODO: Remove when using beacons
+        String deviceId = "48b341c52ec673e69750ea5fbf850c30";
+        this.tryChangeLocation(deviceId);
     }
 
     @Override

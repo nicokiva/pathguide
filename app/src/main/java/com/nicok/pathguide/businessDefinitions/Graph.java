@@ -111,18 +111,11 @@ public class Graph {
         return this.currentLocation.getAdjacentNodes().get(nextLocation);
     }
 
-    public EdgeDefinition updateNodeAndGetInstructions(NodeDefinition currentLocation) {
-        if (this.currentLocation != null && this.currentLocation.equals(currentLocation)) {
-            return null;
-        }
-
-        if (this.destination.equals(currentLocation)) {
-            this.currentLocation = currentLocation;
-            return null;
-        }
-
+    public void updateCurrentLocation(NodeDefinition currentLocation) {
         this.currentLocation = currentLocation;
+    }
 
+    public EdgeDefinition getInstructionsTo(NodeDefinition currentLocation) {
         if (!this.shortestPath.contains(currentLocation) || !this.shortestPath.contains(this.destination) || this.shortestPath.get(0) != currentLocation) {
             this.calculateShortestPath(currentLocation, this.destination);
         }

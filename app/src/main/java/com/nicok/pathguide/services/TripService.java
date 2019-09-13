@@ -124,20 +124,29 @@ public class TripService {
         }
 
         this.currentLocationId = currentLocationId;
-        EdgeDefinition edge = pathFinder.updateNodeAndGetInstructions(currentLocationId);
-        List<NodeDefinition> shortestPath = pathFinder.getShortestPath();
+        pathFinder.updateCurrentLocation(this.currentLocationId);
 
-        NodeDefinition[] itemsArray = new NodeDefinition[shortestPath.size()];
-        itemsArray = shortestPath.toArray(itemsArray);
+        pathFinder.reloadMapAndSet(new PathFinder.LoadMapServiceListener() {
+            @Override
+            public void onSuccess(MapDefinition map) {
+                EdgeDefinition edge = pathFinder.updateNodeAndGetInstructions(currentLocationId);
+                List<NodeDefinition> shortestPath = pathFinder.getShortestPath();
+                NodeDefinition[] itemsArray = new NodeDefinition[shortestPath.size()];
 
-        if (edge == null) {
-            this.informFinishTrip();
+                itemsArray = shortestPath.toArray(itemsArray);
 
-            return;
-        }
+                if (edge == null) {
+                    informFinishTrip();
 
-        this.informChangeCurrentLocation(itemsArray, edge);
-        pathFinder.loadMapAndSet();
+                    return;
+                }
+
+                informChangeCurrentLocation(itemsArray, edge);
+            }
+
+            @Override
+            public void onFail(Exception e) { }
+        });
     }
 
     private void informChangeCurrentLocation(NodeDefinition[] shortestPath, EdgeDefinition edge) {

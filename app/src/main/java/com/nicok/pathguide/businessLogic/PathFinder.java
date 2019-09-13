@@ -38,29 +38,38 @@ public class PathFinder {
         this.map.setupEntities();
     }
 
+    // TODO: Try to reload map before recalculating path.
+    // TODO: what if internet is off?
+
     // TODO: This is a hack to allow infinite beacons and should be removed when project is done.
-    public void loadMapAndSet() {
+    public void reloadMapAndSet(LoadMapServiceListener listener) {
         NodeDefinition currentLocation = map.getCurrentLocation();
         NodeDefinition destination = map.getDestination();
 
-        this.mapService.load(new MapService.LoadMapServiceListener() {
+        this.loadMapAndSet(new LoadMapServiceListener() {
+            @Override
+            public void onSuccess(MapDefinition map) {
+                map.setDestination(map.getNodeByTag(destination.tag));
+                map.updateCurrentLocation(currentLocation.id);
+                map.getInstructionsTo(currentLocation.id);
+
+                listener.onSuccess(map);
+            }
+
+            @Override
+            public void onFail(Exception e) {
+                listener.onFail(e);
+            }
+        });
+
+    }
+
+    public void loadMapAndSet(LoadMapServiceListener listener) {
+        this.loadMap(new PathFinder.LoadMapServiceListener() {
             @Override
             public void onSuccess(MapDefinition map) {
                 setMap(map);
 
-                map.setDestination(map.getNodeByTag(destination.tag));
-                map.updateNodeAndGetInstructions(currentLocation.id);
-            }
-
-            @Override
-            public void onFail(Exception e) { }
-        });
-    }
-
-    public void loadMap(LoadMapServiceListener listener) {
-        this.mapService.load(new MapService.LoadMapServiceListener() {
-            @Override
-            public void onSuccess(MapDefinition map) {
                 listener.onSuccess(map);
             }
 
@@ -71,12 +80,10 @@ public class PathFinder {
         });
     }
 
-    public void loadMapAndSet(LoadMapServiceListener listener) {
-        this.loadMap(new PathFinder.LoadMapServiceListener() {
+    public void loadMap(LoadMapServiceListener listener) {
+        this.mapService.load(new MapService.LoadMapServiceListener() {
             @Override
             public void onSuccess(MapDefinition map) {
-                setMap(map);
-
                 listener.onSuccess(map);
             }
 
@@ -109,7 +116,11 @@ public class PathFinder {
     }
 
     public EdgeDefinition updateNodeAndGetInstructions(String currentLocationId){
-        return map.updateNodeAndGetInstructions(currentLocationId);
+        return map.getInstructionsTo(currentLocationId);
+    }
+
+    public void updateCurrentLocation(String currentLocationId) {
+        map.updateCurrentLocation(currentLocationId);
     }
 
     public void setDestination(NodeDefinition destination) {

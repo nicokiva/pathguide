@@ -53,7 +53,8 @@ public class GraphUnitTest {
 
         Graph graph = new Graph(nodes);
         long steps = graph.calculateShortestPath(bano, beacon01);
-        EdgeDefinition edge = graph.updateNodeAndGetInstructions(bano);
+        graph.updateCurrentLocation(bano);
+        EdgeDefinition edge = graph.getInstructionsTo(bano);
 
         assertEquals(steps, 1);
         assertEquals(edge, banoToBeacon01);
@@ -73,11 +74,14 @@ public class GraphUnitTest {
         Graph graph = new Graph(nodes);
         long steps = graph.calculateShortestPath(bano, aula204);
         assertEquals(steps, 2);
-        EdgeDefinition edge = graph.updateNodeAndGetInstructions(bano);
+
+        graph.updateCurrentLocation(bano);
+        EdgeDefinition edge = graph.getInstructionsTo(bano);
 
         assertEquals(edge, banoToBeacon01);
 
-        edge = graph.updateNodeAndGetInstructions(beacon01);
+        graph.updateCurrentLocation(beacon01);
+        edge = graph.getInstructionsTo(beacon01);
         assertEquals(edge, beacon01ToAula204);
     }
 
@@ -96,14 +100,17 @@ public class GraphUnitTest {
         Graph graph = new Graph(nodes);
         long steps = graph.calculateShortestPath(bano, aula206);
         assertEquals(steps, 3);
-        EdgeDefinition edge = graph.updateNodeAndGetInstructions(bano);
+        graph.updateCurrentLocation(bano);
+        EdgeDefinition edge = graph.getInstructionsTo(bano);
 
         assertEquals(edge, banoToBeacon01);
 
-        edge = graph.updateNodeAndGetInstructions(beacon01);
+        graph.updateCurrentLocation(beacon01);
+        edge = graph.getInstructionsTo(beacon01);
         assertEquals(edge, beacon01ToAula204);
 
-        edge = graph.updateNodeAndGetInstructions(aula204);
+        graph.updateCurrentLocation(aula204);
+        edge = graph.getInstructionsTo(aula204);
         assertEquals(edge, aula204ToAula206);
     }
 
@@ -124,7 +131,8 @@ public class GraphUnitTest {
         Graph graph = new Graph(nodes);
         long steps = graph.calculateShortestPath(bano, aula206);
         assertEquals(steps, 1);
-        EdgeDefinition edge = graph.updateNodeAndGetInstructions(bano);
+        graph.updateCurrentLocation(bano);
+        EdgeDefinition edge = graph.getInstructionsTo(bano);
 
         assertEquals(edge, banoToAula206);
     }
@@ -147,19 +155,24 @@ public class GraphUnitTest {
 
         long steps = graph.calculateShortestPath(bano, aula206);
         assertEquals(steps, 2);
-        EdgeDefinition edge = graph.updateNodeAndGetInstructions(bano);
+        graph.updateCurrentLocation(bano);
+        EdgeDefinition edge = graph.getInstructionsTo(bano);
         assertEquals(edge, banoToBeacon01);
 
-        edge = graph.updateNodeAndGetInstructions(beacon01);
+        graph.updateCurrentLocation(beacon01);
+        edge = graph.getInstructionsTo(beacon01);
         assertEquals(edge, beacon01ToAula206);
 
 
         steps = graph.calculateShortestPath(aula206, aula204);
         assertEquals(steps, 2);
-        edge = graph.updateNodeAndGetInstructions(aula206);
+
+        graph.updateCurrentLocation(aula206);
+        edge = graph.getInstructionsTo(aula206);
         assertEquals(edge, aula206ToBeacon01);
 
-        edge = graph.updateNodeAndGetInstructions(beacon01);
+        graph.updateCurrentLocation(beacon01);
+        edge = graph.getInstructionsTo(beacon01);
         assertEquals(edge, beacon01ToAula204);
     }
 
@@ -195,10 +208,12 @@ public class GraphUnitTest {
 
         long steps = graph.calculateShortestPath(aula206, bano);
         assertEquals(steps, 2);
-        EdgeDefinition edge = graph.updateNodeAndGetInstructions(aula206);
+        graph.updateCurrentLocation(aula206);
+        EdgeDefinition edge = graph.getInstructionsTo(aula206);
         assertEquals(edge, aula206ToBeacon01);
 
-        edge = graph.updateNodeAndGetInstructions(beacon01);
+        graph.updateCurrentLocation(beacon01);
+        edge = graph.getInstructionsTo(beacon01);
         assertEquals(edge, beacon01ToBano);
     }
 
@@ -216,19 +231,22 @@ public class GraphUnitTest {
         // Go from bathroom to beacon
         long steps = graph.calculateShortestPath(bano, beacon01);
         assertEquals(steps, 1);
-        EdgeDefinition edge = graph.updateNodeAndGetInstructions(bano);
+        graph.updateCurrentLocation(bano);
+        EdgeDefinition edge = graph.getInstructionsTo(bano);
         assertEquals(edge, banoToBeacon01);
 
         // Return from beacon to bathroom
         steps = graph.calculateShortestPath(beacon01, bano);
         assertEquals(steps, 1);
-        edge = graph.updateNodeAndGetInstructions(beacon01);
+        graph.updateCurrentLocation(beacon01);
+        edge = graph.getInstructionsTo(beacon01);
         assertEquals(edge, beacon01ToBano);
 
         // Again from bathroom to beacon
         steps = graph.calculateShortestPath(bano, beacon01);
         assertEquals(steps, 1);
-        edge = graph.updateNodeAndGetInstructions(bano);
+        graph.updateCurrentLocation(bano);
+        edge = graph.getInstructionsTo(bano);
         assertEquals(edge, banoToBeacon01);
     }
 
