@@ -83,7 +83,6 @@ public class BeaconsService extends Thread {
         Unit onError(Throwable error);
     }
 
-
     public static void isEnabled(Activity callerActivity, BeaconsServiceListener listener) {
         RequirementsWizardFactory.createEstimoteRequirementsWizard().fulfillRequirements(
                 callerActivity,

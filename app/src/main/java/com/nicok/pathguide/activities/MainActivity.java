@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.Requirement;
-import com.nicok.pathguide.businessLogic.PathFinder;
 import com.nicok.pathguide.services.BeaconsService;
 import com.nicok.pathguide.services.TextToSpeechService;
 import com.nicok.pathguide.services.http.HttpService;
@@ -16,12 +15,6 @@ import kotlin.Unit;
 
 
 public class MainActivity extends AppCompatActivity {
-
-    private PathFinder pathFinder = null;
-
-    public MainActivity() {
-        this.pathFinder = PathFinder.getInstance(this);
-    }
 
     private final int MAIN_ACTIVITY = 1;
 
@@ -58,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-
         }
     }
+
 
     private Unit goToDestinationsList(){
         Intent myIntent = new Intent(MainActivity.this, DestinationActivity.class);
