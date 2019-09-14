@@ -3,6 +3,8 @@ package com.nicok.pathguide.services;
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
 
+import java.util.Locale;
+
 public class TextToSpeechService {
 
     public static final String ACTION_CHECK_TTS_DATA = TextToSpeech.Engine.ACTION_CHECK_TTS_DATA;
@@ -13,23 +15,14 @@ public class TextToSpeechService {
     private boolean ttsEnabled = false;
 
     public TextToSpeechService(Context context) {
-        this.mTts = new TextToSpeech(context, (int status) -> {
-            ttsEnabled = status == TextToSpeech.SUCCESS;
-        });
+        Locale.getAvailableLocales();
+        this.mTts = new TextToSpeech(context, (int status) -> ttsEnabled = status == TextToSpeech.SUCCESS);
     }
 
     private static TextToSpeechService _instance = null;
     public static TextToSpeechService getInstance(Context context) {
         if (_instance == null) {
             _instance = new TextToSpeechService(context);
-        }
-
-        return _instance;
-    }
-
-    public static TextToSpeechService getInstance() throws Exception {
-        if (_instance == null) {
-            throw new Exception("TextToSpeechService has not been initialized.");
         }
 
         return _instance;

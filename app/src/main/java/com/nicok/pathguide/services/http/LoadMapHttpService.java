@@ -17,7 +17,7 @@ public class LoadMapHttpService extends HttpService<Void, Void, Optional<MapDefi
     protected Optional<MapDefinition> doInBackground(Void... voids) {
         int resource = R.string.load_map_url;
 
-        return get(context.getString(resource), MapDefinition.class);
+        return tryGet(context.getString(resource), MapDefinition.class);
     }
 
 }

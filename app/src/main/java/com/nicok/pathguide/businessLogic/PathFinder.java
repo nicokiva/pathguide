@@ -39,9 +39,6 @@ public class PathFinder {
         this.map.setupEntities();
     }
 
-    // TODO: Try to reload map before recalculating path.
-    // TODO: what if internet is off?
-
     // TODO: This is a hack to allow infinite beacons and should be removed when project is done.
     public void reloadMapAndSet(LoadMapServiceListener listener) {
         NodeDefinition currentLocation = map.getCurrentLocation();

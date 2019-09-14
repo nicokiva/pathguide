@@ -25,23 +25,27 @@ public abstract class HttpService<Params, Progress, Result> extends AsyncTask<Pa
         this.context = context;
     }
 
-    private boolean isConnected() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) this.context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    public static boolean isConnected(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    public <T> Optional<T> get(String url, Class<T> clazz) {
-        if (!this.isConnected()) {
+    public <T> Optional<T> tryGet(String url, Class<T> clazz) {
+        if (!this.isConnected(this.context)) {
             return Optional.empty();
         }
 
+        return Optional.of(get(url, clazz));
+    }
+
+    private <T> T get(String url, Class<T> clazz) {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters()
                 .add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
 
         ResponseEntity<T> response = restTemplate.getForEntity(url, clazz);
-        return Optional.of(response.getBody());
+        return response.getBody();
     }
 
 

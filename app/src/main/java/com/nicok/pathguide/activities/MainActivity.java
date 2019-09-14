@@ -7,6 +7,7 @@ import com.estimote.mustard.rx_goodness.rx_requirements_wizard.Requirement;
 import com.nicok.pathguide.businessLogic.PathFinder;
 import com.nicok.pathguide.services.BeaconsService;
 import com.nicok.pathguide.services.TextToSpeechService;
+import com.nicok.pathguide.services.http.HttpService;
 
 import java.util.List;
 
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == MAIN_ACTIVITY) {
             if (resultCode != TextToSpeechService.CHECK_VOICE_DATA_PASS) {
 
@@ -37,7 +40,25 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
-            this.checkBeaconsRequirements();
+            this.checkBeaconsRequirements(new BeaconsService.BeaconsServiceListener() {
+                @Override
+                public Unit onRequirementsFulfilled() {
+                    return checkInternetConnectivity();
+                }
+
+                @Override
+                public Unit onRequirementsMissing(List<? extends Requirement> requirements) {
+                    // TODO: Harcoded as AVD does not support bluetooth.
+                    return checkInternetConnectivity();
+                }
+
+                @Override
+                public Unit onError(Throwable error) {
+                    return null;
+                }
+            });
+
+
         }
     }
 
@@ -48,24 +69,18 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
-    private void checkBeaconsRequirements() {
-        BeaconsService.isEnabled(this, new BeaconsService.BeaconsServiceListener() {
-            @Override
-            public Unit onRequirementsFulfilled() {
-                return goToDestinationsList();
-            }
+    private Unit checkInternetConnectivity() {
+        boolean isConnected = HttpService.isConnected(this.getApplicationContext());
 
-            @Override
-            public Unit onRequirementsMissing(List<? extends Requirement> requirements) {
-                // TODO: Harcoded as AVD does not support bluetooth.
-                return goToDestinationsList();
-            }
+        if (!isConnected) {
+            return null;
+        }
 
-            @Override
-            public Unit onError(Throwable error) {
-                return null;
-            }
-        });
+        return goToDestinationsList();
+    }
+
+    private void checkBeaconsRequirements(BeaconsService.BeaconsServiceListener listener) {
+        BeaconsService.isEnabled(this, listener);
     }
 
     @Override
