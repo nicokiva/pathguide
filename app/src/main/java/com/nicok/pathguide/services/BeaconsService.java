@@ -58,8 +58,8 @@ public class BeaconsService extends Thread {
         observationHandler = proximityObserver.startObserving(zone);
 
         // TODO: Remove when using beacons
-        String deviceId = "48b341c52ec673e69750ea5fbf850c30";
-        this.tryChangeLocation(deviceId);
+//        String deviceId = "48b341c52ec673e69750ea5fbf850c30";
+//        this.tryChangeLocation(deviceId);
     }
 
     @Override

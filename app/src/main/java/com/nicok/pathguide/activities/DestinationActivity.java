@@ -36,7 +36,9 @@ public class DestinationActivity extends LoadableActivity implements Destination
     private void reload() {
         tripService.reloadMap(new TripService.LoadMapServiceListener() {
             @Override
-            public void onSuccess(MapDefinition map) { setView(); }
+            public void onSuccess(MapDefinition map) {
+                setView();
+            }
 
             @Override
             public void onFail(Exception e) { }

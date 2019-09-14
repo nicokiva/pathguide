@@ -18,10 +18,10 @@ public class Fragment extends DialogFragmentBase {
 
         View view = inflater.inflate(R.layout.cancel_trip_dialog_fragment, null);
         builder.setView(view)
-                .setPositiveButton(android.R.string.yes, (dialog, id) -> {
+                .setPositiveButton(getResources().getString(R.string.accept), (dialog, id) -> {
                     listener.onDialogPositiveClick(null);
                 })
-                .setNegativeButton(android.R.string.no, (dialog, id) -> {
+                .setNegativeButton(getResources().getString(R.string.cancel), (dialog, id) -> {
                     listener.onDialogNegativeClick();
                 });
 

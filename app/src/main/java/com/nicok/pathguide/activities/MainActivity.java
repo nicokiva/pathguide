@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
                 installIntent.setAction(TextToSpeechService.ACTION_INSTALL_TTS_DATA);
                 startActivity(installIntent);
                 return;
-
             }
 
             this.textToSpeechService = TextToSpeechService.getInstance(this);

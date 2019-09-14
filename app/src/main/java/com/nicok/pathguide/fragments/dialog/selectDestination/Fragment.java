@@ -34,10 +34,10 @@ public class Fragment extends DialogFragmentBase {
         ((ImageView)view.findViewById(R.id.img_icon)).setImageResource(entityIcon);
 
         builder.setView(view)
-            .setPositiveButton(android.R.string.yes, (dialog, id) -> {
+            .setPositiveButton(getResources().getString(R.string.accept), (dialog, id) -> {
                 listener.onDialogPositiveClick(entityData);
             })
-            .setNegativeButton(android.R.string.no, (dialog, id) -> {
+            .setNegativeButton(getResources().getString(R.string.cancel), (dialog, id) -> {
                 listener.onDialogNegativeClick();
             });
 

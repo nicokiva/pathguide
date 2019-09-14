@@ -24,6 +24,9 @@
 
     <string name="missing_requirements_message">No cuenta con los requerimientos necesarios para iniciar la aplicación.</string>
 
+    <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+
     <string name="current_location_cancel_confirm">Está seguro que desea cancelar el viaje?</string>
 
     <string name="load_map_url">http://23.92.211.122:3001/path</string>
