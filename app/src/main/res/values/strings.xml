@@ -22,7 +22,7 @@
 
     <string name="current_location_unknown">No se puede obtener la ubicación actual, por favor acérquese a alguna estación.</string>
 
-
+    <string name="missing_requirements_message">No cuenta con los requerimientos necesarios para iniciar la aplicación.</string>
 
     <string name="current_location_cancel_confirm">Está seguro que desea cancelar el viaje?</string>
 

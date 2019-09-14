@@ -16,6 +16,8 @@ import kotlin.Unit;
 
 public class MainActivity extends AppCompatActivity {
 
+    private TextToSpeechService textToSpeechService;
+
     private final int MAIN_ACTIVITY = 1;
 
     @Override
@@ -33,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
+            this.textToSpeechService = TextToSpeechService.getInstance(this);
+
             this.checkBeaconsRequirements(new BeaconsService.BeaconsServiceListener() {
                 @Override
                 public Unit onRequirementsFulfilled() {
@@ -42,11 +46,13 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public Unit onRequirementsMissing(List<? extends Requirement> requirements) {
                     // TODO: Harcoded as AVD does not support bluetooth.
+                    informMissingRequirement();
                     return checkInternetConnectivity();
                 }
 
                 @Override
                 public Unit onError(Throwable error) {
+                    informMissingRequirement();
                     return null;
                 }
             });
@@ -54,6 +60,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void informMissingRequirement(){
+        this.textToSpeechService.speak(this.getApplicationContext().getString(R.string.missing_requirements_message));
+
+        try {
+            Thread.sleep(6000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     private Unit goToDestinationsList(){
         Intent myIntent = new Intent(MainActivity.this, DestinationActivity.class);
@@ -66,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         boolean isConnected = HttpService.isConnected(this.getApplicationContext());
 
         if (!isConnected) {
+            informMissingRequirement();
             return null;
         }
 
