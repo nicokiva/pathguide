@@ -42,7 +42,7 @@ public class BeaconsService extends Thread {
 
         ProximityZone zone = new ProximityZoneBuilder()
             .forTag(context.getString(R.string.beacons_tag))
-            .inCustomRange(1.0)
+            .inCustomRange(0.5)
             .onContextChange(proximityZoneContexts -> {
                 if(proximityZoneContexts.size() != 1) {
                     return null;
