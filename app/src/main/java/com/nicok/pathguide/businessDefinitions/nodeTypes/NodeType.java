@@ -16,6 +16,4 @@ public abstract class NodeType implements Serializable {
         return null;
     }
 
-    public String getContentDescription() { return null; }
-
 }

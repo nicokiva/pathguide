@@ -58,7 +58,6 @@ public class DestinationRowAdapter extends ArrayAdapter<NodeDefinition> {
         Integer icon = node.getImageSource();
         if (icon != null) {
             viewHolder.icon.setImageResource(icon);
-            viewHolder.icon.setContentDescription(node.getContentDescription());
         }
 
         return convertView;

@@ -14,6 +14,4 @@ public class BathroomType extends NodeType {
         return true;
     }
 
-    public String getContentDescription() { return "Baño"; }
-
 }

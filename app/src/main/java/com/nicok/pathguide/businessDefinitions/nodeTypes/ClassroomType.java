@@ -14,7 +14,4 @@ public class ClassroomType extends NodeType {
         return true;
     }
 
-    @Override
-    public String getContentDescription() { return "Aula"; }
-
 }

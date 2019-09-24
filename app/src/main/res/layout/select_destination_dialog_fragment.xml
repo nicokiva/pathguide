@@ -16,7 +16,6 @@
             android:id="@+id/img_icon"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:contentDescription="@string/classroom_icon"
             android:src="@drawable/classroom" />
     </FrameLayout>
 
