@@ -37,9 +37,12 @@ public class DestinationViewHandler extends ViewHandlerBase implements IViewHand
     }
 
     public IViewHandler setView(List<NodeDefinition> nodes) {
+//        int index = destinationsList.getFirstVisiblePosition();
+
         DestinationRowAdapter adapter = new DestinationRowAdapter(this.context, android.R.layout.simple_list_item_1, nodes);
         destinationsList.setAdapter(adapter);
         destinationsList.setOnItemClickListener(this::onItemClickListener);
+//        destinationsList.smoothScrollToPosition(index);
 
         return this;
     }
@@ -49,7 +52,7 @@ public class DestinationViewHandler extends ViewHandlerBase implements IViewHand
 
         Bundle data = new Bundle();
         data.putString(ExtrasParameterNames.ENTITY_NAME, itemValue.description);
-        data.putInt(ExtrasParameterNames.ENTITY_ICON, itemValue.getIcon());
+        data.putInt(ExtrasParameterNames.ENTITY_ICON, itemValue.getNodeType().getImageSource());
         data.putSerializable(ExtrasParameterNames.ENTITY_DATA, itemValue);
 
         DialogFragment dialog = new Fragment()

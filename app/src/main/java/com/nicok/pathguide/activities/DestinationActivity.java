@@ -57,10 +57,10 @@ public class DestinationActivity extends LoadableActivity implements Destination
 
                 finishLoading();
 
-                new Timer().scheduleAtFixedRate(new TimerTask(){
-                    @Override
-                    public void run(){ reload(); }
-                }, 0, 5000);
+//                new Timer().scheduleAtFixedRate(new TimerTask(){
+//                    @Override
+//                    public void run(){ reload(); }
+//                }, 0, 5000);
 
             }
 

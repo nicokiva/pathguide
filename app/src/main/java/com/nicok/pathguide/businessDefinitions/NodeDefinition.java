@@ -59,13 +59,15 @@ public class NodeDefinition implements Serializable {
     @JsonIgnore()
     private List<NodeDefinition> shortestPath = new LinkedList<>();
 
-    public Integer getIcon() {
+    public NodeType getNodeType() {
         if (types == null || types.size() == 0) {
             return null;
         }
 
-        return types.get(0).getImageSource();
+        return types.get(0);
     }
+
+
 
     public List<NodeDefinition> getShortestPath() {
         return this.shortestPath;

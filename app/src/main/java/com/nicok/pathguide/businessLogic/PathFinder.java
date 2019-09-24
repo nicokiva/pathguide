@@ -49,7 +49,9 @@ public class PathFinder {
             public void onSuccess(MapDefinition map) {
                 map.setDestination(map.getNodeByTag(destination.tag));
                 map.updateCurrentLocation(currentLocation.id);
-                map.getInstructionsTo(currentLocation.id);
+                if (!hasReachedDestination()) {
+                    map.getInstructionsTo(currentLocation.id);
+                }
 
                 listener.onSuccess(map);
             }

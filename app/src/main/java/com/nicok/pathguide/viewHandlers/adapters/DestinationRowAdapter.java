@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.nicok.pathguide.activities.R;
 import com.nicok.pathguide.businessDefinitions.NodeDefinition;
+import com.nicok.pathguide.businessDefinitions.nodeTypes.NodeType;
 
 import java.util.List;
 
@@ -53,9 +54,11 @@ public class DestinationRowAdapter extends ArrayAdapter<NodeDefinition> {
 
         viewHolder.description.setText(entity.description);
         viewHolder.extra.setText(entity.extra);
-        Integer icon = entity.getIcon();
+        NodeType node = entity.getNodeType();
+        Integer icon = node.getImageSource();
         if (icon != null) {
             viewHolder.icon.setImageResource(icon);
+            viewHolder.icon.setContentDescription(node.getContentDescription());
         }
 
         return convertView;

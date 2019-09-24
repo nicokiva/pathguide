@@ -129,7 +129,7 @@ public class TripService {
         pathFinder.reloadMapAndSet(new PathFinder.LoadMapServiceListener() {
             @Override
             public void onSuccess(MapDefinition map) {
-                EdgeDefinition edge = pathFinder.updateNodeAndGetInstructions(currentLocationId);
+                EdgeDefinition edge = !pathFinder.hasReachedDestination() ? pathFinder.updateNodeAndGetInstructions(currentLocationId) : null;
                 List<NodeDefinition> shortestPath = pathFinder.getShortestPath();
                 NodeDefinition[] itemsArray = new NodeDefinition[shortestPath.size()];
 
