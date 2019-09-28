@@ -8,8 +8,6 @@ import android.speech.tts.TextToSpeech;
 
 public class AppPathGuideService extends Service {
 
-    private TextToSpeech mTts;
-
     public class BeaconServiceBinder extends Binder {
         public AppPathGuideService getService() {
             return AppPathGuideService.this;
@@ -28,16 +26,19 @@ public class AppPathGuideService extends Service {
         return super.onUnbind(intent);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
     private BeaconsService listener;
+
+    public void stop() {
+        listener.end();
+        listener.interrupt();
+        listener = null;
+
+        stopSelf();
+    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        listener = new BeaconsService(this);
+        listener = new BeaconsService(this, () -> stop());
         listener.start();
 
         // will need to start beacons detection.

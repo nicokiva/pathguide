@@ -33,17 +33,17 @@ public class DestinationActivity extends LoadableActivity implements Destination
         this.tripService = TripService.getInstance(getApplicationContext());
     }
 
-    private void reload() {
-        tripService.reloadMap(new TripService.LoadMapServiceListener() {
-            @Override
-            public void onSuccess(MapDefinition map) {
-                setView();
-            }
-
-            @Override
-            public void onFail(Exception e) { }
-        });
-    }
+//    private void reload() {
+//        tripService.reloadMap(new TripService.LoadMapServiceListener() {
+//            @Override
+//            public void onSuccess(MapDefinition map) {
+//                setView();
+//            }
+//
+//            @Override
+//            public void onFail(Exception e) { }
+//        });
+//    }
 
     @Override
     protected void onStart() {

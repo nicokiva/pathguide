@@ -47,10 +47,15 @@ public class PathFinder {
         this.loadMapAndSet(new LoadMapServiceListener() {
             @Override
             public void onSuccess(MapDefinition map) {
-                map.setDestination(map.getNodeByTag(destination.tag));
-                map.updateCurrentLocation(currentLocation.id);
-                if (!hasReachedDestination()) {
-                    map.getInstructionsTo(currentLocation.id);
+                if (destination != null) {
+                    map.setDestination(map.getNodeByTag(destination.tag));
+                }
+
+                if (currentLocation != null) {
+                    map.updateCurrentLocation(currentLocation.id);
+//                    if (!hasReachedDestination()) {
+//                        map.getInstructionsTo(currentLocation.id);
+//                    }
                 }
 
                 listener.onSuccess(map);
@@ -103,6 +108,10 @@ public class PathFinder {
         return map.getShortestPath();
     }
 
+    public NodeDefinition getDestination() {
+        return map.getDestination();
+    }
+
     public boolean hasReachedDestination() {
         return map.hasReachedDestination();
     }
@@ -111,7 +120,7 @@ public class PathFinder {
         return map.getCurrentInstructions();
     }
 
-    public EdgeDefinition updateNodeAndGetInstructions(String currentLocationId){
+    public EdgeDefinition getInstructionsTo(String currentLocationId){
         return map.getInstructionsTo(currentLocationId);
     }
 

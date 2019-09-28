@@ -17,6 +17,10 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class TripService {
 
+    public boolean isTripActive() {
+        return pathFinder.getDestination() != null && !pathFinder.hasReachedDestination();
+    }
+
     private PathFinder pathFinder;
     private Context context;
     private TextToSpeechService textToSpeechService;
@@ -79,7 +83,7 @@ public class TripService {
         pathFinder.setDestination(destination);
     }
 
-    private void finish() {
+    private void finish(OnChangeLocationListener listener) {
         this.textToSpeechService.speak(context.getString(R.string.arrived_message));
         _instance = null;
 
@@ -89,17 +93,14 @@ public class TripService {
             e.printStackTrace();
         }
 
+        informFinishTrip();
+
         this.cancel();
-    }
 
-    boolean hasReachedToEnd() {
-        boolean hasReachedToEnd = pathFinder.hasReachedDestination();
 
-        if (hasReachedToEnd) {
-            this.finish();
+        if (listener != null) {
+            listener.onTripEnd();
         }
-
-        return hasReachedToEnd;
     }
 
     public void cancel() {
@@ -118,8 +119,12 @@ public class TripService {
         this.textToSpeechService.speak(pathFinder.getCurrentInstructions().instructions);
     }
 
-    void tryChangeLocation(String currentLocationId) {
-        if (currentLocationId.equals(this.currentLocationId)) {
+    public interface OnChangeLocationListener{
+        void onTripEnd();
+    }
+
+    void tryChangeLocation(String currentLocationId, OnChangeLocationListener listener) {
+        if (!isTripActive() || currentLocationId.equals(this.currentLocationId)) {
             return;
         }
 
@@ -129,14 +134,14 @@ public class TripService {
         pathFinder.reloadMapAndSet(new PathFinder.LoadMapServiceListener() {
             @Override
             public void onSuccess(MapDefinition map) {
-                EdgeDefinition edge = !pathFinder.hasReachedDestination() ? pathFinder.updateNodeAndGetInstructions(currentLocationId) : null;
+                EdgeDefinition edge = isTripActive() ? pathFinder.getInstructionsTo(currentLocationId) : null;
                 List<NodeDefinition> shortestPath = pathFinder.getShortestPath();
                 NodeDefinition[] itemsArray = new NodeDefinition[shortestPath.size()];
 
                 itemsArray = shortestPath.toArray(itemsArray);
 
                 if (edge == null) {
-                    informFinishTrip();
+                    finish(listener);
 
                     return;
                 }

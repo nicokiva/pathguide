@@ -33,7 +33,8 @@ public class MapService {
 
     public void load(LoadMapServiceListener listener) {
         new LoadMapHttpService(
-                (HttpService.HttpServiceListener<Optional<MapDefinition>>) body -> listener.onSuccess(body),
-        this.context).execute();
+            (HttpService.HttpServiceListener<Optional<MapDefinition>>) body -> listener.onSuccess(body),
+            this.context
+        ).execute();
     }
 }

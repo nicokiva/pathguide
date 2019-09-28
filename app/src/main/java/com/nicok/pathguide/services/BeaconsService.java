@@ -10,12 +10,8 @@ import com.estimote.proximity_sdk.api.ProximityObserver;
 import com.estimote.proximity_sdk.api.ProximityObserverBuilder;
 import com.estimote.proximity_sdk.api.ProximityZone;
 import com.estimote.proximity_sdk.api.ProximityZoneBuilder;
-import com.estimote.proximity_sdk.api.ProximityZoneContext;
 import com.nicok.pathguide.activities.R;
-
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import kotlin.Unit;
 
@@ -27,11 +23,18 @@ public class BeaconsService extends Thread {
     private ProximityObserver.Handler observationHandler;
     private TripService tripService;
 
-    BeaconsService(Context context) {
+    private IThreadCycle threadCycle = null;
+
+    public interface IThreadCycle {
+        void onThreadEnd();
+    }
+
+    BeaconsService(Context context, IThreadCycle threadCycle) {
         cloudCredentials = new EstimoteCloudCredentials(context.getString(R.string.beacons_api_key), context.getString(R.string.beacons_api_app_token));
         this.context = context;
 
         tripService = TripService.getInstance(context);
+        this.threadCycle = threadCycle;
     }
 
     private void observeBeacons() {
@@ -67,14 +70,13 @@ public class BeaconsService extends Thread {
         this.observeBeacons();
     }
 
+    public void end() {
+        observationHandler.stop();
+    }
+
 
     private void tryChangeLocation(String deviceId) {
-        tripService.tryChangeLocation(deviceId);
-        if (tripService.hasReachedToEnd()) {
-            observationHandler.stop();
-
-            this.interrupt();
-        }
+        tripService.tryChangeLocation(deviceId, () -> end());
     }
 
     public interface BeaconsServiceListener {

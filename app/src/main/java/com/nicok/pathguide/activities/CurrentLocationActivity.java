@@ -17,6 +17,7 @@ import com.nicok.pathguide.services.AppPathGuideService;
 import com.nicok.pathguide.services.TripService;
 import com.nicok.pathguide.constants.ExtrasParameterNames;
 
+import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class CurrentLocationActivity extends LoadableActivity {
@@ -47,7 +48,6 @@ public class CurrentLocationActivity extends LoadableActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_location);
-        startServiceAndBind();
 
         this.tripService = TripService.getInstance(getApplicationContext());
         this.currentLocationViewHandler = new CurrentLocationViewHandler(this, getWindow().getDecorView().getRootView(), new CurrentLocationViewHandler.CurrentLocationViewHandlerListener() {
@@ -81,6 +81,8 @@ public class CurrentLocationActivity extends LoadableActivity {
 
     private void onCancelTrip() {
         this.tripService.cancel();
+        this.cancelService();
+
         this.goToDestinationsList();
     }
 
@@ -100,7 +102,7 @@ public class CurrentLocationActivity extends LoadableActivity {
 
     /* SERVICE CONNECTOR */
     // TODO: Every service stuff should be relocated.
-    protected void startServiceAndBind() {
+    private void startServiceAndBind() {
         serviceIntent = new Intent(getApplicationContext(), AppPathGuideService.class);
 
         startService(serviceIntent);
@@ -111,38 +113,81 @@ public class CurrentLocationActivity extends LoadableActivity {
     protected void onStop () {
         super.onStop();
 
-        unBindService();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mChangeLocationMessageReceiver);
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mFinishTripMessageReceiver);
+        if(this.tripService.isTripActive()) {
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(mChangeLocationMessageReceiver);
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(mFinishTripMessageReceiver);
+        }
+
+        cancelService();
     }
 
-    protected void unBindService() {
+    private void unBindService() {
         unbindService(serviceConnection);
+    }
+
+    private boolean isInBackground = false;
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        this.isInBackground = true;
+
+        if (this.tripService.isTripActive()) {
+            unBindService();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(mChangeLocationMessageReceiver, new IntentFilter(ExtrasParameterNames.CURRENT_LOCATION));
-        LocalBroadcastManager.getInstance(this).registerReceiver(mFinishTripMessageReceiver, new IntentFilter(ExtrasParameterNames.FINISH_TRIP));
+        if (this.tripService.isTripActive()) {
+            startServiceAndBind();
+
+            LocalBroadcastManager.getInstance(this).registerReceiver(mChangeLocationMessageReceiver, new IntentFilter(ExtrasParameterNames.CURRENT_LOCATION));
+            LocalBroadcastManager.getInstance(this).registerReceiver(mFinishTripMessageReceiver, new IntentFilter(ExtrasParameterNames.FINISH_TRIP));
+        }
+
+        if (this.isInBackground) {
+            this.isInBackground = false;
+
+            if(!this.tripService.isTripActive()) {
+                goToDestinationsList();
+            }
+        }
     }
 
-    public void bindService() {
-        if (serviceConnection == null) {
-            serviceConnection = new ServiceConnection() {
-                @Override
-                public void onServiceConnected(ComponentName name, IBinder iBinder) {
-                    AppPathGuideService.BeaconServiceBinder binder = (AppPathGuideService.BeaconServiceBinder) iBinder;
-                    service = binder.getService();
-                }
+    private interface ServiceLifecycle {
+        void onServiceConnected(AppPathGuideService service);
+    }
 
-                @Override
-                public void onServiceDisconnected(ComponentName name) {
-                    unBindService();
+    private void bindService() {
+        bindService(null);
+    }
+
+    private void cancelService() {
+        bindService(service -> service.stop());
+    }
+
+    private void bindService(@Nullable ServiceLifecycle serviceLifecycle) {
+
+        serviceConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder iBinder) {
+                AppPathGuideService.BeaconServiceBinder binder = (AppPathGuideService.BeaconServiceBinder) iBinder;
+                service = binder.getService();
+
+                if (serviceLifecycle != null) {
+                    serviceLifecycle.onServiceConnected(service);
                 }
-            };
-        }
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                unBindService();
+            }
+        };
 
         bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
