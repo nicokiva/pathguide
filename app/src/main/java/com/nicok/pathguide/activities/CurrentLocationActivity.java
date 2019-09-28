@@ -117,6 +117,11 @@ public class CurrentLocationActivity extends LoadableActivity {
             LocalBroadcastManager.getInstance(this).unregisterReceiver(mChangeLocationMessageReceiver);
             LocalBroadcastManager.getInstance(this).unregisterReceiver(mFinishTripMessageReceiver);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
         cancelService();
     }
@@ -171,7 +176,6 @@ public class CurrentLocationActivity extends LoadableActivity {
     }
 
     private void bindService(@Nullable ServiceLifecycle serviceLifecycle) {
-
         serviceConnection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder iBinder) {
