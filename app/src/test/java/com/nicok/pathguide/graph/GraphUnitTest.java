@@ -33,7 +33,7 @@ public class GraphUnitTest {
     private EdgeDefinition aula206ToAula204 = createEdge("Aula 206 to Aula 204!", 6);
     private EdgeDefinition aula206ToAula205 = createEdge("Aula 206 to Aula 205!", 7);
 
-    private EdgeDefinition banoToAula206 = createEdge("Baño to Aula 206!", 8);
+    private EdgeDefinition banoToAula206 = createEdge("Baño to Aula 206!", 10);
 
     private EdgeDefinition createEdge(String instructions, Integer distance) {
         EdgeDefinition edge = new EdgeDefinition();
@@ -116,7 +116,7 @@ public class GraphUnitTest {
 
 
     @Test
-    public void should_bano_be_properly_connected_to_aula206_faster_in_one_step() {
+    public void should_bano_be_properly_connected_to_aula206_faster_in_three_steps() {
         bano.addDestination(beacon01, banoToBeacon01);
         beacon01.addDestination(aula204, beacon01ToAula204);
         aula204.addDestination(aula206, aula204ToAula206);
@@ -130,11 +130,11 @@ public class GraphUnitTest {
 
         Graph graph = new Graph(nodes);
         long steps = graph.calculateShortestPath(bano, aula206);
-        assertEquals(steps, 1);
+        assertEquals(steps, 3);
         graph.updateCurrentLocation(bano);
         EdgeDefinition edge = graph.getInstructionsTo(bano);
 
-        assertEquals(edge, banoToAula206);
+        assertEquals(edge, banoToBeacon01);
     }
 
     @Test
