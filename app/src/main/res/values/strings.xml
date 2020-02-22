@@ -22,6 +22,9 @@
 
     <string name="current_location_unknown">No se puede obtener la ubicación actual, por favor acérquese a alguna estación.</string>
 
+    <string name="current_location_detecting">Detectando ubicación actual, por favor aguarde.</string>
+
+
     <string name="missing_requirements_message">No cuenta con los requerimientos necesarios para iniciar la aplicación.</string>
 
     <string name="accept">Aceptar</string>

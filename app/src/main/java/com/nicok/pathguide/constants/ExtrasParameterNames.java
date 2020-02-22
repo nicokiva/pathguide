@@ -12,5 +12,6 @@ public class ExtrasParameterNames {
 
     public static final String CURRENT_LOCATION = "current_location";
     public static final String FINISH_TRIP = "finish_trip";
+    public static final String STATION_NOT_DETECTED = "station_not_detected";
 
 }

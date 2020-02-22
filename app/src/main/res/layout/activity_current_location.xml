@@ -13,6 +13,13 @@
         tools:context=".activities.CurrentLocationActivity">
 
         <include
+            android:id="@+id/activity_current_location_detecting"
+            layout="@layout/activity_current_location_detecting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include
+            android:visibility="gone"
             android:id="@+id/activity_current_location_unknown"
             layout="@layout/activity_current_location_unknown"
             android:layout_width="match_parent"

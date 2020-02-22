@@ -38,7 +38,7 @@ public class AppPathGuideService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        listener = new BeaconsService(this, () -> stop());
+        listener = new BeaconsService(this);
         listener.start();
 
         // will need to start beacons detection.

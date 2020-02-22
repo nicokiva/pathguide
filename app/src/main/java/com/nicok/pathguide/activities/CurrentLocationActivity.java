@@ -37,6 +37,13 @@ public class CurrentLocationActivity extends LoadableActivity {
         }
     };
 
+    private BroadcastReceiver mStationNotDetectedMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            displayStationNotDetected();
+        }
+    };
+
     private BroadcastReceiver mFinishTripMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -79,6 +86,10 @@ public class CurrentLocationActivity extends LoadableActivity {
         this.tripService.repeatInstructions();
     }
 
+    private void displayStationNotDetected() {
+        this.currentLocationViewHandler.setView(null, null);
+    }
+
     private void onCancelTrip() {
         this.tripService.cancel();
         this.cancelService();
@@ -116,6 +127,7 @@ public class CurrentLocationActivity extends LoadableActivity {
         if(this.tripService.isTripActive()) {
             LocalBroadcastManager.getInstance(this).unregisterReceiver(mChangeLocationMessageReceiver);
             LocalBroadcastManager.getInstance(this).unregisterReceiver(mFinishTripMessageReceiver);
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(mStationNotDetectedMessageReceiver);
         }
     }
 
@@ -150,6 +162,7 @@ public class CurrentLocationActivity extends LoadableActivity {
         if (this.tripService.isTripActive()) {
             startServiceAndBind();
 
+            LocalBroadcastManager.getInstance(this).registerReceiver(mStationNotDetectedMessageReceiver, new IntentFilter(ExtrasParameterNames.STATION_NOT_DETECTED));
             LocalBroadcastManager.getInstance(this).registerReceiver(mChangeLocationMessageReceiver, new IntentFilter(ExtrasParameterNames.CURRENT_LOCATION));
             LocalBroadcastManager.getInstance(this).registerReceiver(mFinishTripMessageReceiver, new IntentFilter(ExtrasParameterNames.FINISH_TRIP));
         }

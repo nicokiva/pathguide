@@ -34,6 +34,7 @@ public class CurrentLocationViewHandler extends ViewHandlerBase implements IView
     Button repeatInstructions;
     ViewGroup currentLocationKnown;
     ViewGroup currentLocationUnknown;
+    ViewGroup currentLocationDetecting;
 
 
     public CurrentLocationViewHandler(Context context, View view, CurrentLocationViewHandlerListener listener) {
@@ -47,6 +48,7 @@ public class CurrentLocationViewHandler extends ViewHandlerBase implements IView
 
         this.currentLocationKnown = view.findViewById(R.id.activity_current_location_known);
         this.currentLocationUnknown = view.findViewById(R.id.activity_current_location_unknown);
+        this.currentLocationDetecting = view.findViewById(R.id.activity_current_location_detecting);
 
         this.listener = listener;
 
@@ -68,9 +70,10 @@ public class CurrentLocationViewHandler extends ViewHandlerBase implements IView
             dialog.show(((AppCompatActivity)context).getSupportFragmentManager(), "cancelDialogFragment");
     }
 
-    public IViewHandler setView(NodeDefinition node, EdgeDefinition edge) {
+    public IViewHandler setView(@Nullable NodeDefinition node, @Nullable EdgeDefinition edge) {
         if (node == null || edge == null) {
             this.currentLocationKnown.setVisibility(View.GONE);
+            this.currentLocationDetecting.setVisibility(View.GONE);
             this.currentLocationUnknown.setVisibility(View.VISIBLE);
 
             return this;
@@ -83,6 +86,7 @@ public class CurrentLocationViewHandler extends ViewHandlerBase implements IView
         this.repeatInstructions.setOnClickListener(v -> listener.onRepeatInstructionsClick());
 
         this.currentLocationKnown.setVisibility(View.VISIBLE);
+        this.currentLocationUnknown.setVisibility(View.GONE);
         this.currentLocationUnknown.setVisibility(View.GONE);
 
         return this;

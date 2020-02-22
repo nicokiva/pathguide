@@ -179,6 +179,13 @@ public class TripService {
         this.sendMessage(ExtrasParameterNames.CURRENT_LOCATION, data);
     }
 
+    public void informStationNotDetected(){
+        this.sendMessageStationNotDetected();
+    }
+
+    private void sendMessageStationNotDetected() {
+        this.sendMessage(ExtrasParameterNames.STATION_NOT_DETECTED);
+    }
 
     private void sendMessage(String action) {
         sendMessage(action, null);
