@@ -38,7 +38,7 @@ public class BeaconsService extends Thread {
                     }
                 }
             },
-5000);
+          15000);
     }
 
     private void observeBeacons() {
@@ -50,13 +50,9 @@ public class BeaconsService extends Thread {
         ProximityZone zone = new ProximityZoneBuilder()
             .forTag(context.getString(R.string.beacons_tag))
             .inCustomRange(0.5)
-            .onContextChange(proximityZoneContexts -> {
-                if(proximityZoneContexts.size() != 1) {
-                    return null;
-                }
-
+            .onEnter(beacon -> {
                 this.detectedFirst = true;
-                String deviceId = proximityZoneContexts.iterator().next().getDeviceId();
+                String deviceId = beacon.getDeviceId();
                 this.tryChangeLocation(deviceId);
 
                 return null;
@@ -96,7 +92,6 @@ public class BeaconsService extends Thread {
                 listener::onRequirementsFulfilled,
                 listener::onRequirementsMissing, /* scanning won't work, handle this case in your app */
                 listener::onError /* Oops, some error occurred, handle it here! */
-
         );
     }
 

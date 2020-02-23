@@ -87,8 +87,7 @@ public class CurrentLocationViewHandler extends ViewHandlerBase implements IView
 
         this.currentLocationKnown.setVisibility(View.VISIBLE);
         this.currentLocationUnknown.setVisibility(View.GONE);
-        this.currentLocationUnknown.setVisibility(View.GONE);
-
+        this.currentLocationDetecting.setVisibility(View.GONE);
         return this;
     }
 }
